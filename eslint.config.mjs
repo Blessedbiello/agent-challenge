@@ -1,21 +1,7 @@
-import { dirname } from "path";
-import { fileURLToPath } from "url";
-import { FlatCompat } from "@eslint/eslintrc";
+import webConfig from "./apps/web/eslint.config.mjs";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-
-const compat = new FlatCompat({
-  baseDirectory: __dirname,
-});
-
-const eslintConfig = [
-  ...compat.config({
-    extends: ["next/core-web-vitals", "next/typescript"],
-    rules: {
-      '@ts-expect-error': 'off'
-    }
-  })
+const config = [
+  ...webConfig
 ];
 
-export default eslintConfig;
+export default config;
