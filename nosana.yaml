@@ -1,0 +1,95 @@
+version: "1.0"
+
+metadata:
+  name: sentinelops
+  description: "AI-Powered DevOps Incident Commander - Production-ready multi-agent platform"
+  author: "Blessedbiello"
+  repository: "https://github.com/Blessedbiello/agent-challenge"
+  tags:
+    - ai
+    - devops
+    - incident-management
+    - mastra
+    - agents
+    - mcp
+
+job:
+  type: container
+
+  image:
+    registry: docker.io
+    name: sentinelops
+    tag: latest
+    build:
+      dockerfile: Dockerfile
+      context: .
+
+  resources:
+    cpu: 2
+    memory: 4096  # 4GB RAM
+    storage: 10240  # 10GB disk
+    gpu: false
+
+  environment:
+    NODE_ENV: production
+    LOG_LEVEL: info
+    SERVER_HOST: "0.0.0.0"
+    SERVER_PORT: "4111"
+    NEXT_PUBLIC_SENTINELOPS_API: "http://localhost:4111"
+    DISABLE_TELEMETRY: "true"
+    MASTRA_TELEMETRY_DISABLED: "true"
+
+  ports:
+    - container: 4111
+      host: 4111
+      protocol: tcp
+      description: "Backend API + SSE streaming"
+    - container: 3000
+      host: 3000
+      protocol: tcp
+      description: "Frontend dashboard"
+
+  healthcheck:
+    type: http
+    endpoint: "/healthz"
+    port: 4111
+    interval: 30
+    timeout: 10
+    retries: 3
+
+  volumes:
+    - name: sentinelops-data
+      mount: /app/data
+      size: 1024  # 1GB for SQLite database
+
+  command: ["npm", "start"]
+
+  restart_policy: on-failure
+  max_restarts: 3
+
+monitoring:
+  metrics:
+    enabled: true
+    port: 4111
+    path: /v1/status
+
+  logs:
+    enabled: true
+    level: info
+    max_size: 100MB
+    retention_days: 7
+
+scaling:
+  min_instances: 1
+  max_instances: 3
+  auto_scale:
+    enabled: true
+    metrics:
+      - type: cpu
+        threshold: 80
+      - type: memory
+        threshold: 85
+
+pricing:
+  max_budget: 10  # Maximum $10 for compute
+  billing_model: pay-per-use

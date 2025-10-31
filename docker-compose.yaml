@@ -1,0 +1,50 @@
+version: '3.8'
+
+services:
+  sentinelops:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: sentinelops
+    ports:
+      - "4111:4111"  # Backend API + SSE
+      - "3000:3000"  # Frontend Dashboard
+    environment:
+      - NODE_ENV=production
+      - LOG_LEVEL=info
+      - SERVER_HOST=0.0.0.0
+      - SERVER_PORT=4111
+      - NEXT_PUBLIC_SENTINELOPS_API=http://localhost:4111
+      - DISABLE_TELEMETRY=true
+      - MASTRA_TELEMETRY_DISABLED=true
+      - DO_NOT_TRACK=1
+    volumes:
+      - sentinelops-data:/app/data
+      - sentinelops-logs:/app/logs
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:4111/healthz"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    networks:
+      - sentinelops-network
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 4G
+        reservations:
+          cpus: '1'
+          memory: 2G
+
+volumes:
+  sentinelops-data:
+    driver: local
+  sentinelops-logs:
+    driver: local
+
+networks:
+  sentinelops-network:
+    driver: bridge
