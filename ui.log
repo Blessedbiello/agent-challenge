@@ -1,0 +1,22 @@
+
+> starter@0.1.0 dev:ui /home/bprime/Bounties/agent-challenge
+> next dev apps/web --turbopack --port 9000
+
+ ⚠ Warning: Next.js inferred your workspace root, but it may not be correct.
+ We detected multiple lockfiles and selected the directory of /home/bprime/yarn.lock as the root directory.
+ To silence this warning, set `turbopack.root` in your Next.js config, or consider removing one of the lockfiles if it's not needed.
+   See https://nextjs.org/docs/app/api-reference/config/next-config-js/turbopack#root-directory for more information.
+ Detected additional lockfiles: 
+   * /home/bprime/Bounties/agent-challenge/pnpm-lock.yaml
+
+ ⨯ Failed to start server
+Error: listen EADDRINUSE: address already in use :::9000
+    at <unknown> (Error: listen EADDRINUSE: address already in use :::9000)
+    at new Promise (<anonymous>) {
+  code: 'EADDRINUSE',
+  errno: -98,
+  syscall: 'listen',
+  address: '::',
+  port: 9000
+}
+[?25h

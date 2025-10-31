@@ -5,7 +5,8 @@ export { createServer, startServer };
 
 export async function bootstrapServer() {
   const app = await startServer();
-  app.log.info("SentinelOps MCP server ready", {
+  app.log.info({
+    msg: "SentinelOps MCP server ready",
     host: env.SERVER_HOST,
     port: env.SERVER_PORT,
     environment: env.NODE_ENV,

@@ -1,6 +1,7 @@
 import { randomUUID } from "node:crypto";
 import { createTool } from "@mastra/core/tools";
 import { z } from "zod";
+import { getDb } from "@sentinelops/persistence";
 
 export type LogLevel = "DEBUG" | "INFO" | "WARN" | "ERROR" | "FATAL";
 
@@ -13,8 +14,6 @@ export type LogRecord = {
   metadata: Record<string, unknown>;
   timestamp: string;
 };
-
-const logsStore = new Map<string, LogRecord>();
 
 const LogLevelSchema = z.enum(["DEBUG", "INFO", "WARN", "ERROR", "FATAL"]);
 
@@ -52,7 +51,20 @@ const SampleLogsInputSchema = z.object({
   ttlSeconds: z.number().int().positive().default(300),
 });
 
+function deserializeLog(row: any): LogRecord {
+  return {
+    id: row.id,
+    incidentId: row.incident_id,
+    source: row.source,
+    level: row.level,
+    message: row.message,
+    metadata: row.metadata ? JSON.parse(row.metadata) : {},
+    timestamp: row.timestamp,
+  };
+}
+
 export function ingestLog(input: z.infer<typeof IngestLogInputSchema>): LogRecord {
+  const db = getDb();
   const record: LogRecord = {
     id: randomUUID(),
     incidentId: input.incidentId,
@@ -63,7 +75,13 @@ export function ingestLog(input: z.infer<typeof IngestLogInputSchema>): LogRecor
     timestamp: new Date().toISOString(),
   };
 
-  logsStore.set(record.id, record);
+  db.prepare(
+    `INSERT INTO logs (id, incident_id, source, level, message, metadata, timestamp)
+     VALUES (@id, @incidentId, @source, @level, @message, @metadata, @timestamp)`
+  ).run({
+    ...record,
+    metadata: JSON.stringify(record.metadata),
+  });
 
   return record;
 }
@@ -87,12 +105,15 @@ export const queryLogsTool = createTool({
     logs: z.array(LogRecordSchema),
   }),
   execute: async ({ context }) => {
-    let logs = Array.from(logsStore.values());
+    const db = getDb();
+    const rows = db.prepare(`SELECT * FROM logs ORDER BY timestamp DESC`).all();
+    let logs = rows.map(deserializeLog);
 
     const query = context.query.toLowerCase();
-    logs = logs.filter((log) =>
-      log.message.toLowerCase().includes(query) ||
-      JSON.stringify(log.metadata).toLowerCase().includes(query)
+    logs = logs.filter(
+      (log) =>
+        log.message.toLowerCase().includes(query) ||
+        JSON.stringify(log.metadata).toLowerCase().includes(query)
     );
 
     if (context.timeRange?.from) {
@@ -106,7 +127,6 @@ export const queryLogsTool = createTool({
     }
 
     logs.sort((a, b) => (a.timestamp < b.timestamp ? 1 : -1));
-
     const limited = logs.slice(0, context.limit);
 
     return { count: limited.length, logs: limited };
@@ -123,11 +143,13 @@ export const sampleLogsTool = createTool({
     expiresAt: z.string(),
   }),
   execute: async ({ context }) => {
-    const now = Date.now();
-    const logs = Array.from(logsStore.values()).filter((log) => log.incidentId === context.incidentId);
-    logs.sort((a, b) => (a.timestamp < b.timestamp ? 1 : -1));
+    const db = getDb();
+    const rows = db
+      .prepare(`SELECT * FROM logs WHERE incident_id = ? ORDER BY timestamp DESC`)
+      .all(context.incidentId);
+    const logs = rows.map(deserializeLog);
 
-    const expiresAt = new Date(now + context.ttlSeconds * 1000).toISOString();
+    const expiresAt = new Date(Date.now() + context.ttlSeconds * 1000).toISOString();
 
     return {
       incidentId: context.incidentId,
@@ -138,9 +160,12 @@ export const sampleLogsTool = createTool({
 });
 
 export function listLogs(): LogRecord[] {
-  return Array.from(logsStore.values());
+  const db = getDb();
+  const rows = db.prepare(`SELECT * FROM logs ORDER BY timestamp DESC`).all();
+  return rows.map(deserializeLog);
 }
 
 export function clearLogs() {
-  logsStore.clear();
+  const db = getDb();
+  db.prepare(`DELETE FROM logs`).run();
 }

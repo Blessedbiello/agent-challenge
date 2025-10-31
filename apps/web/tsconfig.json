@@ -13,6 +13,8 @@
       "@sentinelops/tools/*": ["../../packages/tools/src/*"],
       "@sentinelops/agents": ["../../packages/agents/src"],
       "@sentinelops/agents/*": ["../../packages/agents/src/*"],
+      "@sentinelops/persistence": ["../../packages/persistence/src"],
+      "@sentinelops/persistence/*": ["../../packages/persistence/src/*"],
       "@sentinelops/ui": ["../../packages/ui/src"],
       "@sentinelops/ui/*": ["../../packages/ui/src/*"]
     }

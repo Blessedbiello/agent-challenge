@@ -1,20 +1,9 @@
 import { randomUUID } from "node:crypto";
 import { createTool } from "@mastra/core/tools";
 import { z } from "zod";
+import { getDb } from "@sentinelops/persistence";
 
 export type DeployStatus = "PENDING" | "RUNNING" | "SUCCEEDED" | "FAILED";
-
-export type DeployJob = {
-  id: string;
-  service: string;
-  status: DeployStatus;
-  createdAt: string;
-  updatedAt: string;
-  spec: DeploySpec;
-  type: "DEPLOY" | "ROLLBACK";
-  parentJobId?: string;
-  outcome?: string;
-};
 
 export const DeploySpecSchema = z.object({
   service: z.string().min(1),
@@ -45,7 +34,7 @@ const ListDeploysInputSchema = z.object({
   since: z.string().datetime({ offset: true }).optional(),
 });
 
-const DeployJobSchema: z.ZodType<DeployJob> = z.object({
+export const DeployJobSchema = z.object({
   id: z.string(),
   service: z.string(),
   status: z.enum(["PENDING", "RUNNING", "SUCCEEDED", "FAILED"]),
@@ -57,9 +46,24 @@ const DeployJobSchema: z.ZodType<DeployJob> = z.object({
   outcome: z.string().optional(),
 });
 
-const jobsStore = new Map<string, DeployJob>();
+export type DeployJob = z.infer<typeof DeployJobSchema>;
+
+function deserializeJob(row: any): DeployJob {
+  return {
+    id: row.id,
+    service: row.service,
+    status: row.status,
+    createdAt: row.created_at,
+    updatedAt: row.updated_at,
+    spec: JSON.parse(row.spec),
+    type: row.type,
+    parentJobId: row.parent_job_id ?? undefined,
+    outcome: row.outcome ?? undefined,
+  };
+}
 
 export function createDeployJob(spec: DeploySpec, overrides?: Partial<DeployJob>): DeployJob {
+  const db = getDb();
   const now = new Date().toISOString();
   const job: DeployJob = {
     id: overrides?.id ?? randomUUID(),
@@ -73,7 +77,15 @@ export function createDeployJob(spec: DeploySpec, overrides?: Partial<DeployJob>
     outcome: overrides?.outcome,
   };
 
-  jobsStore.set(job.id, job);
+  db.prepare(
+    `INSERT INTO deploy_jobs (id, service, status, created_at, updated_at, spec, type, parent_job_id, outcome)
+     VALUES (@id, @service, @status, @createdAt, @updatedAt, @spec, @type, @parentJobId, @outcome)`
+  ).run({
+    ...job,
+    spec: JSON.stringify(spec),
+    parentJobId: job.parentJobId ?? null,
+    outcome: job.outcome ?? null,
+  });
 
   return job;
 }
@@ -112,9 +124,9 @@ export const rollbackDeployTool = createTool({
   inputSchema: RollbackInputSchema,
   outputSchema: DeployJobSchema,
   execute: async ({ context }) => {
-    const targetJob = jobsStore.get(context.target) ?? findJobByRelease(context.target);
+    const targetJob = getJob(context.target) ?? findJobByRelease(context.target);
 
-    return createRollbackJob(targetJob, context.target, { outcome: context.reason });
+    return createRollbackJob(targetJob ?? undefined, context.target, { outcome: context.reason });
   },
 });
 
@@ -124,7 +136,7 @@ export const getJobStatusTool = createTool({
   inputSchema: GetJobStatusInputSchema,
   outputSchema: DeployJobSchema,
   execute: async ({ context }) => {
-    const job = jobsStore.get(context.jobId);
+    const job = getJob(context.jobId);
     if (!job) {
       throw new Error(`Job ${context.jobId} not found`);
     }
@@ -142,35 +154,71 @@ export const listDeploysTool = createTool({
     jobs: z.array(DeployJobSchema),
   }),
   execute: async ({ context }) => {
-    let jobs = Array.from(jobsStore.values());
+    const db = getDb();
+    const conditions: string[] = [];
+    const params: any[] = [];
 
     if (context.service) {
-      jobs = jobs.filter((job) => job.service === context.service);
+      conditions.push("service = ?");
+      params.push(context.service);
     }
 
     if (context.since) {
-      const boundary = context.since;
-      jobs = jobs.filter((job) => job.createdAt >= boundary);
+      conditions.push("created_at >= ?");
+      params.push(context.since);
     }
 
-    jobs.sort((a, b) => (a.createdAt < b.createdAt ? 1 : -1));
+    const whereClause = conditions.length ? `WHERE ${conditions.join(" AND ")}` : "";
+    const rows = db
+      .prepare(`SELECT * FROM deploy_jobs ${whereClause} ORDER BY created_at DESC`)
+      .all(...params);
 
+    const jobs = rows.map(deserializeJob);
     return { count: jobs.length, jobs };
   },
 });
 
-function findJobByRelease(releaseId: string) {
-  return Array.from(jobsStore.values()).find((job) => job.spec.version === releaseId);
+function getJob(id: string): DeployJob | null {
+  const db = getDb();
+  const row = db.prepare(`SELECT * FROM deploy_jobs WHERE id = ?`).get(id);
+  return row ? deserializeJob(row) : null;
+}
+
+function findJobByRelease(releaseId: string): DeployJob | undefined {
+  const db = getDb();
+  const row = db.prepare(`SELECT * FROM deploy_jobs WHERE json_extract(spec, '$.version') = ?`).get(releaseId);
+  return row ? deserializeJob(row) : undefined;
 }
 
 export function upsertJob(job: DeployJob) {
-  jobsStore.set(job.id, job);
+  const db = getDb();
+  db.prepare(
+    `INSERT INTO deploy_jobs (id, service, status, created_at, updated_at, spec, type, parent_job_id, outcome)
+     VALUES (@id, @service, @status, @createdAt, @updatedAt, @spec, @type, @parentJobId, @outcome)
+     ON CONFLICT(id) DO UPDATE SET
+       service = excluded.service,
+       status = excluded.status,
+       created_at = excluded.created_at,
+       updated_at = excluded.updated_at,
+       spec = excluded.spec,
+       type = excluded.type,
+       parent_job_id = excluded.parent_job_id,
+       outcome = excluded.outcome`
+  ).run({
+    ...job,
+    spec: JSON.stringify(job.spec),
+    parentJobId: job.parentJobId ?? null,
+    outcome: job.outcome ?? null,
+  });
 }
 
 export function listJobs(): DeployJob[] {
-  return Array.from(jobsStore.values());
+  const db = getDb();
+  const rows = db.prepare(`SELECT * FROM deploy_jobs ORDER BY created_at DESC`).all();
+  return rows.map(deserializeJob);
 }
 
 export function clearJobs() {
-  jobsStore.clear();
+  const db = getDb();
+  db.prepare(`DELETE FROM deploy_jobs`).run();
 }

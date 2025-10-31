@@ -1,0 +1,10 @@
+{
+  "name": "@sentinelops/persistence",
+  "version": "0.1.0",
+  "private": true,
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "dependencies": {
+    "better-sqlite3": "^9.4.0"
+  }
+}

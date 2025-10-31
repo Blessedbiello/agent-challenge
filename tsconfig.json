@@ -4,6 +4,7 @@
     { "path": "./apps/web" },
     { "path": "./apps/server" },
     { "path": "./apps/discord-bot" },
+    { "path": "./packages/persistence" },
     { "path": "./packages/agents" },
     { "path": "./packages/tools" },
     { "path": "./packages/ui" }

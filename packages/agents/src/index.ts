@@ -4,11 +4,16 @@ import { Agent } from "@mastra/core/agent";
 import {
   ackAlertTool,
   createAlertTool,
+  createIncidentActionTool,
   createPostmortemTool,
   getJobStatusTool,
   ingestLogTool,
   listDeploysTool,
   listPostmortemsTool,
+  createStrategyTool,
+  listStrategiesTool,
+  approveIncidentActionTool,
+  rejectIncidentActionTool,
   publishPostmortemTool,
   queryLogsTool,
   resolveAlertTool,
@@ -18,9 +23,11 @@ import {
   subscribeAlertsTool,
   weatherTool,
 } from "@sentinelops/tools";
+import { initDb } from "@sentinelops/persistence";
 import { LibSQLStore } from "@mastra/libsql";
 import { Memory } from "@mastra/memory";
 import { z } from "zod";
+import { HumanOpsMemorySchema } from "./memory";
 import {
   DEVOPS_GPT_PROMPT,
   DISCORD_TRIAGE_PROMPT,
@@ -28,11 +35,14 @@ import {
   HUMAN_OPS_PROMPT,
   INCIDENT_COMMANDER_PROMPT,
   MONITOR_AGENT_PROMPT,
+  AGENT_BPRIME_PROMPT,
 } from "./prompts";
 
 const ollama = createOllama({
   baseURL: process.env.NOS_OLLAMA_API_URL || process.env.OLLAMA_API_URL,
 });
+
+initDb();
 
 const defaultModelName = process.env.NOS_MODEL_NAME_AT_ENDPOINT || process.env.MODEL_NAME_AT_ENDPOINT || "qwen3:8b";
 
@@ -42,7 +52,7 @@ const createMemory = <Schema extends z.ZodTypeAny>(schema: Schema) =>
     options: {
       workingMemory: {
         enabled: true,
-        schema,
+        schema: schema as any,
       },
     },
   });
@@ -97,16 +107,6 @@ const ForensicsMemorySchema = z.object({
     .default([]),
 });
 
-export const HumanOpsMemorySchema = z.object({
-  proverbs: z.array(z.string()).default([]),
-  preferences: z
-    .object({
-      environment: z.string().default("production"),
-      verbosity: z.enum(["brief", "detailed"]).default("brief"),
-    })
-    .default({ environment: "production", verbosity: "brief" }),
-});
-
 const DiscordMemorySchema = z.object({
   recentThreads: z
     .array(
@@ -119,6 +119,11 @@ const DiscordMemorySchema = z.object({
     .default([]),
 });
 
+const AgentBprimeMemorySchema = z.object({
+  focusAreas: z.array(z.string()).default([]),
+  latestStrategyId: z.string().optional(),
+});
+
 export const devOpsAgent = new Agent({
   name: "DevOpsGPT",
   description: "Orchestrates releases, approvals, and deployment hygiene.",
@@ -129,6 +134,8 @@ export const devOpsAgent = new Agent({
     listDeploysTool,
     getJobStatusTool,
     listPostmortemsTool,
+    approveIncidentActionTool,
+    rejectIncidentActionTool,
   },
   memory: createMemory(DevOpsMemorySchema),
 });
@@ -147,6 +154,7 @@ export const incidentCommanderAgent = new Agent({
     rollbackDeployTool,
     listDeploysTool,
     createPostmortemTool,
+    createIncidentActionTool,
   },
   memory: createMemory(IncidentMemorySchema),
 });
@@ -190,6 +198,9 @@ export const humanOpsAgent = new Agent({
     listPostmortemsTool,
     queryLogsTool,
     getJobStatusTool,
+    approveIncidentActionTool,
+    rejectIncidentActionTool,
+    listStrategiesTool,
   },
   memory: createMemory(HumanOpsMemorySchema),
 });
@@ -208,6 +219,21 @@ export const discordTriageAgent = new Agent({
   memory: createMemory(DiscordMemorySchema),
 });
 
+export const agentBprime = new Agent({
+  name: "AgentBprime",
+  description: "Coding strategist optimising SentinelOps for BlueShift competitions.",
+  instructions: AGENT_BPRIME_PROMPT,
+  model: ollama(defaultModelName),
+  tools: {
+    listDeploysTool,
+    listStrategiesTool,
+    createStrategyTool,
+    listPostmortemsTool,
+    queryLogsTool,
+  },
+  memory: createMemory(AgentBprimeMemorySchema),
+});
+
 export const agentsRegistry = {
   devOpsAgent,
   incidentCommanderAgent,
@@ -215,6 +241,9 @@ export const agentsRegistry = {
   forensicsAgent,
   humanOpsAgent,
   discordTriageAgent,
+  agentBprime,
 } as const;
 
 export type AgentsRegistry = typeof agentsRegistry;
+
+export { HumanOpsMemorySchema } from "./memory";

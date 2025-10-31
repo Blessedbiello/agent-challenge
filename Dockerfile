@@ -26,11 +26,13 @@ RUN --mount=type=cache,target=/pnpm/store \
 COPY package.json ./
 
 RUN --mount=type=cache,target=/pnpm/store \
-  pnpm install --frozen-lockfile --prod --offline
+  pnpm install --frozen-lockfile --offline
 
 COPY . .
 
 RUN pnpm build
+
+RUN pnpm prune --prod
 
 FROM node:lts AS runtime
 

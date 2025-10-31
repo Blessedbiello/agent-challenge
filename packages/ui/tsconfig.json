@@ -4,6 +4,7 @@
     "composite": true,
     "jsx": "react-jsx",
     "outDir": "dist",
+    "rootDir": "src",
     "module": "commonjs",
     "moduleResolution": "node",
     "target": "ES2021",
@@ -12,5 +13,5 @@
     "types": ["node"],
     "sourceMap": true
   },
-  "include": ["src/**/*.{ts,tsx}"]
+  "include": ["src/**/*.ts", "src/**/*.tsx"]
 }

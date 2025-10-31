@@ -1,6 +1,7 @@
 import { randomUUID } from "node:crypto";
 import { createTool } from "@mastra/core/tools";
 import { z } from "zod";
+import { getDb } from "@sentinelops/persistence";
 
 type AlertStatus = "OPEN" | "ACKED" | "RESOLVED";
 
@@ -17,9 +18,6 @@ export type AlertRecord = {
   resolvedBy?: string;
   resolution?: string;
 };
-
-const alertsStore = new Map<string, AlertRecord>();
-const alertSubscribers = new Set<string>();
 
 export const AlertSeveritySchema = z.enum(["LOW", "MEDIUM", "HIGH", "CRITICAL"]);
 export type AlertSeverity = z.infer<typeof AlertSeveritySchema>;
@@ -62,7 +60,24 @@ const AlertRecordSchema = z.object({
   resolution: z.string().optional(),
 });
 
+function deserializeAlert(row: any): AlertRecord {
+  return {
+    id: row.id,
+    service: row.service,
+    severity: row.severity,
+    summary: row.summary,
+    metadata: row.metadata ? JSON.parse(row.metadata) : {},
+    status: row.status,
+    createdAt: row.created_at,
+    updatedAt: row.updated_at,
+    ackedBy: row.acked_by ?? undefined,
+    resolvedBy: row.resolved_by ?? undefined,
+    resolution: row.resolution ?? undefined,
+  };
+}
+
 export function createAlert(input: z.infer<typeof CreateAlertInputSchema>): AlertRecord {
+  const db = getDb();
   const now = new Date().toISOString();
   const alert: AlertRecord = {
     id: randomUUID(),
@@ -75,7 +90,13 @@ export function createAlert(input: z.infer<typeof CreateAlertInputSchema>): Aler
     updatedAt: now,
   };
 
-  alertsStore.set(alert.id, alert);
+  db.prepare(
+    `INSERT INTO alerts (id, service, severity, summary, metadata, status, created_at, updated_at)
+     VALUES (@id, @service, @severity, @summary, @metadata, @status, @createdAt, @updatedAt)`
+  ).run({
+    ...alert,
+    metadata: JSON.stringify(alert.metadata),
+  });
 
   return alert;
 }
@@ -91,22 +112,24 @@ export const createAlertTool = createTool({
 });
 
 export function ackAlert(input: z.infer<typeof AckAlertInputSchema>): AlertRecord {
-  const alert = alertsStore.get(input.alertId);
-  if (!alert) {
+  const db = getDb();
+  const existing = db
+    .prepare(`SELECT * FROM alerts WHERE id = ?`)
+    .get(input.alertId);
+
+  if (!existing) {
     throw new Error(`Alert ${input.alertId} not found`);
   }
 
   const now = new Date().toISOString();
-  const updated: AlertRecord = {
-    ...alert,
-    status: "ACKED",
-    ackedBy: input.user,
-    updatedAt: now,
-  };
+  db.prepare(
+    `UPDATE alerts
+     SET status = ?, acked_by = ?, updated_at = ?
+     WHERE id = ?`
+  ).run("ACKED", input.user, now, input.alertId);
 
-  alertsStore.set(alert.id, updated);
-
-  return updated;
+  const updated = db.prepare(`SELECT * FROM alerts WHERE id = ?`).get(input.alertId);
+  return deserializeAlert(updated);
 }
 
 export const ackAlertTool = createTool({
@@ -120,23 +143,24 @@ export const ackAlertTool = createTool({
 });
 
 export function resolveAlert(input: z.infer<typeof ResolveAlertInputSchema>): AlertRecord {
-  const alert = alertsStore.get(input.alertId);
-  if (!alert) {
+  const db = getDb();
+  const existing = db
+    .prepare(`SELECT * FROM alerts WHERE id = ?`)
+    .get(input.alertId);
+
+  if (!existing) {
     throw new Error(`Alert ${input.alertId} not found`);
   }
 
   const now = new Date().toISOString();
-  const updated: AlertRecord = {
-    ...alert,
-    status: "RESOLVED",
-    resolution: input.resolution,
-    resolvedBy: input.resolvedBy,
-    updatedAt: now,
-  };
+  db.prepare(
+    `UPDATE alerts
+     SET status = ?, resolution = ?, resolved_by = ?, updated_at = ?
+     WHERE id = ?`
+  ).run("RESOLVED", input.resolution, input.resolvedBy ?? null, now, input.alertId);
 
-  alertsStore.set(alert.id, updated);
-
-  return updated;
+  const updated = db.prepare(`SELECT * FROM alerts WHERE id = ?`).get(input.alertId);
+  return deserializeAlert(updated);
 }
 
 export const resolveAlertTool = createTool({
@@ -155,24 +179,40 @@ export const subscribeAlertsTool = createTool({
   inputSchema: SubscribeAlertInputSchema,
   outputSchema: z.object({ success: z.boolean(), subscribers: z.number() }),
   execute: async ({ context }) => {
-    alertSubscribers.add(context.handlerUrl);
-    return { success: true, subscribers: alertSubscribers.size };
+    const db = getDb();
+    db.prepare(
+      `INSERT INTO alert_subscribers (handler_url, subscribed_at)
+       VALUES (?, ?)
+       ON CONFLICT(handler_url) DO UPDATE SET subscribed_at = excluded.subscribed_at`
+    ).run(context.handlerUrl, new Date().toISOString());
+
+    const count = db.prepare(`SELECT COUNT(*) AS count FROM alert_subscribers`).get() as { count: number };
+    return { success: true, subscribers: count.count };
   },
 });
 
 export function listAlerts(): AlertRecord[] {
-  return Array.from(alertsStore.values()).sort((a, b) => (a.createdAt < b.createdAt ? 1 : -1));
+  const db = getDb();
+  const rows = db.prepare(`SELECT * FROM alerts ORDER BY created_at DESC`).all();
+  return rows.map(deserializeAlert);
 }
 
 export function getAlert(alertId: string): AlertRecord | undefined {
-  return alertsStore.get(alertId);
+  const db = getDb();
+  const row = db.prepare(`SELECT * FROM alerts WHERE id = ?`).get(alertId);
+  return row ? deserializeAlert(row) : undefined;
 }
 
 export function listAlertSubscribers(): string[] {
-  return Array.from(alertSubscribers.values());
+  const db = getDb();
+  const rows = db
+    .prepare(`SELECT handler_url FROM alert_subscribers ORDER BY handler_url ASC`)
+    .all() as Array<{ handler_url: string }>;
+  return rows.map((row) => row.handler_url);
 }
 
 export function clearAlerts() {
-  alertsStore.clear();
-  alertSubscribers.clear();
+  const db = getDb();
+  db.prepare(`DELETE FROM alerts`).run();
+  db.prepare(`DELETE FROM alert_subscribers`).run();
 }
