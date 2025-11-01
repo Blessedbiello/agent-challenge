@@ -99,6 +99,26 @@ packages/
 
 ---
 
+## Demo Scenario: Auth Service Hotfix
+
+Use the following storyline to produce a consistent live demo or recording:
+
+1. **Trigger an outage** – Run chaos scenario index `2` to simulate cascading authentication failures:
+   ```bash
+   curl -X POST http://localhost:4111/v1/chaos/trigger \
+     -H "Content-Type: application/json" \
+     -d '{"scenarioIndex": 2}'
+   ```
+   Monitor Agent generates the alert, while the dashboard (port `9000`) shows an incident feed update over SSE/WebSocket.
+2. **Observe triage** – Incident Commander assembles hypotheses with supporting logs and deploy metadata. Highlight mitigation suggestions and risk scores in the UI.
+3. **Coordinate remediation** – Ask Code Expert to review the recent auth configuration change. Approve the staged fix (e.g., reverting a mis-sized pool) and note how the agent uses Git tooling under human control.
+4. **Approve deployment** – DevOps Orchestrator validates the staged changes, requests operator approval, and pushes the hotfix. Show the deployment status stream updating live.
+5. **Close the loop** – Review the postmortem draft prepared by Forensics Agent and log a follow-up strategy via AgentBprime. Conclude by summarizing the reduced MTTR and captured knowledge artifacts.
+
+This scenario exercises every major subsystem—chaos injectors, multi-agent collaboration, Git-aware remediation, approvals, and knowledge capture—within a 3-minute narrative.
+
+---
+
 ## Demo & Deployment Artifacts
 
 - **Video Demo:** _TODO — add 1–3 minute walkthrough link once recorded_
@@ -217,6 +237,33 @@ nosana job post --file ./nos_job_def/nosana_mastra_job_definition.json --market 
 ```
 
 > **Status:** Docker image published. Nosana deployment proof is TODO. Update the section below once the job is live.
+
+---
+
+## Operating on Nosana
+
+SentinelOps ships with a Nosana job definition (`nos_job_def/nosana_mastra_job_definition.json`) that spins up two containers: the SentinelOps stack and an Ollama sidecar preloaded with Qwen3:8b. Recommended management practices:
+
+- **Deployment lifecycle**
+  1. Update the Docker image tag in the job definition.
+  2. Launch the job via dashboard or CLI with GPU resources sized at ≥24 GB VRAM.
+  3. Confirm port mappings (`3000` for UI, `4111` for API/agents) through Nosana’s ingress details.
+
+- **Runtime configuration**
+  - Use `NOS_OLLAMA_API_URL` and `NOS_MODEL_NAME_AT_ENDPOINT` environment variables in the job definition to wire the agent runtime to the Ollama sidecar.
+  - Pass additional secrets (e.g., external API keys) through the `global.env` block in the job file.
+
+- **Monitoring & logs**
+  - Use `nosana job logs <jobId>` or dashboard log streaming to observe SentinelOps startup (look for “Fastify server listening” and “Mastra agent runtime ready”).
+  - The dashboard exposes the same SSE/WebSocket endpoints, allowing remote operator consoles to subscribe to incident events.
+
+- **Updating agents**
+  - Rebuild and push a new Docker tag, update the job definition, and redeploy. Git tooling inside SentinelOps remains disabled unless `SENTINELOPS_GIT_ENABLED=1` is set, preventing unintended repo interactions in shared environments.
+  - For blue/green deployment, run a second job with a new image tag, validate, then retire the previous job through the Nosana dashboard.
+
+- **Scaling considerations**
+  - SentinelOps is CPU-bound with light GPU utilization—the GPU requirement comes from the Ollama container serving Qwen3:8b. For lighter demos, swap to a smaller model (e.g., `qwen3:0.6b`) and update the `MODEL` env var.
+  - Persistent storage defaults to SQLite inside the container. For longer-lived deployments, mount an external volume or switch `persistence` package to LibSQL/Turso.
 
 ---
 
