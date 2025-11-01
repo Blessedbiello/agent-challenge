@@ -20,8 +20,26 @@ import {
   startDeployTool,
   subscribeAlertsTool,
   weatherTool,
+  gitStatusTool,
+  gitDiffTool,
+  gitStageTool,
+  gitCommitTool,
+  gitPushTool,
+  gitBranchTool,
 } from "@sentinelops/tools";
-import { agentsRegistry } from "@sentinelops/agents";
+import type { AgentsRegistry } from "@sentinelops/agents";
+
+function loadAgentsRegistry(): AgentsRegistry {
+  if (process.env.SENTINELOPS_SKIP_DB === "1") {
+    return {} as AgentsRegistry;
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  const module = require("@sentinelops/agents") as typeof import("@sentinelops/agents");
+  return module.agentsRegistry;
+}
+
+const agentsRegistry = loadAgentsRegistry();
 
 export const mcpServersRegistry = {
   core: new MCPServer({
@@ -48,6 +66,12 @@ export const mcpServersRegistry = {
       rejectIncidentActionTool,
       createStrategyTool,
       listStrategiesTool,
+      gitStatusTool,
+      gitDiffTool,
+      gitStageTool,
+      gitCommitTool,
+      gitPushTool,
+      gitBranchTool,
     },
     agents: agentsRegistry,
   }),

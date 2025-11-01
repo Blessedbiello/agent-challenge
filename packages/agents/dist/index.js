@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.HumanOpsMemorySchema = exports.agentsRegistry = exports.agentBprime = exports.discordTriageAgent = exports.humanOpsAgent = exports.forensicsAgent = exports.monitorAgent = exports.incidentCommanderAgent = exports.devOpsAgent = void 0;
+exports.HumanOpsMemorySchema = exports.agentsRegistry = exports.agentBprime = exports.discordTriageAgent = exports.codeExpertAgent = exports.humanOpsAgent = exports.forensicsAgent = exports.monitorAgent = exports.incidentCommanderAgent = exports.devOpsAgent = void 0;
 require("dotenv/config");
 const ollama_ai_provider_v2_1 = require("ollama-ai-provider-v2");
 const agent_1 = require("@mastra/core/agent");
-const tools_1 = require("@sentinelops/tools");
-const persistence_1 = require("@sentinelops/persistence");
+const src_1 = require("../../tools/src");
+const src_2 = require("../../persistence/src");
 const libsql_1 = require("@mastra/libsql");
 const memory_1 = require("@mastra/memory");
 const zod_1 = require("zod");
@@ -14,7 +14,13 @@ const prompts_1 = require("./prompts");
 const ollama = (0, ollama_ai_provider_v2_1.createOllama)({
     baseURL: process.env.NOS_OLLAMA_API_URL || process.env.OLLAMA_API_URL,
 });
-(0, persistence_1.initDb)();
+if (process.env.SENTINELOPS_SKIP_DB === "1") {
+    // In lightweight test environments we skip the native SQLite dependency.
+    console.debug("[agents] Skipping initDb because SENTINELOPS_SKIP_DB=1");
+}
+else {
+    (0, src_2.initDb)();
+}
 const defaultModelName = process.env.NOS_MODEL_NAME_AT_ENDPOINT || process.env.MODEL_NAME_AT_ENDPOINT || "qwen3:8b";
 const createMemory = (schema) => new memory_1.Memory({
     storage: new libsql_1.LibSQLStore({ url: "file::memory:" }),
@@ -76,18 +82,34 @@ const AgentBprimeMemorySchema = zod_1.z.object({
     focusAreas: zod_1.z.array(zod_1.z.string()).default([]),
     latestStrategyId: zod_1.z.string().optional(),
 });
+const CodeExpertMemorySchema = zod_1.z.object({
+    activeReviews: zod_1.z
+        .array(zod_1.z.object({
+        branch: zod_1.z.string().optional(),
+        summary: zod_1.z.string().optional(),
+        createdAt: zod_1.z.string().datetime().optional(),
+    }))
+        .default([]),
+    suggestionsBacklog: zod_1.z
+        .array(zod_1.z.object({
+        path: zod_1.z.string(),
+        description: zod_1.z.string(),
+        status: zod_1.z.enum(["open", "done"]).default("open"),
+    }))
+        .default([]),
+});
 exports.devOpsAgent = new agent_1.Agent({
     name: "DevOpsGPT",
     description: "Orchestrates releases, approvals, and deployment hygiene.",
     instructions: prompts_1.DEVOPS_GPT_PROMPT,
     model: ollama(defaultModelName),
     tools: {
-        startDeployTool: tools_1.startDeployTool,
-        listDeploysTool: tools_1.listDeploysTool,
-        getJobStatusTool: tools_1.getJobStatusTool,
-        listPostmortemsTool: tools_1.listPostmortemsTool,
-        approveIncidentActionTool: tools_1.approveIncidentActionTool,
-        rejectIncidentActionTool: tools_1.rejectIncidentActionTool,
+        startDeployTool: src_1.startDeployTool,
+        listDeploysTool: src_1.listDeploysTool,
+        getJobStatusTool: src_1.getJobStatusTool,
+        listPostmortemsTool: src_1.listPostmortemsTool,
+        approveIncidentActionTool: src_1.approveIncidentActionTool,
+        rejectIncidentActionTool: src_1.rejectIncidentActionTool,
     },
     memory: createMemory(DevOpsMemorySchema),
 });
@@ -97,15 +119,15 @@ exports.incidentCommanderAgent = new agent_1.Agent({
     instructions: prompts_1.INCIDENT_COMMANDER_PROMPT,
     model: ollama(defaultModelName),
     tools: {
-        createAlertTool: tools_1.createAlertTool,
-        ackAlertTool: tools_1.ackAlertTool,
-        resolveAlertTool: tools_1.resolveAlertTool,
-        queryLogsTool: tools_1.queryLogsTool,
-        sampleLogsTool: tools_1.sampleLogsTool,
-        rollbackDeployTool: tools_1.rollbackDeployTool,
-        listDeploysTool: tools_1.listDeploysTool,
-        createPostmortemTool: tools_1.createPostmortemTool,
-        createIncidentActionTool: tools_1.createIncidentActionTool,
+        createAlertTool: src_1.createAlertTool,
+        ackAlertTool: src_1.ackAlertTool,
+        resolveAlertTool: src_1.resolveAlertTool,
+        queryLogsTool: src_1.queryLogsTool,
+        sampleLogsTool: src_1.sampleLogsTool,
+        rollbackDeployTool: src_1.rollbackDeployTool,
+        listDeploysTool: src_1.listDeploysTool,
+        createPostmortemTool: src_1.createPostmortemTool,
+        createIncidentActionTool: src_1.createIncidentActionTool,
     },
     memory: createMemory(IncidentMemorySchema),
 });
@@ -115,10 +137,10 @@ exports.monitorAgent = new agent_1.Agent({
     instructions: prompts_1.MONITOR_AGENT_PROMPT,
     model: ollama(defaultModelName),
     tools: {
-        ingestLogTool: tools_1.ingestLogTool,
-        createAlertTool: tools_1.createAlertTool,
-        subscribeAlertsTool: tools_1.subscribeAlertsTool,
-        listDeploysTool: tools_1.listDeploysTool,
+        ingestLogTool: src_1.ingestLogTool,
+        createAlertTool: src_1.createAlertTool,
+        subscribeAlertsTool: src_1.subscribeAlertsTool,
+        listDeploysTool: src_1.listDeploysTool,
     },
     memory: createMemory(MonitorMemorySchema),
 });
@@ -128,11 +150,11 @@ exports.forensicsAgent = new agent_1.Agent({
     instructions: prompts_1.FORENSICS_AGENT_PROMPT,
     model: ollama(defaultModelName),
     tools: {
-        createPostmortemTool: tools_1.createPostmortemTool,
-        publishPostmortemTool: tools_1.publishPostmortemTool,
-        listPostmortemsTool: tools_1.listPostmortemsTool,
-        sampleLogsTool: tools_1.sampleLogsTool,
-        queryLogsTool: tools_1.queryLogsTool,
+        createPostmortemTool: src_1.createPostmortemTool,
+        publishPostmortemTool: src_1.publishPostmortemTool,
+        listPostmortemsTool: src_1.listPostmortemsTool,
+        sampleLogsTool: src_1.sampleLogsTool,
+        queryLogsTool: src_1.queryLogsTool,
     },
     memory: createMemory(ForensicsMemorySchema),
 });
@@ -142,15 +164,34 @@ exports.humanOpsAgent = new agent_1.Agent({
     instructions: prompts_1.HUMAN_OPS_PROMPT,
     model: ollama(defaultModelName),
     tools: {
-        listDeploysTool: tools_1.listDeploysTool,
-        listPostmortemsTool: tools_1.listPostmortemsTool,
-        queryLogsTool: tools_1.queryLogsTool,
-        getJobStatusTool: tools_1.getJobStatusTool,
-        approveIncidentActionTool: tools_1.approveIncidentActionTool,
-        rejectIncidentActionTool: tools_1.rejectIncidentActionTool,
-        listStrategiesTool: tools_1.listStrategiesTool,
+        listDeploysTool: src_1.listDeploysTool,
+        listPostmortemsTool: src_1.listPostmortemsTool,
+        queryLogsTool: src_1.queryLogsTool,
+        getJobStatusTool: src_1.getJobStatusTool,
+        approveIncidentActionTool: src_1.approveIncidentActionTool,
+        rejectIncidentActionTool: src_1.rejectIncidentActionTool,
+        listStrategiesTool: src_1.listStrategiesTool,
     },
     memory: createMemory(memory_2.HumanOpsMemorySchema),
+});
+exports.codeExpertAgent = new agent_1.Agent({
+    name: "CodeExpertAgent",
+    description: "Hands-on coding expert for diff analysis, implementation planning, and review.",
+    instructions: prompts_1.CODE_EXPERT_PROMPT,
+    model: ollama(defaultModelName),
+    tools: {
+        gitStatusTool: src_1.gitStatusTool,
+        gitDiffTool: src_1.gitDiffTool,
+        gitStageTool: src_1.gitStageTool,
+        gitCommitTool: src_1.gitCommitTool,
+        gitPushTool: src_1.gitPushTool,
+        gitBranchTool: src_1.gitBranchTool,
+        listDeploysTool: src_1.listDeploysTool,
+        listPostmortemsTool: src_1.listPostmortemsTool,
+        queryLogsTool: src_1.queryLogsTool,
+        createStrategyTool: src_1.createStrategyTool,
+    },
+    memory: createMemory(CodeExpertMemorySchema),
 });
 exports.discordTriageAgent = new agent_1.Agent({
     name: "DiscordTriageAgent",
@@ -158,10 +199,10 @@ exports.discordTriageAgent = new agent_1.Agent({
     instructions: prompts_1.DISCORD_TRIAGE_PROMPT,
     model: ollama(defaultModelName),
     tools: {
-        sampleLogsTool: tools_1.sampleLogsTool,
-        createAlertTool: tools_1.createAlertTool,
-        ingestLogTool: tools_1.ingestLogTool,
-        weatherTool: tools_1.weatherTool, // temporary fallback for lightweight responses; remove once repo tool is ready
+        sampleLogsTool: src_1.sampleLogsTool,
+        createAlertTool: src_1.createAlertTool,
+        ingestLogTool: src_1.ingestLogTool,
+        weatherTool: src_1.weatherTool, // temporary fallback for lightweight responses; remove once repo tool is ready
     },
     memory: createMemory(DiscordMemorySchema),
 });
@@ -171,11 +212,11 @@ exports.agentBprime = new agent_1.Agent({
     instructions: prompts_1.AGENT_BPRIME_PROMPT,
     model: ollama(defaultModelName),
     tools: {
-        listDeploysTool: tools_1.listDeploysTool,
-        listStrategiesTool: tools_1.listStrategiesTool,
-        createStrategyTool: tools_1.createStrategyTool,
-        listPostmortemsTool: tools_1.listPostmortemsTool,
-        queryLogsTool: tools_1.queryLogsTool,
+        listDeploysTool: src_1.listDeploysTool,
+        listStrategiesTool: src_1.listStrategiesTool,
+        createStrategyTool: src_1.createStrategyTool,
+        listPostmortemsTool: src_1.listPostmortemsTool,
+        queryLogsTool: src_1.queryLogsTool,
     },
     memory: createMemory(AgentBprimeMemorySchema),
 });
@@ -185,6 +226,7 @@ exports.agentsRegistry = {
     monitorAgent: exports.monitorAgent,
     forensicsAgent: exports.forensicsAgent,
     humanOpsAgent: exports.humanOpsAgent,
+    codeExpertAgent: exports.codeExpertAgent,
     discordTriageAgent: exports.discordTriageAgent,
     agentBprime: exports.agentBprime,
 };

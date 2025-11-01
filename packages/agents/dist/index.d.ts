@@ -728,13 +728,13 @@ export declare const devOpsAgent: Agent<"DevOpsGPT", {
         service?: string | undefined;
     }>, z.ZodObject<{
         count: z.ZodNumber;
-        postmortems: z.ZodArray<z.ZodType<import("@sentinelops/tools").PostmortemRecord, z.ZodTypeDef, import("@sentinelops/tools").PostmortemRecord>, "many">;
+        postmortems: z.ZodArray<z.ZodType<import("@sentinelops/tools/postmortems").PostmortemRecord, z.ZodTypeDef, import("@sentinelops/tools/postmortems").PostmortemRecord>, "many">;
     }, "strip", z.ZodTypeAny, {
         count: number;
-        postmortems: import("@sentinelops/tools").PostmortemRecord[];
+        postmortems: import("@sentinelops/tools/postmortems").PostmortemRecord[];
     }, {
         count: number;
-        postmortems: import("@sentinelops/tools").PostmortemRecord[];
+        postmortems: import("@sentinelops/tools/postmortems").PostmortemRecord[];
     }>, any, any, import("@mastra/core").ToolExecutionContext<z.ZodObject<{
         service: z.ZodOptional<z.ZodString>;
         status: z.ZodOptional<z.ZodEnum<["DRAFT", "PUBLISHED"]>>;
@@ -757,13 +757,13 @@ export declare const devOpsAgent: Agent<"DevOpsGPT", {
         }>;
         outputSchema: z.ZodObject<{
             count: z.ZodNumber;
-            postmortems: z.ZodArray<z.ZodType<import("@sentinelops/tools").PostmortemRecord, z.ZodTypeDef, import("@sentinelops/tools").PostmortemRecord>, "many">;
+            postmortems: z.ZodArray<z.ZodType<import("@sentinelops/tools/postmortems").PostmortemRecord, z.ZodTypeDef, import("@sentinelops/tools/postmortems").PostmortemRecord>, "many">;
         }, "strip", z.ZodTypeAny, {
             count: number;
-            postmortems: import("@sentinelops/tools").PostmortemRecord[];
+            postmortems: import("@sentinelops/tools/postmortems").PostmortemRecord[];
         }, {
             count: number;
-            postmortems: import("@sentinelops/tools").PostmortemRecord[];
+            postmortems: import("@sentinelops/tools/postmortems").PostmortemRecord[];
         }>;
         execute: (context: import("@mastra/core").ToolExecutionContext<z.ZodObject<{
             service: z.ZodOptional<z.ZodString>;
@@ -788,7 +788,7 @@ export declare const devOpsAgent: Agent<"DevOpsGPT", {
         actionId: string;
         metadata?: Record<string, any> | undefined;
         approvedBy?: string | undefined;
-    }>, z.ZodType<import("@sentinelops/tools").IncidentAction, z.ZodTypeDef, import("@sentinelops/tools").IncidentAction>, any, any, import("@mastra/core").ToolExecutionContext<z.ZodObject<{
+    }>, z.ZodType<import("@sentinelops/tools/actions").IncidentAction, z.ZodTypeDef, import("@sentinelops/tools/actions").IncidentAction>, any, any, import("@mastra/core").ToolExecutionContext<z.ZodObject<{
         actionId: z.ZodString;
         approvedBy: z.ZodOptional<z.ZodString>;
         metadata: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodAny>>;
@@ -814,7 +814,7 @@ export declare const devOpsAgent: Agent<"DevOpsGPT", {
             metadata?: Record<string, any> | undefined;
             approvedBy?: string | undefined;
         }>;
-        outputSchema: z.ZodType<import("@sentinelops/tools").IncidentAction, z.ZodTypeDef, import("@sentinelops/tools").IncidentAction>;
+        outputSchema: z.ZodType<import("@sentinelops/tools/actions").IncidentAction, z.ZodTypeDef, import("@sentinelops/tools/actions").IncidentAction>;
         execute: (context: import("@mastra/core").ToolExecutionContext<z.ZodObject<{
             actionId: z.ZodString;
             approvedBy: z.ZodOptional<z.ZodString>;
@@ -844,7 +844,7 @@ export declare const devOpsAgent: Agent<"DevOpsGPT", {
         metadata?: Record<string, any> | undefined;
         rejectedBy?: string | undefined;
         reason?: string | undefined;
-    }>, z.ZodType<import("@sentinelops/tools").IncidentAction, z.ZodTypeDef, import("@sentinelops/tools").IncidentAction>, any, any, import("@mastra/core").ToolExecutionContext<z.ZodObject<{
+    }>, z.ZodType<import("@sentinelops/tools/actions").IncidentAction, z.ZodTypeDef, import("@sentinelops/tools/actions").IncidentAction>, any, any, import("@mastra/core").ToolExecutionContext<z.ZodObject<{
         actionId: z.ZodString;
         rejectedBy: z.ZodOptional<z.ZodString>;
         reason: z.ZodOptional<z.ZodString>;
@@ -876,7 +876,7 @@ export declare const devOpsAgent: Agent<"DevOpsGPT", {
             rejectedBy?: string | undefined;
             reason?: string | undefined;
         }>;
-        outputSchema: z.ZodType<import("@sentinelops/tools").IncidentAction, z.ZodTypeDef, import("@sentinelops/tools").IncidentAction>;
+        outputSchema: z.ZodType<import("@sentinelops/tools/actions").IncidentAction, z.ZodTypeDef, import("@sentinelops/tools/actions").IncidentAction>;
         execute: (context: import("@mastra/core").ToolExecutionContext<z.ZodObject<{
             actionId: z.ZodString;
             rejectedBy: z.ZodOptional<z.ZodString>;
@@ -1300,13 +1300,13 @@ export declare const incidentCommanderAgent: Agent<"IncidentCommanderAgent", {
         limit?: number | undefined;
     }>, z.ZodObject<{
         count: z.ZodNumber;
-        logs: z.ZodArray<z.ZodType<import("@sentinelops/tools").LogRecord, z.ZodTypeDef, import("@sentinelops/tools").LogRecord>, "many">;
+        logs: z.ZodArray<z.ZodType<import("@sentinelops/tools/logs").LogRecord, z.ZodTypeDef, import("@sentinelops/tools/logs").LogRecord>, "many">;
     }, "strip", z.ZodTypeAny, {
         count: number;
-        logs: import("@sentinelops/tools").LogRecord[];
+        logs: import("@sentinelops/tools/logs").LogRecord[];
     }, {
         count: number;
-        logs: import("@sentinelops/tools").LogRecord[];
+        logs: import("@sentinelops/tools/logs").LogRecord[];
     }>, any, any, import("@mastra/core").ToolExecutionContext<z.ZodObject<{
         query: z.ZodString;
         timeRange: z.ZodOptional<z.ZodObject<{
@@ -1365,13 +1365,13 @@ export declare const incidentCommanderAgent: Agent<"IncidentCommanderAgent", {
         }>;
         outputSchema: z.ZodObject<{
             count: z.ZodNumber;
-            logs: z.ZodArray<z.ZodType<import("@sentinelops/tools").LogRecord, z.ZodTypeDef, import("@sentinelops/tools").LogRecord>, "many">;
+            logs: z.ZodArray<z.ZodType<import("@sentinelops/tools/logs").LogRecord, z.ZodTypeDef, import("@sentinelops/tools/logs").LogRecord>, "many">;
         }, "strip", z.ZodTypeAny, {
             count: number;
-            logs: import("@sentinelops/tools").LogRecord[];
+            logs: import("@sentinelops/tools/logs").LogRecord[];
         }, {
             count: number;
-            logs: import("@sentinelops/tools").LogRecord[];
+            logs: import("@sentinelops/tools/logs").LogRecord[];
         }>;
         execute: (context: import("@mastra/core").ToolExecutionContext<z.ZodObject<{
             query: z.ZodString;
@@ -1413,15 +1413,15 @@ export declare const incidentCommanderAgent: Agent<"IncidentCommanderAgent", {
         ttlSeconds?: number | undefined;
     }>, z.ZodObject<{
         incidentId: z.ZodString;
-        logs: z.ZodArray<z.ZodType<import("@sentinelops/tools").LogRecord, z.ZodTypeDef, import("@sentinelops/tools").LogRecord>, "many">;
+        logs: z.ZodArray<z.ZodType<import("@sentinelops/tools/logs").LogRecord, z.ZodTypeDef, import("@sentinelops/tools/logs").LogRecord>, "many">;
         expiresAt: z.ZodString;
     }, "strip", z.ZodTypeAny, {
         incidentId: string;
-        logs: import("@sentinelops/tools").LogRecord[];
+        logs: import("@sentinelops/tools/logs").LogRecord[];
         expiresAt: string;
     }, {
         incidentId: string;
-        logs: import("@sentinelops/tools").LogRecord[];
+        logs: import("@sentinelops/tools/logs").LogRecord[];
         expiresAt: string;
     }>, any, any, import("@mastra/core").ToolExecutionContext<z.ZodObject<{
         incidentId: z.ZodString;
@@ -1445,15 +1445,15 @@ export declare const incidentCommanderAgent: Agent<"IncidentCommanderAgent", {
         }>;
         outputSchema: z.ZodObject<{
             incidentId: z.ZodString;
-            logs: z.ZodArray<z.ZodType<import("@sentinelops/tools").LogRecord, z.ZodTypeDef, import("@sentinelops/tools").LogRecord>, "many">;
+            logs: z.ZodArray<z.ZodType<import("@sentinelops/tools/logs").LogRecord, z.ZodTypeDef, import("@sentinelops/tools/logs").LogRecord>, "many">;
             expiresAt: z.ZodString;
         }, "strip", z.ZodTypeAny, {
             incidentId: string;
-            logs: import("@sentinelops/tools").LogRecord[];
+            logs: import("@sentinelops/tools/logs").LogRecord[];
             expiresAt: string;
         }, {
             incidentId: string;
-            logs: import("@sentinelops/tools").LogRecord[];
+            logs: import("@sentinelops/tools/logs").LogRecord[];
             expiresAt: string;
         }>;
         execute: (context: import("@mastra/core").ToolExecutionContext<z.ZodObject<{
@@ -1913,7 +1913,7 @@ export declare const incidentCommanderAgent: Agent<"IncidentCommanderAgent", {
         draftText: string;
         attachments?: string[] | undefined;
         authors?: string[] | undefined;
-    }>, z.ZodType<import("@sentinelops/tools").PostmortemRecord, z.ZodTypeDef, import("@sentinelops/tools").PostmortemRecord>, any, any, import("@mastra/core").ToolExecutionContext<z.ZodObject<{
+    }>, z.ZodType<import("@sentinelops/tools/postmortems").PostmortemRecord, z.ZodTypeDef, import("@sentinelops/tools/postmortems").PostmortemRecord>, any, any, import("@mastra/core").ToolExecutionContext<z.ZodObject<{
         incidentId: z.ZodString;
         service: z.ZodString;
         draftText: z.ZodString;
@@ -1951,7 +1951,7 @@ export declare const incidentCommanderAgent: Agent<"IncidentCommanderAgent", {
             attachments?: string[] | undefined;
             authors?: string[] | undefined;
         }>;
-        outputSchema: z.ZodType<import("@sentinelops/tools").PostmortemRecord, z.ZodTypeDef, import("@sentinelops/tools").PostmortemRecord>;
+        outputSchema: z.ZodType<import("@sentinelops/tools/postmortems").PostmortemRecord, z.ZodTypeDef, import("@sentinelops/tools/postmortems").PostmortemRecord>;
         execute: (context: import("@mastra/core").ToolExecutionContext<z.ZodObject<{
             incidentId: z.ZodString;
             service: z.ZodString;
@@ -1990,7 +1990,7 @@ export declare const incidentCommanderAgent: Agent<"IncidentCommanderAgent", {
         label: string;
         risk: "LOW" | "MEDIUM" | "HIGH";
         metadata?: Record<string, any> | undefined;
-    }>, z.ZodType<import("@sentinelops/tools").IncidentAction, z.ZodTypeDef, import("@sentinelops/tools").IncidentAction>, any, any, import("@mastra/core").ToolExecutionContext<z.ZodObject<{
+    }>, z.ZodType<import("@sentinelops/tools/actions").IncidentAction, z.ZodTypeDef, import("@sentinelops/tools/actions").IncidentAction>, any, any, import("@mastra/core").ToolExecutionContext<z.ZodObject<{
         incidentId: z.ZodString;
         label: z.ZodString;
         type: z.ZodEnum<["ROLLBACK", "RESTART", "SCALE", "INVESTIGATE", "POSTMORTEM"]>;
@@ -2028,7 +2028,7 @@ export declare const incidentCommanderAgent: Agent<"IncidentCommanderAgent", {
             risk: "LOW" | "MEDIUM" | "HIGH";
             metadata?: Record<string, any> | undefined;
         }>;
-        outputSchema: z.ZodType<import("@sentinelops/tools").IncidentAction, z.ZodTypeDef, import("@sentinelops/tools").IncidentAction>;
+        outputSchema: z.ZodType<import("@sentinelops/tools/actions").IncidentAction, z.ZodTypeDef, import("@sentinelops/tools/actions").IncidentAction>;
         execute: (context: import("@mastra/core").ToolExecutionContext<z.ZodObject<{
             incidentId: z.ZodString;
             label: z.ZodString;
@@ -2069,7 +2069,7 @@ export declare const monitorAgent: Agent<"MonitorAgent", {
         metadata?: Record<string, any> | undefined;
         source?: string | undefined;
         level?: "DEBUG" | "INFO" | "WARN" | "ERROR" | "FATAL" | undefined;
-    }>, z.ZodType<import("@sentinelops/tools").LogRecord, z.ZodTypeDef, import("@sentinelops/tools").LogRecord>, any, any, import("@mastra/core").ToolExecutionContext<z.ZodObject<{
+    }>, z.ZodType<import("@sentinelops/tools/logs").LogRecord, z.ZodTypeDef, import("@sentinelops/tools/logs").LogRecord>, any, any, import("@mastra/core").ToolExecutionContext<z.ZodObject<{
         incidentId: z.ZodString;
         source: z.ZodDefault<z.ZodString>;
         level: z.ZodDefault<z.ZodEnum<["DEBUG", "INFO", "WARN", "ERROR", "FATAL"]>>;
@@ -2107,7 +2107,7 @@ export declare const monitorAgent: Agent<"MonitorAgent", {
             source?: string | undefined;
             level?: "DEBUG" | "INFO" | "WARN" | "ERROR" | "FATAL" | undefined;
         }>;
-        outputSchema: z.ZodType<import("@sentinelops/tools").LogRecord, z.ZodTypeDef, import("@sentinelops/tools").LogRecord>;
+        outputSchema: z.ZodType<import("@sentinelops/tools/logs").LogRecord, z.ZodTypeDef, import("@sentinelops/tools/logs").LogRecord>;
         execute: (context: import("@mastra/core").ToolExecutionContext<z.ZodObject<{
             incidentId: z.ZodString;
             source: z.ZodDefault<z.ZodString>;
@@ -2589,7 +2589,7 @@ export declare const forensicsAgent: Agent<"ForensicsAgent", {
         draftText: string;
         attachments?: string[] | undefined;
         authors?: string[] | undefined;
-    }>, z.ZodType<import("@sentinelops/tools").PostmortemRecord, z.ZodTypeDef, import("@sentinelops/tools").PostmortemRecord>, any, any, import("@mastra/core").ToolExecutionContext<z.ZodObject<{
+    }>, z.ZodType<import("@sentinelops/tools/postmortems").PostmortemRecord, z.ZodTypeDef, import("@sentinelops/tools/postmortems").PostmortemRecord>, any, any, import("@mastra/core").ToolExecutionContext<z.ZodObject<{
         incidentId: z.ZodString;
         service: z.ZodString;
         draftText: z.ZodString;
@@ -2627,7 +2627,7 @@ export declare const forensicsAgent: Agent<"ForensicsAgent", {
             attachments?: string[] | undefined;
             authors?: string[] | undefined;
         }>;
-        outputSchema: z.ZodType<import("@sentinelops/tools").PostmortemRecord, z.ZodTypeDef, import("@sentinelops/tools").PostmortemRecord>;
+        outputSchema: z.ZodType<import("@sentinelops/tools/postmortems").PostmortemRecord, z.ZodTypeDef, import("@sentinelops/tools/postmortems").PostmortemRecord>;
         execute: (context: import("@mastra/core").ToolExecutionContext<z.ZodObject<{
             incidentId: z.ZodString;
             service: z.ZodString;
@@ -2657,7 +2657,7 @@ export declare const forensicsAgent: Agent<"ForensicsAgent", {
     }, {
         postmortemId: string;
         publishedBy?: string | undefined;
-    }>, z.ZodType<import("@sentinelops/tools").PostmortemRecord, z.ZodTypeDef, import("@sentinelops/tools").PostmortemRecord>, any, any, import("@mastra/core").ToolExecutionContext<z.ZodObject<{
+    }>, z.ZodType<import("@sentinelops/tools/postmortems").PostmortemRecord, z.ZodTypeDef, import("@sentinelops/tools/postmortems").PostmortemRecord>, any, any, import("@mastra/core").ToolExecutionContext<z.ZodObject<{
         postmortemId: z.ZodString;
         publishedBy: z.ZodOptional<z.ZodString>;
     }, "strip", z.ZodTypeAny, {
@@ -2677,7 +2677,7 @@ export declare const forensicsAgent: Agent<"ForensicsAgent", {
             postmortemId: string;
             publishedBy?: string | undefined;
         }>;
-        outputSchema: z.ZodType<import("@sentinelops/tools").PostmortemRecord, z.ZodTypeDef, import("@sentinelops/tools").PostmortemRecord>;
+        outputSchema: z.ZodType<import("@sentinelops/tools/postmortems").PostmortemRecord, z.ZodTypeDef, import("@sentinelops/tools/postmortems").PostmortemRecord>;
         execute: (context: import("@mastra/core").ToolExecutionContext<z.ZodObject<{
             postmortemId: z.ZodString;
             publishedBy: z.ZodOptional<z.ZodString>;
@@ -2700,13 +2700,13 @@ export declare const forensicsAgent: Agent<"ForensicsAgent", {
         service?: string | undefined;
     }>, z.ZodObject<{
         count: z.ZodNumber;
-        postmortems: z.ZodArray<z.ZodType<import("@sentinelops/tools").PostmortemRecord, z.ZodTypeDef, import("@sentinelops/tools").PostmortemRecord>, "many">;
+        postmortems: z.ZodArray<z.ZodType<import("@sentinelops/tools/postmortems").PostmortemRecord, z.ZodTypeDef, import("@sentinelops/tools/postmortems").PostmortemRecord>, "many">;
     }, "strip", z.ZodTypeAny, {
         count: number;
-        postmortems: import("@sentinelops/tools").PostmortemRecord[];
+        postmortems: import("@sentinelops/tools/postmortems").PostmortemRecord[];
     }, {
         count: number;
-        postmortems: import("@sentinelops/tools").PostmortemRecord[];
+        postmortems: import("@sentinelops/tools/postmortems").PostmortemRecord[];
     }>, any, any, import("@mastra/core").ToolExecutionContext<z.ZodObject<{
         service: z.ZodOptional<z.ZodString>;
         status: z.ZodOptional<z.ZodEnum<["DRAFT", "PUBLISHED"]>>;
@@ -2729,13 +2729,13 @@ export declare const forensicsAgent: Agent<"ForensicsAgent", {
         }>;
         outputSchema: z.ZodObject<{
             count: z.ZodNumber;
-            postmortems: z.ZodArray<z.ZodType<import("@sentinelops/tools").PostmortemRecord, z.ZodTypeDef, import("@sentinelops/tools").PostmortemRecord>, "many">;
+            postmortems: z.ZodArray<z.ZodType<import("@sentinelops/tools/postmortems").PostmortemRecord, z.ZodTypeDef, import("@sentinelops/tools/postmortems").PostmortemRecord>, "many">;
         }, "strip", z.ZodTypeAny, {
             count: number;
-            postmortems: import("@sentinelops/tools").PostmortemRecord[];
+            postmortems: import("@sentinelops/tools/postmortems").PostmortemRecord[];
         }, {
             count: number;
-            postmortems: import("@sentinelops/tools").PostmortemRecord[];
+            postmortems: import("@sentinelops/tools/postmortems").PostmortemRecord[];
         }>;
         execute: (context: import("@mastra/core").ToolExecutionContext<z.ZodObject<{
             service: z.ZodOptional<z.ZodString>;
@@ -2759,15 +2759,15 @@ export declare const forensicsAgent: Agent<"ForensicsAgent", {
         ttlSeconds?: number | undefined;
     }>, z.ZodObject<{
         incidentId: z.ZodString;
-        logs: z.ZodArray<z.ZodType<import("@sentinelops/tools").LogRecord, z.ZodTypeDef, import("@sentinelops/tools").LogRecord>, "many">;
+        logs: z.ZodArray<z.ZodType<import("@sentinelops/tools/logs").LogRecord, z.ZodTypeDef, import("@sentinelops/tools/logs").LogRecord>, "many">;
         expiresAt: z.ZodString;
     }, "strip", z.ZodTypeAny, {
         incidentId: string;
-        logs: import("@sentinelops/tools").LogRecord[];
+        logs: import("@sentinelops/tools/logs").LogRecord[];
         expiresAt: string;
     }, {
         incidentId: string;
-        logs: import("@sentinelops/tools").LogRecord[];
+        logs: import("@sentinelops/tools/logs").LogRecord[];
         expiresAt: string;
     }>, any, any, import("@mastra/core").ToolExecutionContext<z.ZodObject<{
         incidentId: z.ZodString;
@@ -2791,15 +2791,15 @@ export declare const forensicsAgent: Agent<"ForensicsAgent", {
         }>;
         outputSchema: z.ZodObject<{
             incidentId: z.ZodString;
-            logs: z.ZodArray<z.ZodType<import("@sentinelops/tools").LogRecord, z.ZodTypeDef, import("@sentinelops/tools").LogRecord>, "many">;
+            logs: z.ZodArray<z.ZodType<import("@sentinelops/tools/logs").LogRecord, z.ZodTypeDef, import("@sentinelops/tools/logs").LogRecord>, "many">;
             expiresAt: z.ZodString;
         }, "strip", z.ZodTypeAny, {
             incidentId: string;
-            logs: import("@sentinelops/tools").LogRecord[];
+            logs: import("@sentinelops/tools/logs").LogRecord[];
             expiresAt: string;
         }, {
             incidentId: string;
-            logs: import("@sentinelops/tools").LogRecord[];
+            logs: import("@sentinelops/tools/logs").LogRecord[];
             expiresAt: string;
         }>;
         execute: (context: import("@mastra/core").ToolExecutionContext<z.ZodObject<{
@@ -2842,13 +2842,13 @@ export declare const forensicsAgent: Agent<"ForensicsAgent", {
         limit?: number | undefined;
     }>, z.ZodObject<{
         count: z.ZodNumber;
-        logs: z.ZodArray<z.ZodType<import("@sentinelops/tools").LogRecord, z.ZodTypeDef, import("@sentinelops/tools").LogRecord>, "many">;
+        logs: z.ZodArray<z.ZodType<import("@sentinelops/tools/logs").LogRecord, z.ZodTypeDef, import("@sentinelops/tools/logs").LogRecord>, "many">;
     }, "strip", z.ZodTypeAny, {
         count: number;
-        logs: import("@sentinelops/tools").LogRecord[];
+        logs: import("@sentinelops/tools/logs").LogRecord[];
     }, {
         count: number;
-        logs: import("@sentinelops/tools").LogRecord[];
+        logs: import("@sentinelops/tools/logs").LogRecord[];
     }>, any, any, import("@mastra/core").ToolExecutionContext<z.ZodObject<{
         query: z.ZodString;
         timeRange: z.ZodOptional<z.ZodObject<{
@@ -2907,13 +2907,13 @@ export declare const forensicsAgent: Agent<"ForensicsAgent", {
         }>;
         outputSchema: z.ZodObject<{
             count: z.ZodNumber;
-            logs: z.ZodArray<z.ZodType<import("@sentinelops/tools").LogRecord, z.ZodTypeDef, import("@sentinelops/tools").LogRecord>, "many">;
+            logs: z.ZodArray<z.ZodType<import("@sentinelops/tools/logs").LogRecord, z.ZodTypeDef, import("@sentinelops/tools/logs").LogRecord>, "many">;
         }, "strip", z.ZodTypeAny, {
             count: number;
-            logs: import("@sentinelops/tools").LogRecord[];
+            logs: import("@sentinelops/tools/logs").LogRecord[];
         }, {
             count: number;
-            logs: import("@sentinelops/tools").LogRecord[];
+            logs: import("@sentinelops/tools/logs").LogRecord[];
         }>;
         execute: (context: import("@mastra/core").ToolExecutionContext<z.ZodObject<{
             query: z.ZodString;
@@ -3214,13 +3214,13 @@ export declare const humanOpsAgent: Agent<"HumanOpsAgent", {
         service?: string | undefined;
     }>, z.ZodObject<{
         count: z.ZodNumber;
-        postmortems: z.ZodArray<z.ZodType<import("@sentinelops/tools").PostmortemRecord, z.ZodTypeDef, import("@sentinelops/tools").PostmortemRecord>, "many">;
+        postmortems: z.ZodArray<z.ZodType<import("@sentinelops/tools/postmortems").PostmortemRecord, z.ZodTypeDef, import("@sentinelops/tools/postmortems").PostmortemRecord>, "many">;
     }, "strip", z.ZodTypeAny, {
         count: number;
-        postmortems: import("@sentinelops/tools").PostmortemRecord[];
+        postmortems: import("@sentinelops/tools/postmortems").PostmortemRecord[];
     }, {
         count: number;
-        postmortems: import("@sentinelops/tools").PostmortemRecord[];
+        postmortems: import("@sentinelops/tools/postmortems").PostmortemRecord[];
     }>, any, any, import("@mastra/core").ToolExecutionContext<z.ZodObject<{
         service: z.ZodOptional<z.ZodString>;
         status: z.ZodOptional<z.ZodEnum<["DRAFT", "PUBLISHED"]>>;
@@ -3243,13 +3243,13 @@ export declare const humanOpsAgent: Agent<"HumanOpsAgent", {
         }>;
         outputSchema: z.ZodObject<{
             count: z.ZodNumber;
-            postmortems: z.ZodArray<z.ZodType<import("@sentinelops/tools").PostmortemRecord, z.ZodTypeDef, import("@sentinelops/tools").PostmortemRecord>, "many">;
+            postmortems: z.ZodArray<z.ZodType<import("@sentinelops/tools/postmortems").PostmortemRecord, z.ZodTypeDef, import("@sentinelops/tools/postmortems").PostmortemRecord>, "many">;
         }, "strip", z.ZodTypeAny, {
             count: number;
-            postmortems: import("@sentinelops/tools").PostmortemRecord[];
+            postmortems: import("@sentinelops/tools/postmortems").PostmortemRecord[];
         }, {
             count: number;
-            postmortems: import("@sentinelops/tools").PostmortemRecord[];
+            postmortems: import("@sentinelops/tools/postmortems").PostmortemRecord[];
         }>;
         execute: (context: import("@mastra/core").ToolExecutionContext<z.ZodObject<{
             service: z.ZodOptional<z.ZodString>;
@@ -3291,13 +3291,13 @@ export declare const humanOpsAgent: Agent<"HumanOpsAgent", {
         limit?: number | undefined;
     }>, z.ZodObject<{
         count: z.ZodNumber;
-        logs: z.ZodArray<z.ZodType<import("@sentinelops/tools").LogRecord, z.ZodTypeDef, import("@sentinelops/tools").LogRecord>, "many">;
+        logs: z.ZodArray<z.ZodType<import("@sentinelops/tools/logs").LogRecord, z.ZodTypeDef, import("@sentinelops/tools/logs").LogRecord>, "many">;
     }, "strip", z.ZodTypeAny, {
         count: number;
-        logs: import("@sentinelops/tools").LogRecord[];
+        logs: import("@sentinelops/tools/logs").LogRecord[];
     }, {
         count: number;
-        logs: import("@sentinelops/tools").LogRecord[];
+        logs: import("@sentinelops/tools/logs").LogRecord[];
     }>, any, any, import("@mastra/core").ToolExecutionContext<z.ZodObject<{
         query: z.ZodString;
         timeRange: z.ZodOptional<z.ZodObject<{
@@ -3356,13 +3356,13 @@ export declare const humanOpsAgent: Agent<"HumanOpsAgent", {
         }>;
         outputSchema: z.ZodObject<{
             count: z.ZodNumber;
-            logs: z.ZodArray<z.ZodType<import("@sentinelops/tools").LogRecord, z.ZodTypeDef, import("@sentinelops/tools").LogRecord>, "many">;
+            logs: z.ZodArray<z.ZodType<import("@sentinelops/tools/logs").LogRecord, z.ZodTypeDef, import("@sentinelops/tools/logs").LogRecord>, "many">;
         }, "strip", z.ZodTypeAny, {
             count: number;
-            logs: import("@sentinelops/tools").LogRecord[];
+            logs: import("@sentinelops/tools/logs").LogRecord[];
         }, {
             count: number;
-            logs: import("@sentinelops/tools").LogRecord[];
+            logs: import("@sentinelops/tools/logs").LogRecord[];
         }>;
         execute: (context: import("@mastra/core").ToolExecutionContext<z.ZodObject<{
             query: z.ZodString;
@@ -3564,7 +3564,7 @@ export declare const humanOpsAgent: Agent<"HumanOpsAgent", {
         actionId: string;
         metadata?: Record<string, any> | undefined;
         approvedBy?: string | undefined;
-    }>, z.ZodType<import("@sentinelops/tools").IncidentAction, z.ZodTypeDef, import("@sentinelops/tools").IncidentAction>, any, any, import("@mastra/core").ToolExecutionContext<z.ZodObject<{
+    }>, z.ZodType<import("@sentinelops/tools/actions").IncidentAction, z.ZodTypeDef, import("@sentinelops/tools/actions").IncidentAction>, any, any, import("@mastra/core").ToolExecutionContext<z.ZodObject<{
         actionId: z.ZodString;
         approvedBy: z.ZodOptional<z.ZodString>;
         metadata: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodAny>>;
@@ -3590,7 +3590,7 @@ export declare const humanOpsAgent: Agent<"HumanOpsAgent", {
             metadata?: Record<string, any> | undefined;
             approvedBy?: string | undefined;
         }>;
-        outputSchema: z.ZodType<import("@sentinelops/tools").IncidentAction, z.ZodTypeDef, import("@sentinelops/tools").IncidentAction>;
+        outputSchema: z.ZodType<import("@sentinelops/tools/actions").IncidentAction, z.ZodTypeDef, import("@sentinelops/tools/actions").IncidentAction>;
         execute: (context: import("@mastra/core").ToolExecutionContext<z.ZodObject<{
             actionId: z.ZodString;
             approvedBy: z.ZodOptional<z.ZodString>;
@@ -3620,7 +3620,7 @@ export declare const humanOpsAgent: Agent<"HumanOpsAgent", {
         metadata?: Record<string, any> | undefined;
         rejectedBy?: string | undefined;
         reason?: string | undefined;
-    }>, z.ZodType<import("@sentinelops/tools").IncidentAction, z.ZodTypeDef, import("@sentinelops/tools").IncidentAction>, any, any, import("@mastra/core").ToolExecutionContext<z.ZodObject<{
+    }>, z.ZodType<import("@sentinelops/tools/actions").IncidentAction, z.ZodTypeDef, import("@sentinelops/tools/actions").IncidentAction>, any, any, import("@mastra/core").ToolExecutionContext<z.ZodObject<{
         actionId: z.ZodString;
         rejectedBy: z.ZodOptional<z.ZodString>;
         reason: z.ZodOptional<z.ZodString>;
@@ -3652,7 +3652,7 @@ export declare const humanOpsAgent: Agent<"HumanOpsAgent", {
             rejectedBy?: string | undefined;
             reason?: string | undefined;
         }>;
-        outputSchema: z.ZodType<import("@sentinelops/tools").IncidentAction, z.ZodTypeDef, import("@sentinelops/tools").IncidentAction>;
+        outputSchema: z.ZodType<import("@sentinelops/tools/actions").IncidentAction, z.ZodTypeDef, import("@sentinelops/tools/actions").IncidentAction>;
         execute: (context: import("@mastra/core").ToolExecutionContext<z.ZodObject<{
             actionId: z.ZodString;
             rejectedBy: z.ZodOptional<z.ZodString>;
@@ -3778,6 +3778,1718 @@ export declare const humanOpsAgent: Agent<"HumanOpsAgent", {
         execute: (context: import("@mastra/core").ToolExecutionContext<z.ZodOptional<z.ZodObject<{}, "strip", z.ZodTypeAny, {}, {}>>, any, any>, options: import("@mastra/core").ToolInvocationOptions) => Promise<any>;
     };
 }, Record<string, import("@mastra/core").Metric>>;
+export declare const codeExpertAgent: Agent<"CodeExpertAgent", {
+    gitStatusTool: import("@mastra/core/tools").Tool<z.ZodOptional<z.ZodObject<{}, "strip", z.ZodTypeAny, {}, {}>>, z.ZodObject<{
+        enabled: z.ZodBoolean;
+        status: z.ZodNullable<z.ZodObject<{
+            branch: z.ZodNullable<z.ZodString>;
+            tracking: z.ZodNullable<z.ZodString>;
+            ahead: z.ZodNumber;
+            behind: z.ZodNumber;
+            isClean: z.ZodBoolean;
+            staged: z.ZodArray<z.ZodObject<{
+                path: z.ZodString;
+                headStatus: z.ZodString;
+                worktreeStatus: z.ZodString;
+            }, "strip", z.ZodTypeAny, {
+                path: string;
+                headStatus: string;
+                worktreeStatus: string;
+            }, {
+                path: string;
+                headStatus: string;
+                worktreeStatus: string;
+            }>, "many">;
+            unstaged: z.ZodArray<z.ZodObject<{
+                path: z.ZodString;
+                headStatus: z.ZodString;
+                worktreeStatus: z.ZodString;
+            }, "strip", z.ZodTypeAny, {
+                path: string;
+                headStatus: string;
+                worktreeStatus: string;
+            }, {
+                path: string;
+                headStatus: string;
+                worktreeStatus: string;
+            }>, "many">;
+            untracked: z.ZodArray<z.ZodString, "many">;
+            created: z.ZodArray<z.ZodString, "many">;
+            deleted: z.ZodArray<z.ZodString, "many">;
+            modified: z.ZodArray<z.ZodString, "many">;
+            conflicted: z.ZodArray<z.ZodString, "many">;
+            renamed: z.ZodArray<z.ZodObject<{
+                from: z.ZodString;
+                to: z.ZodString;
+            }, "strip", z.ZodTypeAny, {
+                from: string;
+                to: string;
+            }, {
+                from: string;
+                to: string;
+            }>, "many">;
+        }, "strip", z.ZodTypeAny, {
+            branch: string | null;
+            tracking: string | null;
+            ahead: number;
+            behind: number;
+            isClean: boolean;
+            staged: {
+                path: string;
+                headStatus: string;
+                worktreeStatus: string;
+            }[];
+            unstaged: {
+                path: string;
+                headStatus: string;
+                worktreeStatus: string;
+            }[];
+            untracked: string[];
+            created: string[];
+            deleted: string[];
+            modified: string[];
+            conflicted: string[];
+            renamed: {
+                from: string;
+                to: string;
+            }[];
+        }, {
+            branch: string | null;
+            tracking: string | null;
+            ahead: number;
+            behind: number;
+            isClean: boolean;
+            staged: {
+                path: string;
+                headStatus: string;
+                worktreeStatus: string;
+            }[];
+            unstaged: {
+                path: string;
+                headStatus: string;
+                worktreeStatus: string;
+            }[];
+            untracked: string[];
+            created: string[];
+            deleted: string[];
+            modified: string[];
+            conflicted: string[];
+            renamed: {
+                from: string;
+                to: string;
+            }[];
+        }>>;
+        error: z.ZodOptional<z.ZodObject<{
+            message: z.ZodString;
+            code: z.ZodString;
+        }, "strip", z.ZodTypeAny, {
+            code: string;
+            message: string;
+        }, {
+            code: string;
+            message: string;
+        }>>;
+    }, "strip", z.ZodTypeAny, {
+        status: {
+            branch: string | null;
+            tracking: string | null;
+            ahead: number;
+            behind: number;
+            isClean: boolean;
+            staged: {
+                path: string;
+                headStatus: string;
+                worktreeStatus: string;
+            }[];
+            unstaged: {
+                path: string;
+                headStatus: string;
+                worktreeStatus: string;
+            }[];
+            untracked: string[];
+            created: string[];
+            deleted: string[];
+            modified: string[];
+            conflicted: string[];
+            renamed: {
+                from: string;
+                to: string;
+            }[];
+        } | null;
+        enabled: boolean;
+        error?: {
+            code: string;
+            message: string;
+        } | undefined;
+    }, {
+        status: {
+            branch: string | null;
+            tracking: string | null;
+            ahead: number;
+            behind: number;
+            isClean: boolean;
+            staged: {
+                path: string;
+                headStatus: string;
+                worktreeStatus: string;
+            }[];
+            unstaged: {
+                path: string;
+                headStatus: string;
+                worktreeStatus: string;
+            }[];
+            untracked: string[];
+            created: string[];
+            deleted: string[];
+            modified: string[];
+            conflicted: string[];
+            renamed: {
+                from: string;
+                to: string;
+            }[];
+        } | null;
+        enabled: boolean;
+        error?: {
+            code: string;
+            message: string;
+        } | undefined;
+    }>, any, any, import("@mastra/core").ToolExecutionContext<z.ZodOptional<z.ZodObject<{}, "strip", z.ZodTypeAny, {}, {}>>, any, any>> & {
+        inputSchema: z.ZodOptional<z.ZodObject<{}, "strip", z.ZodTypeAny, {}, {}>>;
+        outputSchema: z.ZodObject<{
+            enabled: z.ZodBoolean;
+            status: z.ZodNullable<z.ZodObject<{
+                branch: z.ZodNullable<z.ZodString>;
+                tracking: z.ZodNullable<z.ZodString>;
+                ahead: z.ZodNumber;
+                behind: z.ZodNumber;
+                isClean: z.ZodBoolean;
+                staged: z.ZodArray<z.ZodObject<{
+                    path: z.ZodString;
+                    headStatus: z.ZodString;
+                    worktreeStatus: z.ZodString;
+                }, "strip", z.ZodTypeAny, {
+                    path: string;
+                    headStatus: string;
+                    worktreeStatus: string;
+                }, {
+                    path: string;
+                    headStatus: string;
+                    worktreeStatus: string;
+                }>, "many">;
+                unstaged: z.ZodArray<z.ZodObject<{
+                    path: z.ZodString;
+                    headStatus: z.ZodString;
+                    worktreeStatus: z.ZodString;
+                }, "strip", z.ZodTypeAny, {
+                    path: string;
+                    headStatus: string;
+                    worktreeStatus: string;
+                }, {
+                    path: string;
+                    headStatus: string;
+                    worktreeStatus: string;
+                }>, "many">;
+                untracked: z.ZodArray<z.ZodString, "many">;
+                created: z.ZodArray<z.ZodString, "many">;
+                deleted: z.ZodArray<z.ZodString, "many">;
+                modified: z.ZodArray<z.ZodString, "many">;
+                conflicted: z.ZodArray<z.ZodString, "many">;
+                renamed: z.ZodArray<z.ZodObject<{
+                    from: z.ZodString;
+                    to: z.ZodString;
+                }, "strip", z.ZodTypeAny, {
+                    from: string;
+                    to: string;
+                }, {
+                    from: string;
+                    to: string;
+                }>, "many">;
+            }, "strip", z.ZodTypeAny, {
+                branch: string | null;
+                tracking: string | null;
+                ahead: number;
+                behind: number;
+                isClean: boolean;
+                staged: {
+                    path: string;
+                    headStatus: string;
+                    worktreeStatus: string;
+                }[];
+                unstaged: {
+                    path: string;
+                    headStatus: string;
+                    worktreeStatus: string;
+                }[];
+                untracked: string[];
+                created: string[];
+                deleted: string[];
+                modified: string[];
+                conflicted: string[];
+                renamed: {
+                    from: string;
+                    to: string;
+                }[];
+            }, {
+                branch: string | null;
+                tracking: string | null;
+                ahead: number;
+                behind: number;
+                isClean: boolean;
+                staged: {
+                    path: string;
+                    headStatus: string;
+                    worktreeStatus: string;
+                }[];
+                unstaged: {
+                    path: string;
+                    headStatus: string;
+                    worktreeStatus: string;
+                }[];
+                untracked: string[];
+                created: string[];
+                deleted: string[];
+                modified: string[];
+                conflicted: string[];
+                renamed: {
+                    from: string;
+                    to: string;
+                }[];
+            }>>;
+            error: z.ZodOptional<z.ZodObject<{
+                message: z.ZodString;
+                code: z.ZodString;
+            }, "strip", z.ZodTypeAny, {
+                code: string;
+                message: string;
+            }, {
+                code: string;
+                message: string;
+            }>>;
+        }, "strip", z.ZodTypeAny, {
+            status: {
+                branch: string | null;
+                tracking: string | null;
+                ahead: number;
+                behind: number;
+                isClean: boolean;
+                staged: {
+                    path: string;
+                    headStatus: string;
+                    worktreeStatus: string;
+                }[];
+                unstaged: {
+                    path: string;
+                    headStatus: string;
+                    worktreeStatus: string;
+                }[];
+                untracked: string[];
+                created: string[];
+                deleted: string[];
+                modified: string[];
+                conflicted: string[];
+                renamed: {
+                    from: string;
+                    to: string;
+                }[];
+            } | null;
+            enabled: boolean;
+            error?: {
+                code: string;
+                message: string;
+            } | undefined;
+        }, {
+            status: {
+                branch: string | null;
+                tracking: string | null;
+                ahead: number;
+                behind: number;
+                isClean: boolean;
+                staged: {
+                    path: string;
+                    headStatus: string;
+                    worktreeStatus: string;
+                }[];
+                unstaged: {
+                    path: string;
+                    headStatus: string;
+                    worktreeStatus: string;
+                }[];
+                untracked: string[];
+                created: string[];
+                deleted: string[];
+                modified: string[];
+                conflicted: string[];
+                renamed: {
+                    from: string;
+                    to: string;
+                }[];
+            } | null;
+            enabled: boolean;
+            error?: {
+                code: string;
+                message: string;
+            } | undefined;
+        }>;
+        execute: (context: import("@mastra/core").ToolExecutionContext<z.ZodOptional<z.ZodObject<{}, "strip", z.ZodTypeAny, {}, {}>>, any, any>, options: import("@mastra/core").ToolInvocationOptions) => Promise<any>;
+    };
+    gitDiffTool: import("@mastra/core/tools").Tool<z.ZodOptional<z.ZodObject<{
+        cached: z.ZodOptional<z.ZodBoolean>;
+    }, "strip", z.ZodTypeAny, {
+        cached?: boolean | undefined;
+    }, {
+        cached?: boolean | undefined;
+    }>>, z.ZodObject<{
+        enabled: z.ZodBoolean;
+        diff: z.ZodNullable<z.ZodObject<{
+            cached: z.ZodBoolean;
+            files: z.ZodArray<z.ZodObject<{
+                file: z.ZodString;
+                changes: z.ZodNumber;
+                insertions: z.ZodNumber;
+                deletions: z.ZodNumber;
+            }, "strip", z.ZodTypeAny, {
+                file: string;
+                changes: number;
+                insertions: number;
+                deletions: number;
+            }, {
+                file: string;
+                changes: number;
+                insertions: number;
+                deletions: number;
+            }>, "many">;
+            insertions: z.ZodNumber;
+            deletions: z.ZodNumber;
+            changes: z.ZodNumber;
+        }, "strip", z.ZodTypeAny, {
+            changes: number;
+            insertions: number;
+            deletions: number;
+            cached: boolean;
+            files: {
+                file: string;
+                changes: number;
+                insertions: number;
+                deletions: number;
+            }[];
+        }, {
+            changes: number;
+            insertions: number;
+            deletions: number;
+            cached: boolean;
+            files: {
+                file: string;
+                changes: number;
+                insertions: number;
+                deletions: number;
+            }[];
+        }>>;
+        error: z.ZodOptional<z.ZodObject<{
+            message: z.ZodString;
+            code: z.ZodString;
+        }, "strip", z.ZodTypeAny, {
+            code: string;
+            message: string;
+        }, {
+            code: string;
+            message: string;
+        }>>;
+    }, "strip", z.ZodTypeAny, {
+        enabled: boolean;
+        diff: {
+            changes: number;
+            insertions: number;
+            deletions: number;
+            cached: boolean;
+            files: {
+                file: string;
+                changes: number;
+                insertions: number;
+                deletions: number;
+            }[];
+        } | null;
+        error?: {
+            code: string;
+            message: string;
+        } | undefined;
+    }, {
+        enabled: boolean;
+        diff: {
+            changes: number;
+            insertions: number;
+            deletions: number;
+            cached: boolean;
+            files: {
+                file: string;
+                changes: number;
+                insertions: number;
+                deletions: number;
+            }[];
+        } | null;
+        error?: {
+            code: string;
+            message: string;
+        } | undefined;
+    }>, any, any, import("@mastra/core").ToolExecutionContext<z.ZodOptional<z.ZodObject<{
+        cached: z.ZodOptional<z.ZodBoolean>;
+    }, "strip", z.ZodTypeAny, {
+        cached?: boolean | undefined;
+    }, {
+        cached?: boolean | undefined;
+    }>>, any, any>> & {
+        inputSchema: z.ZodOptional<z.ZodObject<{
+            cached: z.ZodOptional<z.ZodBoolean>;
+        }, "strip", z.ZodTypeAny, {
+            cached?: boolean | undefined;
+        }, {
+            cached?: boolean | undefined;
+        }>>;
+        outputSchema: z.ZodObject<{
+            enabled: z.ZodBoolean;
+            diff: z.ZodNullable<z.ZodObject<{
+                cached: z.ZodBoolean;
+                files: z.ZodArray<z.ZodObject<{
+                    file: z.ZodString;
+                    changes: z.ZodNumber;
+                    insertions: z.ZodNumber;
+                    deletions: z.ZodNumber;
+                }, "strip", z.ZodTypeAny, {
+                    file: string;
+                    changes: number;
+                    insertions: number;
+                    deletions: number;
+                }, {
+                    file: string;
+                    changes: number;
+                    insertions: number;
+                    deletions: number;
+                }>, "many">;
+                insertions: z.ZodNumber;
+                deletions: z.ZodNumber;
+                changes: z.ZodNumber;
+            }, "strip", z.ZodTypeAny, {
+                changes: number;
+                insertions: number;
+                deletions: number;
+                cached: boolean;
+                files: {
+                    file: string;
+                    changes: number;
+                    insertions: number;
+                    deletions: number;
+                }[];
+            }, {
+                changes: number;
+                insertions: number;
+                deletions: number;
+                cached: boolean;
+                files: {
+                    file: string;
+                    changes: number;
+                    insertions: number;
+                    deletions: number;
+                }[];
+            }>>;
+            error: z.ZodOptional<z.ZodObject<{
+                message: z.ZodString;
+                code: z.ZodString;
+            }, "strip", z.ZodTypeAny, {
+                code: string;
+                message: string;
+            }, {
+                code: string;
+                message: string;
+            }>>;
+        }, "strip", z.ZodTypeAny, {
+            enabled: boolean;
+            diff: {
+                changes: number;
+                insertions: number;
+                deletions: number;
+                cached: boolean;
+                files: {
+                    file: string;
+                    changes: number;
+                    insertions: number;
+                    deletions: number;
+                }[];
+            } | null;
+            error?: {
+                code: string;
+                message: string;
+            } | undefined;
+        }, {
+            enabled: boolean;
+            diff: {
+                changes: number;
+                insertions: number;
+                deletions: number;
+                cached: boolean;
+                files: {
+                    file: string;
+                    changes: number;
+                    insertions: number;
+                    deletions: number;
+                }[];
+            } | null;
+            error?: {
+                code: string;
+                message: string;
+            } | undefined;
+        }>;
+        execute: (context: import("@mastra/core").ToolExecutionContext<z.ZodOptional<z.ZodObject<{
+            cached: z.ZodOptional<z.ZodBoolean>;
+        }, "strip", z.ZodTypeAny, {
+            cached?: boolean | undefined;
+        }, {
+            cached?: boolean | undefined;
+        }>>, any, any>, options: import("@mastra/core").ToolInvocationOptions) => Promise<any>;
+    };
+    gitStageTool: import("@mastra/core/tools").Tool<z.ZodOptional<z.ZodObject<{
+        paths: z.ZodOptional<z.ZodArray<z.ZodString, "many">>;
+    }, "strip", z.ZodTypeAny, {
+        paths?: string[] | undefined;
+    }, {
+        paths?: string[] | undefined;
+    }>>, z.ZodObject<{
+        enabled: z.ZodBoolean;
+        success: z.ZodBoolean;
+        error: z.ZodOptional<z.ZodObject<{
+            message: z.ZodString;
+            code: z.ZodString;
+        }, "strip", z.ZodTypeAny, {
+            code: string;
+            message: string;
+        }, {
+            code: string;
+            message: string;
+        }>>;
+    }, "strip", z.ZodTypeAny, {
+        enabled: boolean;
+        success: boolean;
+        error?: {
+            code: string;
+            message: string;
+        } | undefined;
+    }, {
+        enabled: boolean;
+        success: boolean;
+        error?: {
+            code: string;
+            message: string;
+        } | undefined;
+    }>, any, any, import("@mastra/core").ToolExecutionContext<z.ZodOptional<z.ZodObject<{
+        paths: z.ZodOptional<z.ZodArray<z.ZodString, "many">>;
+    }, "strip", z.ZodTypeAny, {
+        paths?: string[] | undefined;
+    }, {
+        paths?: string[] | undefined;
+    }>>, any, any>> & {
+        inputSchema: z.ZodOptional<z.ZodObject<{
+            paths: z.ZodOptional<z.ZodArray<z.ZodString, "many">>;
+        }, "strip", z.ZodTypeAny, {
+            paths?: string[] | undefined;
+        }, {
+            paths?: string[] | undefined;
+        }>>;
+        outputSchema: z.ZodObject<{
+            enabled: z.ZodBoolean;
+            success: z.ZodBoolean;
+            error: z.ZodOptional<z.ZodObject<{
+                message: z.ZodString;
+                code: z.ZodString;
+            }, "strip", z.ZodTypeAny, {
+                code: string;
+                message: string;
+            }, {
+                code: string;
+                message: string;
+            }>>;
+        }, "strip", z.ZodTypeAny, {
+            enabled: boolean;
+            success: boolean;
+            error?: {
+                code: string;
+                message: string;
+            } | undefined;
+        }, {
+            enabled: boolean;
+            success: boolean;
+            error?: {
+                code: string;
+                message: string;
+            } | undefined;
+        }>;
+        execute: (context: import("@mastra/core").ToolExecutionContext<z.ZodOptional<z.ZodObject<{
+            paths: z.ZodOptional<z.ZodArray<z.ZodString, "many">>;
+        }, "strip", z.ZodTypeAny, {
+            paths?: string[] | undefined;
+        }, {
+            paths?: string[] | undefined;
+        }>>, any, any>, options: import("@mastra/core").ToolInvocationOptions) => Promise<any>;
+    };
+    gitCommitTool: import("@mastra/core/tools").Tool<z.ZodObject<{
+        message: z.ZodString;
+        allowEmpty: z.ZodOptional<z.ZodBoolean>;
+        signoff: z.ZodOptional<z.ZodBoolean>;
+        author: z.ZodOptional<z.ZodObject<{
+            name: z.ZodString;
+            email: z.ZodOptional<z.ZodString>;
+        }, "strip", z.ZodTypeAny, {
+            name: string;
+            email?: string | undefined;
+        }, {
+            name: string;
+            email?: string | undefined;
+        }>>;
+    }, "strip", z.ZodTypeAny, {
+        message: string;
+        allowEmpty?: boolean | undefined;
+        signoff?: boolean | undefined;
+        author?: {
+            name: string;
+            email?: string | undefined;
+        } | undefined;
+    }, {
+        message: string;
+        allowEmpty?: boolean | undefined;
+        signoff?: boolean | undefined;
+        author?: {
+            name: string;
+            email?: string | undefined;
+        } | undefined;
+    }>, z.ZodObject<{
+        enabled: z.ZodBoolean;
+        commit: z.ZodNullable<z.ZodObject<{
+            sha: z.ZodString;
+            summary: z.ZodString;
+        }, "strip", z.ZodTypeAny, {
+            sha: string;
+            summary: string;
+        }, {
+            sha: string;
+            summary: string;
+        }>>;
+        error: z.ZodOptional<z.ZodObject<{
+            message: z.ZodString;
+            code: z.ZodString;
+        }, "strip", z.ZodTypeAny, {
+            code: string;
+            message: string;
+        }, {
+            code: string;
+            message: string;
+        }>>;
+    }, "strip", z.ZodTypeAny, {
+        enabled: boolean;
+        commit: {
+            sha: string;
+            summary: string;
+        } | null;
+        error?: {
+            code: string;
+            message: string;
+        } | undefined;
+    }, {
+        enabled: boolean;
+        commit: {
+            sha: string;
+            summary: string;
+        } | null;
+        error?: {
+            code: string;
+            message: string;
+        } | undefined;
+    }>, any, any, import("@mastra/core").ToolExecutionContext<z.ZodObject<{
+        message: z.ZodString;
+        allowEmpty: z.ZodOptional<z.ZodBoolean>;
+        signoff: z.ZodOptional<z.ZodBoolean>;
+        author: z.ZodOptional<z.ZodObject<{
+            name: z.ZodString;
+            email: z.ZodOptional<z.ZodString>;
+        }, "strip", z.ZodTypeAny, {
+            name: string;
+            email?: string | undefined;
+        }, {
+            name: string;
+            email?: string | undefined;
+        }>>;
+    }, "strip", z.ZodTypeAny, {
+        message: string;
+        allowEmpty?: boolean | undefined;
+        signoff?: boolean | undefined;
+        author?: {
+            name: string;
+            email?: string | undefined;
+        } | undefined;
+    }, {
+        message: string;
+        allowEmpty?: boolean | undefined;
+        signoff?: boolean | undefined;
+        author?: {
+            name: string;
+            email?: string | undefined;
+        } | undefined;
+    }>, any, any>> & {
+        inputSchema: z.ZodObject<{
+            message: z.ZodString;
+            allowEmpty: z.ZodOptional<z.ZodBoolean>;
+            signoff: z.ZodOptional<z.ZodBoolean>;
+            author: z.ZodOptional<z.ZodObject<{
+                name: z.ZodString;
+                email: z.ZodOptional<z.ZodString>;
+            }, "strip", z.ZodTypeAny, {
+                name: string;
+                email?: string | undefined;
+            }, {
+                name: string;
+                email?: string | undefined;
+            }>>;
+        }, "strip", z.ZodTypeAny, {
+            message: string;
+            allowEmpty?: boolean | undefined;
+            signoff?: boolean | undefined;
+            author?: {
+                name: string;
+                email?: string | undefined;
+            } | undefined;
+        }, {
+            message: string;
+            allowEmpty?: boolean | undefined;
+            signoff?: boolean | undefined;
+            author?: {
+                name: string;
+                email?: string | undefined;
+            } | undefined;
+        }>;
+        outputSchema: z.ZodObject<{
+            enabled: z.ZodBoolean;
+            commit: z.ZodNullable<z.ZodObject<{
+                sha: z.ZodString;
+                summary: z.ZodString;
+            }, "strip", z.ZodTypeAny, {
+                sha: string;
+                summary: string;
+            }, {
+                sha: string;
+                summary: string;
+            }>>;
+            error: z.ZodOptional<z.ZodObject<{
+                message: z.ZodString;
+                code: z.ZodString;
+            }, "strip", z.ZodTypeAny, {
+                code: string;
+                message: string;
+            }, {
+                code: string;
+                message: string;
+            }>>;
+        }, "strip", z.ZodTypeAny, {
+            enabled: boolean;
+            commit: {
+                sha: string;
+                summary: string;
+            } | null;
+            error?: {
+                code: string;
+                message: string;
+            } | undefined;
+        }, {
+            enabled: boolean;
+            commit: {
+                sha: string;
+                summary: string;
+            } | null;
+            error?: {
+                code: string;
+                message: string;
+            } | undefined;
+        }>;
+        execute: (context: import("@mastra/core").ToolExecutionContext<z.ZodObject<{
+            message: z.ZodString;
+            allowEmpty: z.ZodOptional<z.ZodBoolean>;
+            signoff: z.ZodOptional<z.ZodBoolean>;
+            author: z.ZodOptional<z.ZodObject<{
+                name: z.ZodString;
+                email: z.ZodOptional<z.ZodString>;
+            }, "strip", z.ZodTypeAny, {
+                name: string;
+                email?: string | undefined;
+            }, {
+                name: string;
+                email?: string | undefined;
+            }>>;
+        }, "strip", z.ZodTypeAny, {
+            message: string;
+            allowEmpty?: boolean | undefined;
+            signoff?: boolean | undefined;
+            author?: {
+                name: string;
+                email?: string | undefined;
+            } | undefined;
+        }, {
+            message: string;
+            allowEmpty?: boolean | undefined;
+            signoff?: boolean | undefined;
+            author?: {
+                name: string;
+                email?: string | undefined;
+            } | undefined;
+        }>, any, any>, options: import("@mastra/core").ToolInvocationOptions) => Promise<any>;
+    };
+    gitPushTool: import("@mastra/core/tools").Tool<z.ZodOptional<z.ZodObject<{
+        remote: z.ZodOptional<z.ZodString>;
+        branch: z.ZodOptional<z.ZodString>;
+        force: z.ZodOptional<z.ZodBoolean>;
+    }, "strip", z.ZodTypeAny, {
+        branch?: string | undefined;
+        remote?: string | undefined;
+        force?: boolean | undefined;
+    }, {
+        branch?: string | undefined;
+        remote?: string | undefined;
+        force?: boolean | undefined;
+    }>>, z.ZodObject<{
+        enabled: z.ZodBoolean;
+        result: z.ZodNullable<z.ZodObject<{
+            remote: z.ZodString;
+            branch: z.ZodString;
+        }, "strip", z.ZodTypeAny, {
+            branch: string;
+            remote: string;
+        }, {
+            branch: string;
+            remote: string;
+        }>>;
+        error: z.ZodOptional<z.ZodObject<{
+            message: z.ZodString;
+            code: z.ZodString;
+        }, "strip", z.ZodTypeAny, {
+            code: string;
+            message: string;
+        }, {
+            code: string;
+            message: string;
+        }>>;
+    }, "strip", z.ZodTypeAny, {
+        enabled: boolean;
+        result: {
+            branch: string;
+            remote: string;
+        } | null;
+        error?: {
+            code: string;
+            message: string;
+        } | undefined;
+    }, {
+        enabled: boolean;
+        result: {
+            branch: string;
+            remote: string;
+        } | null;
+        error?: {
+            code: string;
+            message: string;
+        } | undefined;
+    }>, any, any, import("@mastra/core").ToolExecutionContext<z.ZodOptional<z.ZodObject<{
+        remote: z.ZodOptional<z.ZodString>;
+        branch: z.ZodOptional<z.ZodString>;
+        force: z.ZodOptional<z.ZodBoolean>;
+    }, "strip", z.ZodTypeAny, {
+        branch?: string | undefined;
+        remote?: string | undefined;
+        force?: boolean | undefined;
+    }, {
+        branch?: string | undefined;
+        remote?: string | undefined;
+        force?: boolean | undefined;
+    }>>, any, any>> & {
+        inputSchema: z.ZodOptional<z.ZodObject<{
+            remote: z.ZodOptional<z.ZodString>;
+            branch: z.ZodOptional<z.ZodString>;
+            force: z.ZodOptional<z.ZodBoolean>;
+        }, "strip", z.ZodTypeAny, {
+            branch?: string | undefined;
+            remote?: string | undefined;
+            force?: boolean | undefined;
+        }, {
+            branch?: string | undefined;
+            remote?: string | undefined;
+            force?: boolean | undefined;
+        }>>;
+        outputSchema: z.ZodObject<{
+            enabled: z.ZodBoolean;
+            result: z.ZodNullable<z.ZodObject<{
+                remote: z.ZodString;
+                branch: z.ZodString;
+            }, "strip", z.ZodTypeAny, {
+                branch: string;
+                remote: string;
+            }, {
+                branch: string;
+                remote: string;
+            }>>;
+            error: z.ZodOptional<z.ZodObject<{
+                message: z.ZodString;
+                code: z.ZodString;
+            }, "strip", z.ZodTypeAny, {
+                code: string;
+                message: string;
+            }, {
+                code: string;
+                message: string;
+            }>>;
+        }, "strip", z.ZodTypeAny, {
+            enabled: boolean;
+            result: {
+                branch: string;
+                remote: string;
+            } | null;
+            error?: {
+                code: string;
+                message: string;
+            } | undefined;
+        }, {
+            enabled: boolean;
+            result: {
+                branch: string;
+                remote: string;
+            } | null;
+            error?: {
+                code: string;
+                message: string;
+            } | undefined;
+        }>;
+        execute: (context: import("@mastra/core").ToolExecutionContext<z.ZodOptional<z.ZodObject<{
+            remote: z.ZodOptional<z.ZodString>;
+            branch: z.ZodOptional<z.ZodString>;
+            force: z.ZodOptional<z.ZodBoolean>;
+        }, "strip", z.ZodTypeAny, {
+            branch?: string | undefined;
+            remote?: string | undefined;
+            force?: boolean | undefined;
+        }, {
+            branch?: string | undefined;
+            remote?: string | undefined;
+            force?: boolean | undefined;
+        }>>, any, any>, options: import("@mastra/core").ToolInvocationOptions) => Promise<any>;
+    };
+    gitBranchTool: import("@mastra/core/tools").Tool<z.ZodObject<{
+        name: z.ZodString;
+        base: z.ZodOptional<z.ZodString>;
+        checkout: z.ZodOptional<z.ZodBoolean>;
+    }, "strip", z.ZodTypeAny, {
+        name: string;
+        base?: string | undefined;
+        checkout?: boolean | undefined;
+    }, {
+        name: string;
+        base?: string | undefined;
+        checkout?: boolean | undefined;
+    }>, z.ZodObject<{
+        enabled: z.ZodBoolean;
+        branch: z.ZodNullable<z.ZodObject<{
+            name: z.ZodString;
+            checkedOut: z.ZodBoolean;
+        }, "strip", z.ZodTypeAny, {
+            name: string;
+            checkedOut: boolean;
+        }, {
+            name: string;
+            checkedOut: boolean;
+        }>>;
+        error: z.ZodOptional<z.ZodObject<{
+            message: z.ZodString;
+            code: z.ZodString;
+        }, "strip", z.ZodTypeAny, {
+            code: string;
+            message: string;
+        }, {
+            code: string;
+            message: string;
+        }>>;
+    }, "strip", z.ZodTypeAny, {
+        branch: {
+            name: string;
+            checkedOut: boolean;
+        } | null;
+        enabled: boolean;
+        error?: {
+            code: string;
+            message: string;
+        } | undefined;
+    }, {
+        branch: {
+            name: string;
+            checkedOut: boolean;
+        } | null;
+        enabled: boolean;
+        error?: {
+            code: string;
+            message: string;
+        } | undefined;
+    }>, any, any, import("@mastra/core").ToolExecutionContext<z.ZodObject<{
+        name: z.ZodString;
+        base: z.ZodOptional<z.ZodString>;
+        checkout: z.ZodOptional<z.ZodBoolean>;
+    }, "strip", z.ZodTypeAny, {
+        name: string;
+        base?: string | undefined;
+        checkout?: boolean | undefined;
+    }, {
+        name: string;
+        base?: string | undefined;
+        checkout?: boolean | undefined;
+    }>, any, any>> & {
+        inputSchema: z.ZodObject<{
+            name: z.ZodString;
+            base: z.ZodOptional<z.ZodString>;
+            checkout: z.ZodOptional<z.ZodBoolean>;
+        }, "strip", z.ZodTypeAny, {
+            name: string;
+            base?: string | undefined;
+            checkout?: boolean | undefined;
+        }, {
+            name: string;
+            base?: string | undefined;
+            checkout?: boolean | undefined;
+        }>;
+        outputSchema: z.ZodObject<{
+            enabled: z.ZodBoolean;
+            branch: z.ZodNullable<z.ZodObject<{
+                name: z.ZodString;
+                checkedOut: z.ZodBoolean;
+            }, "strip", z.ZodTypeAny, {
+                name: string;
+                checkedOut: boolean;
+            }, {
+                name: string;
+                checkedOut: boolean;
+            }>>;
+            error: z.ZodOptional<z.ZodObject<{
+                message: z.ZodString;
+                code: z.ZodString;
+            }, "strip", z.ZodTypeAny, {
+                code: string;
+                message: string;
+            }, {
+                code: string;
+                message: string;
+            }>>;
+        }, "strip", z.ZodTypeAny, {
+            branch: {
+                name: string;
+                checkedOut: boolean;
+            } | null;
+            enabled: boolean;
+            error?: {
+                code: string;
+                message: string;
+            } | undefined;
+        }, {
+            branch: {
+                name: string;
+                checkedOut: boolean;
+            } | null;
+            enabled: boolean;
+            error?: {
+                code: string;
+                message: string;
+            } | undefined;
+        }>;
+        execute: (context: import("@mastra/core").ToolExecutionContext<z.ZodObject<{
+            name: z.ZodString;
+            base: z.ZodOptional<z.ZodString>;
+            checkout: z.ZodOptional<z.ZodBoolean>;
+        }, "strip", z.ZodTypeAny, {
+            name: string;
+            base?: string | undefined;
+            checkout?: boolean | undefined;
+        }, {
+            name: string;
+            base?: string | undefined;
+            checkout?: boolean | undefined;
+        }>, any, any>, options: import("@mastra/core").ToolInvocationOptions) => Promise<any>;
+    };
+    listDeploysTool: import("@mastra/core/tools").Tool<z.ZodObject<{
+        service: z.ZodOptional<z.ZodString>;
+        since: z.ZodOptional<z.ZodString>;
+    }, "strip", z.ZodTypeAny, {
+        service?: string | undefined;
+        since?: string | undefined;
+    }, {
+        service?: string | undefined;
+        since?: string | undefined;
+    }>, z.ZodObject<{
+        count: z.ZodNumber;
+        jobs: z.ZodArray<z.ZodObject<{
+            id: z.ZodString;
+            service: z.ZodString;
+            status: z.ZodEnum<["PENDING", "RUNNING", "SUCCEEDED", "FAILED"]>;
+            createdAt: z.ZodString;
+            updatedAt: z.ZodString;
+            spec: z.ZodObject<{
+                service: z.ZodString;
+                image: z.ZodString;
+                version: z.ZodDefault<z.ZodString>;
+                command: z.ZodDefault<z.ZodArray<z.ZodString, "many">>;
+                env: z.ZodDefault<z.ZodRecord<z.ZodString, z.ZodString>>;
+                metadata: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodAny>>;
+            }, "strip", z.ZodTypeAny, {
+                service: string;
+                image: string;
+                version: string;
+                command: string[];
+                env: Record<string, string>;
+                metadata?: Record<string, any> | undefined;
+            }, {
+                service: string;
+                image: string;
+                metadata?: Record<string, any> | undefined;
+                version?: string | undefined;
+                command?: string[] | undefined;
+                env?: Record<string, string> | undefined;
+            }>;
+            type: z.ZodEnum<["DEPLOY", "ROLLBACK"]>;
+            parentJobId: z.ZodOptional<z.ZodString>;
+            outcome: z.ZodOptional<z.ZodString>;
+        }, "strip", z.ZodTypeAny, {
+            type: "ROLLBACK" | "DEPLOY";
+            status: "PENDING" | "RUNNING" | "SUCCEEDED" | "FAILED";
+            id: string;
+            createdAt: string;
+            updatedAt: string;
+            service: string;
+            spec: {
+                service: string;
+                image: string;
+                version: string;
+                command: string[];
+                env: Record<string, string>;
+                metadata?: Record<string, any> | undefined;
+            };
+            parentJobId?: string | undefined;
+            outcome?: string | undefined;
+        }, {
+            type: "ROLLBACK" | "DEPLOY";
+            status: "PENDING" | "RUNNING" | "SUCCEEDED" | "FAILED";
+            id: string;
+            createdAt: string;
+            updatedAt: string;
+            service: string;
+            spec: {
+                service: string;
+                image: string;
+                metadata?: Record<string, any> | undefined;
+                version?: string | undefined;
+                command?: string[] | undefined;
+                env?: Record<string, string> | undefined;
+            };
+            parentJobId?: string | undefined;
+            outcome?: string | undefined;
+        }>, "many">;
+    }, "strip", z.ZodTypeAny, {
+        count: number;
+        jobs: {
+            type: "ROLLBACK" | "DEPLOY";
+            status: "PENDING" | "RUNNING" | "SUCCEEDED" | "FAILED";
+            id: string;
+            createdAt: string;
+            updatedAt: string;
+            service: string;
+            spec: {
+                service: string;
+                image: string;
+                version: string;
+                command: string[];
+                env: Record<string, string>;
+                metadata?: Record<string, any> | undefined;
+            };
+            parentJobId?: string | undefined;
+            outcome?: string | undefined;
+        }[];
+    }, {
+        count: number;
+        jobs: {
+            type: "ROLLBACK" | "DEPLOY";
+            status: "PENDING" | "RUNNING" | "SUCCEEDED" | "FAILED";
+            id: string;
+            createdAt: string;
+            updatedAt: string;
+            service: string;
+            spec: {
+                service: string;
+                image: string;
+                metadata?: Record<string, any> | undefined;
+                version?: string | undefined;
+                command?: string[] | undefined;
+                env?: Record<string, string> | undefined;
+            };
+            parentJobId?: string | undefined;
+            outcome?: string | undefined;
+        }[];
+    }>, any, any, import("@mastra/core").ToolExecutionContext<z.ZodObject<{
+        service: z.ZodOptional<z.ZodString>;
+        since: z.ZodOptional<z.ZodString>;
+    }, "strip", z.ZodTypeAny, {
+        service?: string | undefined;
+        since?: string | undefined;
+    }, {
+        service?: string | undefined;
+        since?: string | undefined;
+    }>, any, any>> & {
+        inputSchema: z.ZodObject<{
+            service: z.ZodOptional<z.ZodString>;
+            since: z.ZodOptional<z.ZodString>;
+        }, "strip", z.ZodTypeAny, {
+            service?: string | undefined;
+            since?: string | undefined;
+        }, {
+            service?: string | undefined;
+            since?: string | undefined;
+        }>;
+        outputSchema: z.ZodObject<{
+            count: z.ZodNumber;
+            jobs: z.ZodArray<z.ZodObject<{
+                id: z.ZodString;
+                service: z.ZodString;
+                status: z.ZodEnum<["PENDING", "RUNNING", "SUCCEEDED", "FAILED"]>;
+                createdAt: z.ZodString;
+                updatedAt: z.ZodString;
+                spec: z.ZodObject<{
+                    service: z.ZodString;
+                    image: z.ZodString;
+                    version: z.ZodDefault<z.ZodString>;
+                    command: z.ZodDefault<z.ZodArray<z.ZodString, "many">>;
+                    env: z.ZodDefault<z.ZodRecord<z.ZodString, z.ZodString>>;
+                    metadata: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodAny>>;
+                }, "strip", z.ZodTypeAny, {
+                    service: string;
+                    image: string;
+                    version: string;
+                    command: string[];
+                    env: Record<string, string>;
+                    metadata?: Record<string, any> | undefined;
+                }, {
+                    service: string;
+                    image: string;
+                    metadata?: Record<string, any> | undefined;
+                    version?: string | undefined;
+                    command?: string[] | undefined;
+                    env?: Record<string, string> | undefined;
+                }>;
+                type: z.ZodEnum<["DEPLOY", "ROLLBACK"]>;
+                parentJobId: z.ZodOptional<z.ZodString>;
+                outcome: z.ZodOptional<z.ZodString>;
+            }, "strip", z.ZodTypeAny, {
+                type: "ROLLBACK" | "DEPLOY";
+                status: "PENDING" | "RUNNING" | "SUCCEEDED" | "FAILED";
+                id: string;
+                createdAt: string;
+                updatedAt: string;
+                service: string;
+                spec: {
+                    service: string;
+                    image: string;
+                    version: string;
+                    command: string[];
+                    env: Record<string, string>;
+                    metadata?: Record<string, any> | undefined;
+                };
+                parentJobId?: string | undefined;
+                outcome?: string | undefined;
+            }, {
+                type: "ROLLBACK" | "DEPLOY";
+                status: "PENDING" | "RUNNING" | "SUCCEEDED" | "FAILED";
+                id: string;
+                createdAt: string;
+                updatedAt: string;
+                service: string;
+                spec: {
+                    service: string;
+                    image: string;
+                    metadata?: Record<string, any> | undefined;
+                    version?: string | undefined;
+                    command?: string[] | undefined;
+                    env?: Record<string, string> | undefined;
+                };
+                parentJobId?: string | undefined;
+                outcome?: string | undefined;
+            }>, "many">;
+        }, "strip", z.ZodTypeAny, {
+            count: number;
+            jobs: {
+                type: "ROLLBACK" | "DEPLOY";
+                status: "PENDING" | "RUNNING" | "SUCCEEDED" | "FAILED";
+                id: string;
+                createdAt: string;
+                updatedAt: string;
+                service: string;
+                spec: {
+                    service: string;
+                    image: string;
+                    version: string;
+                    command: string[];
+                    env: Record<string, string>;
+                    metadata?: Record<string, any> | undefined;
+                };
+                parentJobId?: string | undefined;
+                outcome?: string | undefined;
+            }[];
+        }, {
+            count: number;
+            jobs: {
+                type: "ROLLBACK" | "DEPLOY";
+                status: "PENDING" | "RUNNING" | "SUCCEEDED" | "FAILED";
+                id: string;
+                createdAt: string;
+                updatedAt: string;
+                service: string;
+                spec: {
+                    service: string;
+                    image: string;
+                    metadata?: Record<string, any> | undefined;
+                    version?: string | undefined;
+                    command?: string[] | undefined;
+                    env?: Record<string, string> | undefined;
+                };
+                parentJobId?: string | undefined;
+                outcome?: string | undefined;
+            }[];
+        }>;
+        execute: (context: import("@mastra/core").ToolExecutionContext<z.ZodObject<{
+            service: z.ZodOptional<z.ZodString>;
+            since: z.ZodOptional<z.ZodString>;
+        }, "strip", z.ZodTypeAny, {
+            service?: string | undefined;
+            since?: string | undefined;
+        }, {
+            service?: string | undefined;
+            since?: string | undefined;
+        }>, any, any>, options: import("@mastra/core").ToolInvocationOptions) => Promise<any>;
+    };
+    listPostmortemsTool: import("@mastra/core/tools").Tool<z.ZodObject<{
+        service: z.ZodOptional<z.ZodString>;
+        status: z.ZodOptional<z.ZodEnum<["DRAFT", "PUBLISHED"]>>;
+    }, "strip", z.ZodTypeAny, {
+        status?: "DRAFT" | "PUBLISHED" | undefined;
+        service?: string | undefined;
+    }, {
+        status?: "DRAFT" | "PUBLISHED" | undefined;
+        service?: string | undefined;
+    }>, z.ZodObject<{
+        count: z.ZodNumber;
+        postmortems: z.ZodArray<z.ZodType<import("@sentinelops/tools/postmortems").PostmortemRecord, z.ZodTypeDef, import("@sentinelops/tools/postmortems").PostmortemRecord>, "many">;
+    }, "strip", z.ZodTypeAny, {
+        count: number;
+        postmortems: import("@sentinelops/tools/postmortems").PostmortemRecord[];
+    }, {
+        count: number;
+        postmortems: import("@sentinelops/tools/postmortems").PostmortemRecord[];
+    }>, any, any, import("@mastra/core").ToolExecutionContext<z.ZodObject<{
+        service: z.ZodOptional<z.ZodString>;
+        status: z.ZodOptional<z.ZodEnum<["DRAFT", "PUBLISHED"]>>;
+    }, "strip", z.ZodTypeAny, {
+        status?: "DRAFT" | "PUBLISHED" | undefined;
+        service?: string | undefined;
+    }, {
+        status?: "DRAFT" | "PUBLISHED" | undefined;
+        service?: string | undefined;
+    }>, any, any>> & {
+        inputSchema: z.ZodObject<{
+            service: z.ZodOptional<z.ZodString>;
+            status: z.ZodOptional<z.ZodEnum<["DRAFT", "PUBLISHED"]>>;
+        }, "strip", z.ZodTypeAny, {
+            status?: "DRAFT" | "PUBLISHED" | undefined;
+            service?: string | undefined;
+        }, {
+            status?: "DRAFT" | "PUBLISHED" | undefined;
+            service?: string | undefined;
+        }>;
+        outputSchema: z.ZodObject<{
+            count: z.ZodNumber;
+            postmortems: z.ZodArray<z.ZodType<import("@sentinelops/tools/postmortems").PostmortemRecord, z.ZodTypeDef, import("@sentinelops/tools/postmortems").PostmortemRecord>, "many">;
+        }, "strip", z.ZodTypeAny, {
+            count: number;
+            postmortems: import("@sentinelops/tools/postmortems").PostmortemRecord[];
+        }, {
+            count: number;
+            postmortems: import("@sentinelops/tools/postmortems").PostmortemRecord[];
+        }>;
+        execute: (context: import("@mastra/core").ToolExecutionContext<z.ZodObject<{
+            service: z.ZodOptional<z.ZodString>;
+            status: z.ZodOptional<z.ZodEnum<["DRAFT", "PUBLISHED"]>>;
+        }, "strip", z.ZodTypeAny, {
+            status?: "DRAFT" | "PUBLISHED" | undefined;
+            service?: string | undefined;
+        }, {
+            status?: "DRAFT" | "PUBLISHED" | undefined;
+            service?: string | undefined;
+        }>, any, any>, options: import("@mastra/core").ToolInvocationOptions) => Promise<any>;
+    };
+    queryLogsTool: import("@mastra/core/tools").Tool<z.ZodObject<{
+        query: z.ZodString;
+        timeRange: z.ZodOptional<z.ZodObject<{
+            from: z.ZodOptional<z.ZodString>;
+            to: z.ZodOptional<z.ZodString>;
+        }, "strip", z.ZodTypeAny, {
+            from?: string | undefined;
+            to?: string | undefined;
+        }, {
+            from?: string | undefined;
+            to?: string | undefined;
+        }>>;
+        limit: z.ZodDefault<z.ZodNumber>;
+    }, "strip", z.ZodTypeAny, {
+        query: string;
+        limit: number;
+        timeRange?: {
+            from?: string | undefined;
+            to?: string | undefined;
+        } | undefined;
+    }, {
+        query: string;
+        timeRange?: {
+            from?: string | undefined;
+            to?: string | undefined;
+        } | undefined;
+        limit?: number | undefined;
+    }>, z.ZodObject<{
+        count: z.ZodNumber;
+        logs: z.ZodArray<z.ZodType<import("@sentinelops/tools/logs").LogRecord, z.ZodTypeDef, import("@sentinelops/tools/logs").LogRecord>, "many">;
+    }, "strip", z.ZodTypeAny, {
+        count: number;
+        logs: import("@sentinelops/tools/logs").LogRecord[];
+    }, {
+        count: number;
+        logs: import("@sentinelops/tools/logs").LogRecord[];
+    }>, any, any, import("@mastra/core").ToolExecutionContext<z.ZodObject<{
+        query: z.ZodString;
+        timeRange: z.ZodOptional<z.ZodObject<{
+            from: z.ZodOptional<z.ZodString>;
+            to: z.ZodOptional<z.ZodString>;
+        }, "strip", z.ZodTypeAny, {
+            from?: string | undefined;
+            to?: string | undefined;
+        }, {
+            from?: string | undefined;
+            to?: string | undefined;
+        }>>;
+        limit: z.ZodDefault<z.ZodNumber>;
+    }, "strip", z.ZodTypeAny, {
+        query: string;
+        limit: number;
+        timeRange?: {
+            from?: string | undefined;
+            to?: string | undefined;
+        } | undefined;
+    }, {
+        query: string;
+        timeRange?: {
+            from?: string | undefined;
+            to?: string | undefined;
+        } | undefined;
+        limit?: number | undefined;
+    }>, any, any>> & {
+        inputSchema: z.ZodObject<{
+            query: z.ZodString;
+            timeRange: z.ZodOptional<z.ZodObject<{
+                from: z.ZodOptional<z.ZodString>;
+                to: z.ZodOptional<z.ZodString>;
+            }, "strip", z.ZodTypeAny, {
+                from?: string | undefined;
+                to?: string | undefined;
+            }, {
+                from?: string | undefined;
+                to?: string | undefined;
+            }>>;
+            limit: z.ZodDefault<z.ZodNumber>;
+        }, "strip", z.ZodTypeAny, {
+            query: string;
+            limit: number;
+            timeRange?: {
+                from?: string | undefined;
+                to?: string | undefined;
+            } | undefined;
+        }, {
+            query: string;
+            timeRange?: {
+                from?: string | undefined;
+                to?: string | undefined;
+            } | undefined;
+            limit?: number | undefined;
+        }>;
+        outputSchema: z.ZodObject<{
+            count: z.ZodNumber;
+            logs: z.ZodArray<z.ZodType<import("@sentinelops/tools/logs").LogRecord, z.ZodTypeDef, import("@sentinelops/tools/logs").LogRecord>, "many">;
+        }, "strip", z.ZodTypeAny, {
+            count: number;
+            logs: import("@sentinelops/tools/logs").LogRecord[];
+        }, {
+            count: number;
+            logs: import("@sentinelops/tools/logs").LogRecord[];
+        }>;
+        execute: (context: import("@mastra/core").ToolExecutionContext<z.ZodObject<{
+            query: z.ZodString;
+            timeRange: z.ZodOptional<z.ZodObject<{
+                from: z.ZodOptional<z.ZodString>;
+                to: z.ZodOptional<z.ZodString>;
+            }, "strip", z.ZodTypeAny, {
+                from?: string | undefined;
+                to?: string | undefined;
+            }, {
+                from?: string | undefined;
+                to?: string | undefined;
+            }>>;
+            limit: z.ZodDefault<z.ZodNumber>;
+        }, "strip", z.ZodTypeAny, {
+            query: string;
+            limit: number;
+            timeRange?: {
+                from?: string | undefined;
+                to?: string | undefined;
+            } | undefined;
+        }, {
+            query: string;
+            timeRange?: {
+                from?: string | undefined;
+                to?: string | undefined;
+            } | undefined;
+            limit?: number | undefined;
+        }>, any, any>, options: import("@mastra/core").ToolInvocationOptions) => Promise<any>;
+    };
+    createStrategyTool: import("@mastra/core/tools").Tool<z.ZodObject<{
+        title: z.ZodString;
+        focusArea: z.ZodString;
+        constraints: z.ZodOptional<z.ZodString>;
+        plan: z.ZodString;
+        metrics: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodAny>>;
+    }, "strip", z.ZodTypeAny, {
+        title: string;
+        focusArea: string;
+        plan: string;
+        constraints?: string | undefined;
+        metrics?: Record<string, any> | undefined;
+    }, {
+        title: string;
+        focusArea: string;
+        plan: string;
+        constraints?: string | undefined;
+        metrics?: Record<string, any> | undefined;
+    }>, z.ZodObject<{
+        id: z.ZodString;
+        title: z.ZodString;
+        focusArea: z.ZodString;
+        constraints: z.ZodNullable<z.ZodString>;
+        plan: z.ZodString;
+        metrics: z.ZodNullable<z.ZodRecord<z.ZodString, z.ZodAny>>;
+        createdAt: z.ZodString;
+        updatedAt: z.ZodString;
+    }, "strip", z.ZodTypeAny, {
+        id: string;
+        createdAt: string;
+        updatedAt: string;
+        title: string;
+        focusArea: string;
+        constraints: string | null;
+        plan: string;
+        metrics: Record<string, any> | null;
+    }, {
+        id: string;
+        createdAt: string;
+        updatedAt: string;
+        title: string;
+        focusArea: string;
+        constraints: string | null;
+        plan: string;
+        metrics: Record<string, any> | null;
+    }>, any, any, import("@mastra/core").ToolExecutionContext<z.ZodObject<{
+        title: z.ZodString;
+        focusArea: z.ZodString;
+        constraints: z.ZodOptional<z.ZodString>;
+        plan: z.ZodString;
+        metrics: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodAny>>;
+    }, "strip", z.ZodTypeAny, {
+        title: string;
+        focusArea: string;
+        plan: string;
+        constraints?: string | undefined;
+        metrics?: Record<string, any> | undefined;
+    }, {
+        title: string;
+        focusArea: string;
+        plan: string;
+        constraints?: string | undefined;
+        metrics?: Record<string, any> | undefined;
+    }>, any, any>> & {
+        inputSchema: z.ZodObject<{
+            title: z.ZodString;
+            focusArea: z.ZodString;
+            constraints: z.ZodOptional<z.ZodString>;
+            plan: z.ZodString;
+            metrics: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodAny>>;
+        }, "strip", z.ZodTypeAny, {
+            title: string;
+            focusArea: string;
+            plan: string;
+            constraints?: string | undefined;
+            metrics?: Record<string, any> | undefined;
+        }, {
+            title: string;
+            focusArea: string;
+            plan: string;
+            constraints?: string | undefined;
+            metrics?: Record<string, any> | undefined;
+        }>;
+        outputSchema: z.ZodObject<{
+            id: z.ZodString;
+            title: z.ZodString;
+            focusArea: z.ZodString;
+            constraints: z.ZodNullable<z.ZodString>;
+            plan: z.ZodString;
+            metrics: z.ZodNullable<z.ZodRecord<z.ZodString, z.ZodAny>>;
+            createdAt: z.ZodString;
+            updatedAt: z.ZodString;
+        }, "strip", z.ZodTypeAny, {
+            id: string;
+            createdAt: string;
+            updatedAt: string;
+            title: string;
+            focusArea: string;
+            constraints: string | null;
+            plan: string;
+            metrics: Record<string, any> | null;
+        }, {
+            id: string;
+            createdAt: string;
+            updatedAt: string;
+            title: string;
+            focusArea: string;
+            constraints: string | null;
+            plan: string;
+            metrics: Record<string, any> | null;
+        }>;
+        execute: (context: import("@mastra/core").ToolExecutionContext<z.ZodObject<{
+            title: z.ZodString;
+            focusArea: z.ZodString;
+            constraints: z.ZodOptional<z.ZodString>;
+            plan: z.ZodString;
+            metrics: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodAny>>;
+        }, "strip", z.ZodTypeAny, {
+            title: string;
+            focusArea: string;
+            plan: string;
+            constraints?: string | undefined;
+            metrics?: Record<string, any> | undefined;
+        }, {
+            title: string;
+            focusArea: string;
+            plan: string;
+            constraints?: string | undefined;
+            metrics?: Record<string, any> | undefined;
+        }>, any, any>, options: import("@mastra/core").ToolInvocationOptions) => Promise<any>;
+    };
+}, Record<string, import("@mastra/core").Metric>>;
 export declare const discordTriageAgent: Agent<"DiscordTriageAgent", {
     sampleLogsTool: import("@mastra/core/tools").Tool<z.ZodObject<{
         incidentId: z.ZodString;
@@ -3790,15 +5502,15 @@ export declare const discordTriageAgent: Agent<"DiscordTriageAgent", {
         ttlSeconds?: number | undefined;
     }>, z.ZodObject<{
         incidentId: z.ZodString;
-        logs: z.ZodArray<z.ZodType<import("@sentinelops/tools").LogRecord, z.ZodTypeDef, import("@sentinelops/tools").LogRecord>, "many">;
+        logs: z.ZodArray<z.ZodType<import("@sentinelops/tools/logs").LogRecord, z.ZodTypeDef, import("@sentinelops/tools/logs").LogRecord>, "many">;
         expiresAt: z.ZodString;
     }, "strip", z.ZodTypeAny, {
         incidentId: string;
-        logs: import("@sentinelops/tools").LogRecord[];
+        logs: import("@sentinelops/tools/logs").LogRecord[];
         expiresAt: string;
     }, {
         incidentId: string;
-        logs: import("@sentinelops/tools").LogRecord[];
+        logs: import("@sentinelops/tools/logs").LogRecord[];
         expiresAt: string;
     }>, any, any, import("@mastra/core").ToolExecutionContext<z.ZodObject<{
         incidentId: z.ZodString;
@@ -3822,15 +5534,15 @@ export declare const discordTriageAgent: Agent<"DiscordTriageAgent", {
         }>;
         outputSchema: z.ZodObject<{
             incidentId: z.ZodString;
-            logs: z.ZodArray<z.ZodType<import("@sentinelops/tools").LogRecord, z.ZodTypeDef, import("@sentinelops/tools").LogRecord>, "many">;
+            logs: z.ZodArray<z.ZodType<import("@sentinelops/tools/logs").LogRecord, z.ZodTypeDef, import("@sentinelops/tools/logs").LogRecord>, "many">;
             expiresAt: z.ZodString;
         }, "strip", z.ZodTypeAny, {
             incidentId: string;
-            logs: import("@sentinelops/tools").LogRecord[];
+            logs: import("@sentinelops/tools/logs").LogRecord[];
             expiresAt: string;
         }, {
             incidentId: string;
-            logs: import("@sentinelops/tools").LogRecord[];
+            logs: import("@sentinelops/tools/logs").LogRecord[];
             expiresAt: string;
         }>;
         execute: (context: import("@mastra/core").ToolExecutionContext<z.ZodObject<{
@@ -3999,7 +5711,7 @@ export declare const discordTriageAgent: Agent<"DiscordTriageAgent", {
         metadata?: Record<string, any> | undefined;
         source?: string | undefined;
         level?: "DEBUG" | "INFO" | "WARN" | "ERROR" | "FATAL" | undefined;
-    }>, z.ZodType<import("@sentinelops/tools").LogRecord, z.ZodTypeDef, import("@sentinelops/tools").LogRecord>, any, any, import("@mastra/core").ToolExecutionContext<z.ZodObject<{
+    }>, z.ZodType<import("@sentinelops/tools/logs").LogRecord, z.ZodTypeDef, import("@sentinelops/tools/logs").LogRecord>, any, any, import("@mastra/core").ToolExecutionContext<z.ZodObject<{
         incidentId: z.ZodString;
         source: z.ZodDefault<z.ZodString>;
         level: z.ZodDefault<z.ZodEnum<["DEBUG", "INFO", "WARN", "ERROR", "FATAL"]>>;
@@ -4037,7 +5749,7 @@ export declare const discordTriageAgent: Agent<"DiscordTriageAgent", {
             source?: string | undefined;
             level?: "DEBUG" | "INFO" | "WARN" | "ERROR" | "FATAL" | undefined;
         }>;
-        outputSchema: z.ZodType<import("@sentinelops/tools").LogRecord, z.ZodTypeDef, import("@sentinelops/tools").LogRecord>;
+        outputSchema: z.ZodType<import("@sentinelops/tools/logs").LogRecord, z.ZodTypeDef, import("@sentinelops/tools/logs").LogRecord>;
         execute: (context: import("@mastra/core").ToolExecutionContext<z.ZodObject<{
             incidentId: z.ZodString;
             source: z.ZodDefault<z.ZodString>;
@@ -4643,13 +6355,13 @@ export declare const agentBprime: Agent<"AgentBprime", {
         service?: string | undefined;
     }>, z.ZodObject<{
         count: z.ZodNumber;
-        postmortems: z.ZodArray<z.ZodType<import("@sentinelops/tools").PostmortemRecord, z.ZodTypeDef, import("@sentinelops/tools").PostmortemRecord>, "many">;
+        postmortems: z.ZodArray<z.ZodType<import("@sentinelops/tools/postmortems").PostmortemRecord, z.ZodTypeDef, import("@sentinelops/tools/postmortems").PostmortemRecord>, "many">;
     }, "strip", z.ZodTypeAny, {
         count: number;
-        postmortems: import("@sentinelops/tools").PostmortemRecord[];
+        postmortems: import("@sentinelops/tools/postmortems").PostmortemRecord[];
     }, {
         count: number;
-        postmortems: import("@sentinelops/tools").PostmortemRecord[];
+        postmortems: import("@sentinelops/tools/postmortems").PostmortemRecord[];
     }>, any, any, import("@mastra/core").ToolExecutionContext<z.ZodObject<{
         service: z.ZodOptional<z.ZodString>;
         status: z.ZodOptional<z.ZodEnum<["DRAFT", "PUBLISHED"]>>;
@@ -4672,13 +6384,13 @@ export declare const agentBprime: Agent<"AgentBprime", {
         }>;
         outputSchema: z.ZodObject<{
             count: z.ZodNumber;
-            postmortems: z.ZodArray<z.ZodType<import("@sentinelops/tools").PostmortemRecord, z.ZodTypeDef, import("@sentinelops/tools").PostmortemRecord>, "many">;
+            postmortems: z.ZodArray<z.ZodType<import("@sentinelops/tools/postmortems").PostmortemRecord, z.ZodTypeDef, import("@sentinelops/tools/postmortems").PostmortemRecord>, "many">;
         }, "strip", z.ZodTypeAny, {
             count: number;
-            postmortems: import("@sentinelops/tools").PostmortemRecord[];
+            postmortems: import("@sentinelops/tools/postmortems").PostmortemRecord[];
         }, {
             count: number;
-            postmortems: import("@sentinelops/tools").PostmortemRecord[];
+            postmortems: import("@sentinelops/tools/postmortems").PostmortemRecord[];
         }>;
         execute: (context: import("@mastra/core").ToolExecutionContext<z.ZodObject<{
             service: z.ZodOptional<z.ZodString>;
@@ -4720,13 +6432,13 @@ export declare const agentBprime: Agent<"AgentBprime", {
         limit?: number | undefined;
     }>, z.ZodObject<{
         count: z.ZodNumber;
-        logs: z.ZodArray<z.ZodType<import("@sentinelops/tools").LogRecord, z.ZodTypeDef, import("@sentinelops/tools").LogRecord>, "many">;
+        logs: z.ZodArray<z.ZodType<import("@sentinelops/tools/logs").LogRecord, z.ZodTypeDef, import("@sentinelops/tools/logs").LogRecord>, "many">;
     }, "strip", z.ZodTypeAny, {
         count: number;
-        logs: import("@sentinelops/tools").LogRecord[];
+        logs: import("@sentinelops/tools/logs").LogRecord[];
     }, {
         count: number;
-        logs: import("@sentinelops/tools").LogRecord[];
+        logs: import("@sentinelops/tools/logs").LogRecord[];
     }>, any, any, import("@mastra/core").ToolExecutionContext<z.ZodObject<{
         query: z.ZodString;
         timeRange: z.ZodOptional<z.ZodObject<{
@@ -4785,13 +6497,13 @@ export declare const agentBprime: Agent<"AgentBprime", {
         }>;
         outputSchema: z.ZodObject<{
             count: z.ZodNumber;
-            logs: z.ZodArray<z.ZodType<import("@sentinelops/tools").LogRecord, z.ZodTypeDef, import("@sentinelops/tools").LogRecord>, "many">;
+            logs: z.ZodArray<z.ZodType<import("@sentinelops/tools/logs").LogRecord, z.ZodTypeDef, import("@sentinelops/tools/logs").LogRecord>, "many">;
         }, "strip", z.ZodTypeAny, {
             count: number;
-            logs: import("@sentinelops/tools").LogRecord[];
+            logs: import("@sentinelops/tools/logs").LogRecord[];
         }, {
             count: number;
-            logs: import("@sentinelops/tools").LogRecord[];
+            logs: import("@sentinelops/tools/logs").LogRecord[];
         }>;
         execute: (context: import("@mastra/core").ToolExecutionContext<z.ZodObject<{
             query: z.ZodString;
@@ -5551,13 +7263,13 @@ export declare const agentsRegistry: {
             service?: string | undefined;
         }>, z.ZodObject<{
             count: z.ZodNumber;
-            postmortems: z.ZodArray<z.ZodType<import("@sentinelops/tools").PostmortemRecord, z.ZodTypeDef, import("@sentinelops/tools").PostmortemRecord>, "many">;
+            postmortems: z.ZodArray<z.ZodType<import("@sentinelops/tools/postmortems").PostmortemRecord, z.ZodTypeDef, import("@sentinelops/tools/postmortems").PostmortemRecord>, "many">;
         }, "strip", z.ZodTypeAny, {
             count: number;
-            postmortems: import("@sentinelops/tools").PostmortemRecord[];
+            postmortems: import("@sentinelops/tools/postmortems").PostmortemRecord[];
         }, {
             count: number;
-            postmortems: import("@sentinelops/tools").PostmortemRecord[];
+            postmortems: import("@sentinelops/tools/postmortems").PostmortemRecord[];
         }>, any, any, import("@mastra/core").ToolExecutionContext<z.ZodObject<{
             service: z.ZodOptional<z.ZodString>;
             status: z.ZodOptional<z.ZodEnum<["DRAFT", "PUBLISHED"]>>;
@@ -5580,13 +7292,13 @@ export declare const agentsRegistry: {
             }>;
             outputSchema: z.ZodObject<{
                 count: z.ZodNumber;
-                postmortems: z.ZodArray<z.ZodType<import("@sentinelops/tools").PostmortemRecord, z.ZodTypeDef, import("@sentinelops/tools").PostmortemRecord>, "many">;
+                postmortems: z.ZodArray<z.ZodType<import("@sentinelops/tools/postmortems").PostmortemRecord, z.ZodTypeDef, import("@sentinelops/tools/postmortems").PostmortemRecord>, "many">;
             }, "strip", z.ZodTypeAny, {
                 count: number;
-                postmortems: import("@sentinelops/tools").PostmortemRecord[];
+                postmortems: import("@sentinelops/tools/postmortems").PostmortemRecord[];
             }, {
                 count: number;
-                postmortems: import("@sentinelops/tools").PostmortemRecord[];
+                postmortems: import("@sentinelops/tools/postmortems").PostmortemRecord[];
             }>;
             execute: (context: import("@mastra/core").ToolExecutionContext<z.ZodObject<{
                 service: z.ZodOptional<z.ZodString>;
@@ -5611,7 +7323,7 @@ export declare const agentsRegistry: {
             actionId: string;
             metadata?: Record<string, any> | undefined;
             approvedBy?: string | undefined;
-        }>, z.ZodType<import("@sentinelops/tools").IncidentAction, z.ZodTypeDef, import("@sentinelops/tools").IncidentAction>, any, any, import("@mastra/core").ToolExecutionContext<z.ZodObject<{
+        }>, z.ZodType<import("@sentinelops/tools/actions").IncidentAction, z.ZodTypeDef, import("@sentinelops/tools/actions").IncidentAction>, any, any, import("@mastra/core").ToolExecutionContext<z.ZodObject<{
             actionId: z.ZodString;
             approvedBy: z.ZodOptional<z.ZodString>;
             metadata: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodAny>>;
@@ -5637,7 +7349,7 @@ export declare const agentsRegistry: {
                 metadata?: Record<string, any> | undefined;
                 approvedBy?: string | undefined;
             }>;
-            outputSchema: z.ZodType<import("@sentinelops/tools").IncidentAction, z.ZodTypeDef, import("@sentinelops/tools").IncidentAction>;
+            outputSchema: z.ZodType<import("@sentinelops/tools/actions").IncidentAction, z.ZodTypeDef, import("@sentinelops/tools/actions").IncidentAction>;
             execute: (context: import("@mastra/core").ToolExecutionContext<z.ZodObject<{
                 actionId: z.ZodString;
                 approvedBy: z.ZodOptional<z.ZodString>;
@@ -5667,7 +7379,7 @@ export declare const agentsRegistry: {
             metadata?: Record<string, any> | undefined;
             rejectedBy?: string | undefined;
             reason?: string | undefined;
-        }>, z.ZodType<import("@sentinelops/tools").IncidentAction, z.ZodTypeDef, import("@sentinelops/tools").IncidentAction>, any, any, import("@mastra/core").ToolExecutionContext<z.ZodObject<{
+        }>, z.ZodType<import("@sentinelops/tools/actions").IncidentAction, z.ZodTypeDef, import("@sentinelops/tools/actions").IncidentAction>, any, any, import("@mastra/core").ToolExecutionContext<z.ZodObject<{
             actionId: z.ZodString;
             rejectedBy: z.ZodOptional<z.ZodString>;
             reason: z.ZodOptional<z.ZodString>;
@@ -5699,7 +7411,7 @@ export declare const agentsRegistry: {
                 rejectedBy?: string | undefined;
                 reason?: string | undefined;
             }>;
-            outputSchema: z.ZodType<import("@sentinelops/tools").IncidentAction, z.ZodTypeDef, import("@sentinelops/tools").IncidentAction>;
+            outputSchema: z.ZodType<import("@sentinelops/tools/actions").IncidentAction, z.ZodTypeDef, import("@sentinelops/tools/actions").IncidentAction>;
             execute: (context: import("@mastra/core").ToolExecutionContext<z.ZodObject<{
                 actionId: z.ZodString;
                 rejectedBy: z.ZodOptional<z.ZodString>;
@@ -6123,13 +7835,13 @@ export declare const agentsRegistry: {
             limit?: number | undefined;
         }>, z.ZodObject<{
             count: z.ZodNumber;
-            logs: z.ZodArray<z.ZodType<import("@sentinelops/tools").LogRecord, z.ZodTypeDef, import("@sentinelops/tools").LogRecord>, "many">;
+            logs: z.ZodArray<z.ZodType<import("@sentinelops/tools/logs").LogRecord, z.ZodTypeDef, import("@sentinelops/tools/logs").LogRecord>, "many">;
         }, "strip", z.ZodTypeAny, {
             count: number;
-            logs: import("@sentinelops/tools").LogRecord[];
+            logs: import("@sentinelops/tools/logs").LogRecord[];
         }, {
             count: number;
-            logs: import("@sentinelops/tools").LogRecord[];
+            logs: import("@sentinelops/tools/logs").LogRecord[];
         }>, any, any, import("@mastra/core").ToolExecutionContext<z.ZodObject<{
             query: z.ZodString;
             timeRange: z.ZodOptional<z.ZodObject<{
@@ -6188,13 +7900,13 @@ export declare const agentsRegistry: {
             }>;
             outputSchema: z.ZodObject<{
                 count: z.ZodNumber;
-                logs: z.ZodArray<z.ZodType<import("@sentinelops/tools").LogRecord, z.ZodTypeDef, import("@sentinelops/tools").LogRecord>, "many">;
+                logs: z.ZodArray<z.ZodType<import("@sentinelops/tools/logs").LogRecord, z.ZodTypeDef, import("@sentinelops/tools/logs").LogRecord>, "many">;
             }, "strip", z.ZodTypeAny, {
                 count: number;
-                logs: import("@sentinelops/tools").LogRecord[];
+                logs: import("@sentinelops/tools/logs").LogRecord[];
             }, {
                 count: number;
-                logs: import("@sentinelops/tools").LogRecord[];
+                logs: import("@sentinelops/tools/logs").LogRecord[];
             }>;
             execute: (context: import("@mastra/core").ToolExecutionContext<z.ZodObject<{
                 query: z.ZodString;
@@ -6236,15 +7948,15 @@ export declare const agentsRegistry: {
             ttlSeconds?: number | undefined;
         }>, z.ZodObject<{
             incidentId: z.ZodString;
-            logs: z.ZodArray<z.ZodType<import("@sentinelops/tools").LogRecord, z.ZodTypeDef, import("@sentinelops/tools").LogRecord>, "many">;
+            logs: z.ZodArray<z.ZodType<import("@sentinelops/tools/logs").LogRecord, z.ZodTypeDef, import("@sentinelops/tools/logs").LogRecord>, "many">;
             expiresAt: z.ZodString;
         }, "strip", z.ZodTypeAny, {
             incidentId: string;
-            logs: import("@sentinelops/tools").LogRecord[];
+            logs: import("@sentinelops/tools/logs").LogRecord[];
             expiresAt: string;
         }, {
             incidentId: string;
-            logs: import("@sentinelops/tools").LogRecord[];
+            logs: import("@sentinelops/tools/logs").LogRecord[];
             expiresAt: string;
         }>, any, any, import("@mastra/core").ToolExecutionContext<z.ZodObject<{
             incidentId: z.ZodString;
@@ -6268,15 +7980,15 @@ export declare const agentsRegistry: {
             }>;
             outputSchema: z.ZodObject<{
                 incidentId: z.ZodString;
-                logs: z.ZodArray<z.ZodType<import("@sentinelops/tools").LogRecord, z.ZodTypeDef, import("@sentinelops/tools").LogRecord>, "many">;
+                logs: z.ZodArray<z.ZodType<import("@sentinelops/tools/logs").LogRecord, z.ZodTypeDef, import("@sentinelops/tools/logs").LogRecord>, "many">;
                 expiresAt: z.ZodString;
             }, "strip", z.ZodTypeAny, {
                 incidentId: string;
-                logs: import("@sentinelops/tools").LogRecord[];
+                logs: import("@sentinelops/tools/logs").LogRecord[];
                 expiresAt: string;
             }, {
                 incidentId: string;
-                logs: import("@sentinelops/tools").LogRecord[];
+                logs: import("@sentinelops/tools/logs").LogRecord[];
                 expiresAt: string;
             }>;
             execute: (context: import("@mastra/core").ToolExecutionContext<z.ZodObject<{
@@ -6736,7 +8448,7 @@ export declare const agentsRegistry: {
             draftText: string;
             attachments?: string[] | undefined;
             authors?: string[] | undefined;
-        }>, z.ZodType<import("@sentinelops/tools").PostmortemRecord, z.ZodTypeDef, import("@sentinelops/tools").PostmortemRecord>, any, any, import("@mastra/core").ToolExecutionContext<z.ZodObject<{
+        }>, z.ZodType<import("@sentinelops/tools/postmortems").PostmortemRecord, z.ZodTypeDef, import("@sentinelops/tools/postmortems").PostmortemRecord>, any, any, import("@mastra/core").ToolExecutionContext<z.ZodObject<{
             incidentId: z.ZodString;
             service: z.ZodString;
             draftText: z.ZodString;
@@ -6774,7 +8486,7 @@ export declare const agentsRegistry: {
                 attachments?: string[] | undefined;
                 authors?: string[] | undefined;
             }>;
-            outputSchema: z.ZodType<import("@sentinelops/tools").PostmortemRecord, z.ZodTypeDef, import("@sentinelops/tools").PostmortemRecord>;
+            outputSchema: z.ZodType<import("@sentinelops/tools/postmortems").PostmortemRecord, z.ZodTypeDef, import("@sentinelops/tools/postmortems").PostmortemRecord>;
             execute: (context: import("@mastra/core").ToolExecutionContext<z.ZodObject<{
                 incidentId: z.ZodString;
                 service: z.ZodString;
@@ -6813,7 +8525,7 @@ export declare const agentsRegistry: {
             label: string;
             risk: "LOW" | "MEDIUM" | "HIGH";
             metadata?: Record<string, any> | undefined;
-        }>, z.ZodType<import("@sentinelops/tools").IncidentAction, z.ZodTypeDef, import("@sentinelops/tools").IncidentAction>, any, any, import("@mastra/core").ToolExecutionContext<z.ZodObject<{
+        }>, z.ZodType<import("@sentinelops/tools/actions").IncidentAction, z.ZodTypeDef, import("@sentinelops/tools/actions").IncidentAction>, any, any, import("@mastra/core").ToolExecutionContext<z.ZodObject<{
             incidentId: z.ZodString;
             label: z.ZodString;
             type: z.ZodEnum<["ROLLBACK", "RESTART", "SCALE", "INVESTIGATE", "POSTMORTEM"]>;
@@ -6851,7 +8563,7 @@ export declare const agentsRegistry: {
                 risk: "LOW" | "MEDIUM" | "HIGH";
                 metadata?: Record<string, any> | undefined;
             }>;
-            outputSchema: z.ZodType<import("@sentinelops/tools").IncidentAction, z.ZodTypeDef, import("@sentinelops/tools").IncidentAction>;
+            outputSchema: z.ZodType<import("@sentinelops/tools/actions").IncidentAction, z.ZodTypeDef, import("@sentinelops/tools/actions").IncidentAction>;
             execute: (context: import("@mastra/core").ToolExecutionContext<z.ZodObject<{
                 incidentId: z.ZodString;
                 label: z.ZodString;
@@ -6892,7 +8604,7 @@ export declare const agentsRegistry: {
             metadata?: Record<string, any> | undefined;
             source?: string | undefined;
             level?: "DEBUG" | "INFO" | "WARN" | "ERROR" | "FATAL" | undefined;
-        }>, z.ZodType<import("@sentinelops/tools").LogRecord, z.ZodTypeDef, import("@sentinelops/tools").LogRecord>, any, any, import("@mastra/core").ToolExecutionContext<z.ZodObject<{
+        }>, z.ZodType<import("@sentinelops/tools/logs").LogRecord, z.ZodTypeDef, import("@sentinelops/tools/logs").LogRecord>, any, any, import("@mastra/core").ToolExecutionContext<z.ZodObject<{
             incidentId: z.ZodString;
             source: z.ZodDefault<z.ZodString>;
             level: z.ZodDefault<z.ZodEnum<["DEBUG", "INFO", "WARN", "ERROR", "FATAL"]>>;
@@ -6930,7 +8642,7 @@ export declare const agentsRegistry: {
                 source?: string | undefined;
                 level?: "DEBUG" | "INFO" | "WARN" | "ERROR" | "FATAL" | undefined;
             }>;
-            outputSchema: z.ZodType<import("@sentinelops/tools").LogRecord, z.ZodTypeDef, import("@sentinelops/tools").LogRecord>;
+            outputSchema: z.ZodType<import("@sentinelops/tools/logs").LogRecord, z.ZodTypeDef, import("@sentinelops/tools/logs").LogRecord>;
             execute: (context: import("@mastra/core").ToolExecutionContext<z.ZodObject<{
                 incidentId: z.ZodString;
                 source: z.ZodDefault<z.ZodString>;
@@ -7412,7 +9124,7 @@ export declare const agentsRegistry: {
             draftText: string;
             attachments?: string[] | undefined;
             authors?: string[] | undefined;
-        }>, z.ZodType<import("@sentinelops/tools").PostmortemRecord, z.ZodTypeDef, import("@sentinelops/tools").PostmortemRecord>, any, any, import("@mastra/core").ToolExecutionContext<z.ZodObject<{
+        }>, z.ZodType<import("@sentinelops/tools/postmortems").PostmortemRecord, z.ZodTypeDef, import("@sentinelops/tools/postmortems").PostmortemRecord>, any, any, import("@mastra/core").ToolExecutionContext<z.ZodObject<{
             incidentId: z.ZodString;
             service: z.ZodString;
             draftText: z.ZodString;
@@ -7450,7 +9162,7 @@ export declare const agentsRegistry: {
                 attachments?: string[] | undefined;
                 authors?: string[] | undefined;
             }>;
-            outputSchema: z.ZodType<import("@sentinelops/tools").PostmortemRecord, z.ZodTypeDef, import("@sentinelops/tools").PostmortemRecord>;
+            outputSchema: z.ZodType<import("@sentinelops/tools/postmortems").PostmortemRecord, z.ZodTypeDef, import("@sentinelops/tools/postmortems").PostmortemRecord>;
             execute: (context: import("@mastra/core").ToolExecutionContext<z.ZodObject<{
                 incidentId: z.ZodString;
                 service: z.ZodString;
@@ -7480,7 +9192,7 @@ export declare const agentsRegistry: {
         }, {
             postmortemId: string;
             publishedBy?: string | undefined;
-        }>, z.ZodType<import("@sentinelops/tools").PostmortemRecord, z.ZodTypeDef, import("@sentinelops/tools").PostmortemRecord>, any, any, import("@mastra/core").ToolExecutionContext<z.ZodObject<{
+        }>, z.ZodType<import("@sentinelops/tools/postmortems").PostmortemRecord, z.ZodTypeDef, import("@sentinelops/tools/postmortems").PostmortemRecord>, any, any, import("@mastra/core").ToolExecutionContext<z.ZodObject<{
             postmortemId: z.ZodString;
             publishedBy: z.ZodOptional<z.ZodString>;
         }, "strip", z.ZodTypeAny, {
@@ -7500,7 +9212,7 @@ export declare const agentsRegistry: {
                 postmortemId: string;
                 publishedBy?: string | undefined;
             }>;
-            outputSchema: z.ZodType<import("@sentinelops/tools").PostmortemRecord, z.ZodTypeDef, import("@sentinelops/tools").PostmortemRecord>;
+            outputSchema: z.ZodType<import("@sentinelops/tools/postmortems").PostmortemRecord, z.ZodTypeDef, import("@sentinelops/tools/postmortems").PostmortemRecord>;
             execute: (context: import("@mastra/core").ToolExecutionContext<z.ZodObject<{
                 postmortemId: z.ZodString;
                 publishedBy: z.ZodOptional<z.ZodString>;
@@ -7523,13 +9235,13 @@ export declare const agentsRegistry: {
             service?: string | undefined;
         }>, z.ZodObject<{
             count: z.ZodNumber;
-            postmortems: z.ZodArray<z.ZodType<import("@sentinelops/tools").PostmortemRecord, z.ZodTypeDef, import("@sentinelops/tools").PostmortemRecord>, "many">;
+            postmortems: z.ZodArray<z.ZodType<import("@sentinelops/tools/postmortems").PostmortemRecord, z.ZodTypeDef, import("@sentinelops/tools/postmortems").PostmortemRecord>, "many">;
         }, "strip", z.ZodTypeAny, {
             count: number;
-            postmortems: import("@sentinelops/tools").PostmortemRecord[];
+            postmortems: import("@sentinelops/tools/postmortems").PostmortemRecord[];
         }, {
             count: number;
-            postmortems: import("@sentinelops/tools").PostmortemRecord[];
+            postmortems: import("@sentinelops/tools/postmortems").PostmortemRecord[];
         }>, any, any, import("@mastra/core").ToolExecutionContext<z.ZodObject<{
             service: z.ZodOptional<z.ZodString>;
             status: z.ZodOptional<z.ZodEnum<["DRAFT", "PUBLISHED"]>>;
@@ -7552,13 +9264,13 @@ export declare const agentsRegistry: {
             }>;
             outputSchema: z.ZodObject<{
                 count: z.ZodNumber;
-                postmortems: z.ZodArray<z.ZodType<import("@sentinelops/tools").PostmortemRecord, z.ZodTypeDef, import("@sentinelops/tools").PostmortemRecord>, "many">;
+                postmortems: z.ZodArray<z.ZodType<import("@sentinelops/tools/postmortems").PostmortemRecord, z.ZodTypeDef, import("@sentinelops/tools/postmortems").PostmortemRecord>, "many">;
             }, "strip", z.ZodTypeAny, {
                 count: number;
-                postmortems: import("@sentinelops/tools").PostmortemRecord[];
+                postmortems: import("@sentinelops/tools/postmortems").PostmortemRecord[];
             }, {
                 count: number;
-                postmortems: import("@sentinelops/tools").PostmortemRecord[];
+                postmortems: import("@sentinelops/tools/postmortems").PostmortemRecord[];
             }>;
             execute: (context: import("@mastra/core").ToolExecutionContext<z.ZodObject<{
                 service: z.ZodOptional<z.ZodString>;
@@ -7582,15 +9294,15 @@ export declare const agentsRegistry: {
             ttlSeconds?: number | undefined;
         }>, z.ZodObject<{
             incidentId: z.ZodString;
-            logs: z.ZodArray<z.ZodType<import("@sentinelops/tools").LogRecord, z.ZodTypeDef, import("@sentinelops/tools").LogRecord>, "many">;
+            logs: z.ZodArray<z.ZodType<import("@sentinelops/tools/logs").LogRecord, z.ZodTypeDef, import("@sentinelops/tools/logs").LogRecord>, "many">;
             expiresAt: z.ZodString;
         }, "strip", z.ZodTypeAny, {
             incidentId: string;
-            logs: import("@sentinelops/tools").LogRecord[];
+            logs: import("@sentinelops/tools/logs").LogRecord[];
             expiresAt: string;
         }, {
             incidentId: string;
-            logs: import("@sentinelops/tools").LogRecord[];
+            logs: import("@sentinelops/tools/logs").LogRecord[];
             expiresAt: string;
         }>, any, any, import("@mastra/core").ToolExecutionContext<z.ZodObject<{
             incidentId: z.ZodString;
@@ -7614,15 +9326,15 @@ export declare const agentsRegistry: {
             }>;
             outputSchema: z.ZodObject<{
                 incidentId: z.ZodString;
-                logs: z.ZodArray<z.ZodType<import("@sentinelops/tools").LogRecord, z.ZodTypeDef, import("@sentinelops/tools").LogRecord>, "many">;
+                logs: z.ZodArray<z.ZodType<import("@sentinelops/tools/logs").LogRecord, z.ZodTypeDef, import("@sentinelops/tools/logs").LogRecord>, "many">;
                 expiresAt: z.ZodString;
             }, "strip", z.ZodTypeAny, {
                 incidentId: string;
-                logs: import("@sentinelops/tools").LogRecord[];
+                logs: import("@sentinelops/tools/logs").LogRecord[];
                 expiresAt: string;
             }, {
                 incidentId: string;
-                logs: import("@sentinelops/tools").LogRecord[];
+                logs: import("@sentinelops/tools/logs").LogRecord[];
                 expiresAt: string;
             }>;
             execute: (context: import("@mastra/core").ToolExecutionContext<z.ZodObject<{
@@ -7665,13 +9377,13 @@ export declare const agentsRegistry: {
             limit?: number | undefined;
         }>, z.ZodObject<{
             count: z.ZodNumber;
-            logs: z.ZodArray<z.ZodType<import("@sentinelops/tools").LogRecord, z.ZodTypeDef, import("@sentinelops/tools").LogRecord>, "many">;
+            logs: z.ZodArray<z.ZodType<import("@sentinelops/tools/logs").LogRecord, z.ZodTypeDef, import("@sentinelops/tools/logs").LogRecord>, "many">;
         }, "strip", z.ZodTypeAny, {
             count: number;
-            logs: import("@sentinelops/tools").LogRecord[];
+            logs: import("@sentinelops/tools/logs").LogRecord[];
         }, {
             count: number;
-            logs: import("@sentinelops/tools").LogRecord[];
+            logs: import("@sentinelops/tools/logs").LogRecord[];
         }>, any, any, import("@mastra/core").ToolExecutionContext<z.ZodObject<{
             query: z.ZodString;
             timeRange: z.ZodOptional<z.ZodObject<{
@@ -7730,13 +9442,13 @@ export declare const agentsRegistry: {
             }>;
             outputSchema: z.ZodObject<{
                 count: z.ZodNumber;
-                logs: z.ZodArray<z.ZodType<import("@sentinelops/tools").LogRecord, z.ZodTypeDef, import("@sentinelops/tools").LogRecord>, "many">;
+                logs: z.ZodArray<z.ZodType<import("@sentinelops/tools/logs").LogRecord, z.ZodTypeDef, import("@sentinelops/tools/logs").LogRecord>, "many">;
             }, "strip", z.ZodTypeAny, {
                 count: number;
-                logs: import("@sentinelops/tools").LogRecord[];
+                logs: import("@sentinelops/tools/logs").LogRecord[];
             }, {
                 count: number;
-                logs: import("@sentinelops/tools").LogRecord[];
+                logs: import("@sentinelops/tools/logs").LogRecord[];
             }>;
             execute: (context: import("@mastra/core").ToolExecutionContext<z.ZodObject<{
                 query: z.ZodString;
@@ -8037,13 +9749,13 @@ export declare const agentsRegistry: {
             service?: string | undefined;
         }>, z.ZodObject<{
             count: z.ZodNumber;
-            postmortems: z.ZodArray<z.ZodType<import("@sentinelops/tools").PostmortemRecord, z.ZodTypeDef, import("@sentinelops/tools").PostmortemRecord>, "many">;
+            postmortems: z.ZodArray<z.ZodType<import("@sentinelops/tools/postmortems").PostmortemRecord, z.ZodTypeDef, import("@sentinelops/tools/postmortems").PostmortemRecord>, "many">;
         }, "strip", z.ZodTypeAny, {
             count: number;
-            postmortems: import("@sentinelops/tools").PostmortemRecord[];
+            postmortems: import("@sentinelops/tools/postmortems").PostmortemRecord[];
         }, {
             count: number;
-            postmortems: import("@sentinelops/tools").PostmortemRecord[];
+            postmortems: import("@sentinelops/tools/postmortems").PostmortemRecord[];
         }>, any, any, import("@mastra/core").ToolExecutionContext<z.ZodObject<{
             service: z.ZodOptional<z.ZodString>;
             status: z.ZodOptional<z.ZodEnum<["DRAFT", "PUBLISHED"]>>;
@@ -8066,13 +9778,13 @@ export declare const agentsRegistry: {
             }>;
             outputSchema: z.ZodObject<{
                 count: z.ZodNumber;
-                postmortems: z.ZodArray<z.ZodType<import("@sentinelops/tools").PostmortemRecord, z.ZodTypeDef, import("@sentinelops/tools").PostmortemRecord>, "many">;
+                postmortems: z.ZodArray<z.ZodType<import("@sentinelops/tools/postmortems").PostmortemRecord, z.ZodTypeDef, import("@sentinelops/tools/postmortems").PostmortemRecord>, "many">;
             }, "strip", z.ZodTypeAny, {
                 count: number;
-                postmortems: import("@sentinelops/tools").PostmortemRecord[];
+                postmortems: import("@sentinelops/tools/postmortems").PostmortemRecord[];
             }, {
                 count: number;
-                postmortems: import("@sentinelops/tools").PostmortemRecord[];
+                postmortems: import("@sentinelops/tools/postmortems").PostmortemRecord[];
             }>;
             execute: (context: import("@mastra/core").ToolExecutionContext<z.ZodObject<{
                 service: z.ZodOptional<z.ZodString>;
@@ -8114,13 +9826,13 @@ export declare const agentsRegistry: {
             limit?: number | undefined;
         }>, z.ZodObject<{
             count: z.ZodNumber;
-            logs: z.ZodArray<z.ZodType<import("@sentinelops/tools").LogRecord, z.ZodTypeDef, import("@sentinelops/tools").LogRecord>, "many">;
+            logs: z.ZodArray<z.ZodType<import("@sentinelops/tools/logs").LogRecord, z.ZodTypeDef, import("@sentinelops/tools/logs").LogRecord>, "many">;
         }, "strip", z.ZodTypeAny, {
             count: number;
-            logs: import("@sentinelops/tools").LogRecord[];
+            logs: import("@sentinelops/tools/logs").LogRecord[];
         }, {
             count: number;
-            logs: import("@sentinelops/tools").LogRecord[];
+            logs: import("@sentinelops/tools/logs").LogRecord[];
         }>, any, any, import("@mastra/core").ToolExecutionContext<z.ZodObject<{
             query: z.ZodString;
             timeRange: z.ZodOptional<z.ZodObject<{
@@ -8179,13 +9891,13 @@ export declare const agentsRegistry: {
             }>;
             outputSchema: z.ZodObject<{
                 count: z.ZodNumber;
-                logs: z.ZodArray<z.ZodType<import("@sentinelops/tools").LogRecord, z.ZodTypeDef, import("@sentinelops/tools").LogRecord>, "many">;
+                logs: z.ZodArray<z.ZodType<import("@sentinelops/tools/logs").LogRecord, z.ZodTypeDef, import("@sentinelops/tools/logs").LogRecord>, "many">;
             }, "strip", z.ZodTypeAny, {
                 count: number;
-                logs: import("@sentinelops/tools").LogRecord[];
+                logs: import("@sentinelops/tools/logs").LogRecord[];
             }, {
                 count: number;
-                logs: import("@sentinelops/tools").LogRecord[];
+                logs: import("@sentinelops/tools/logs").LogRecord[];
             }>;
             execute: (context: import("@mastra/core").ToolExecutionContext<z.ZodObject<{
                 query: z.ZodString;
@@ -8387,7 +10099,7 @@ export declare const agentsRegistry: {
             actionId: string;
             metadata?: Record<string, any> | undefined;
             approvedBy?: string | undefined;
-        }>, z.ZodType<import("@sentinelops/tools").IncidentAction, z.ZodTypeDef, import("@sentinelops/tools").IncidentAction>, any, any, import("@mastra/core").ToolExecutionContext<z.ZodObject<{
+        }>, z.ZodType<import("@sentinelops/tools/actions").IncidentAction, z.ZodTypeDef, import("@sentinelops/tools/actions").IncidentAction>, any, any, import("@mastra/core").ToolExecutionContext<z.ZodObject<{
             actionId: z.ZodString;
             approvedBy: z.ZodOptional<z.ZodString>;
             metadata: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodAny>>;
@@ -8413,7 +10125,7 @@ export declare const agentsRegistry: {
                 metadata?: Record<string, any> | undefined;
                 approvedBy?: string | undefined;
             }>;
-            outputSchema: z.ZodType<import("@sentinelops/tools").IncidentAction, z.ZodTypeDef, import("@sentinelops/tools").IncidentAction>;
+            outputSchema: z.ZodType<import("@sentinelops/tools/actions").IncidentAction, z.ZodTypeDef, import("@sentinelops/tools/actions").IncidentAction>;
             execute: (context: import("@mastra/core").ToolExecutionContext<z.ZodObject<{
                 actionId: z.ZodString;
                 approvedBy: z.ZodOptional<z.ZodString>;
@@ -8443,7 +10155,7 @@ export declare const agentsRegistry: {
             metadata?: Record<string, any> | undefined;
             rejectedBy?: string | undefined;
             reason?: string | undefined;
-        }>, z.ZodType<import("@sentinelops/tools").IncidentAction, z.ZodTypeDef, import("@sentinelops/tools").IncidentAction>, any, any, import("@mastra/core").ToolExecutionContext<z.ZodObject<{
+        }>, z.ZodType<import("@sentinelops/tools/actions").IncidentAction, z.ZodTypeDef, import("@sentinelops/tools/actions").IncidentAction>, any, any, import("@mastra/core").ToolExecutionContext<z.ZodObject<{
             actionId: z.ZodString;
             rejectedBy: z.ZodOptional<z.ZodString>;
             reason: z.ZodOptional<z.ZodString>;
@@ -8475,7 +10187,7 @@ export declare const agentsRegistry: {
                 rejectedBy?: string | undefined;
                 reason?: string | undefined;
             }>;
-            outputSchema: z.ZodType<import("@sentinelops/tools").IncidentAction, z.ZodTypeDef, import("@sentinelops/tools").IncidentAction>;
+            outputSchema: z.ZodType<import("@sentinelops/tools/actions").IncidentAction, z.ZodTypeDef, import("@sentinelops/tools/actions").IncidentAction>;
             execute: (context: import("@mastra/core").ToolExecutionContext<z.ZodObject<{
                 actionId: z.ZodString;
                 rejectedBy: z.ZodOptional<z.ZodString>;
@@ -8601,6 +10313,1718 @@ export declare const agentsRegistry: {
             execute: (context: import("@mastra/core").ToolExecutionContext<z.ZodOptional<z.ZodObject<{}, "strip", z.ZodTypeAny, {}, {}>>, any, any>, options: import("@mastra/core").ToolInvocationOptions) => Promise<any>;
         };
     }, Record<string, import("@mastra/core").Metric>>;
+    readonly codeExpertAgent: Agent<"CodeExpertAgent", {
+        gitStatusTool: import("@mastra/core/tools").Tool<z.ZodOptional<z.ZodObject<{}, "strip", z.ZodTypeAny, {}, {}>>, z.ZodObject<{
+            enabled: z.ZodBoolean;
+            status: z.ZodNullable<z.ZodObject<{
+                branch: z.ZodNullable<z.ZodString>;
+                tracking: z.ZodNullable<z.ZodString>;
+                ahead: z.ZodNumber;
+                behind: z.ZodNumber;
+                isClean: z.ZodBoolean;
+                staged: z.ZodArray<z.ZodObject<{
+                    path: z.ZodString;
+                    headStatus: z.ZodString;
+                    worktreeStatus: z.ZodString;
+                }, "strip", z.ZodTypeAny, {
+                    path: string;
+                    headStatus: string;
+                    worktreeStatus: string;
+                }, {
+                    path: string;
+                    headStatus: string;
+                    worktreeStatus: string;
+                }>, "many">;
+                unstaged: z.ZodArray<z.ZodObject<{
+                    path: z.ZodString;
+                    headStatus: z.ZodString;
+                    worktreeStatus: z.ZodString;
+                }, "strip", z.ZodTypeAny, {
+                    path: string;
+                    headStatus: string;
+                    worktreeStatus: string;
+                }, {
+                    path: string;
+                    headStatus: string;
+                    worktreeStatus: string;
+                }>, "many">;
+                untracked: z.ZodArray<z.ZodString, "many">;
+                created: z.ZodArray<z.ZodString, "many">;
+                deleted: z.ZodArray<z.ZodString, "many">;
+                modified: z.ZodArray<z.ZodString, "many">;
+                conflicted: z.ZodArray<z.ZodString, "many">;
+                renamed: z.ZodArray<z.ZodObject<{
+                    from: z.ZodString;
+                    to: z.ZodString;
+                }, "strip", z.ZodTypeAny, {
+                    from: string;
+                    to: string;
+                }, {
+                    from: string;
+                    to: string;
+                }>, "many">;
+            }, "strip", z.ZodTypeAny, {
+                branch: string | null;
+                tracking: string | null;
+                ahead: number;
+                behind: number;
+                isClean: boolean;
+                staged: {
+                    path: string;
+                    headStatus: string;
+                    worktreeStatus: string;
+                }[];
+                unstaged: {
+                    path: string;
+                    headStatus: string;
+                    worktreeStatus: string;
+                }[];
+                untracked: string[];
+                created: string[];
+                deleted: string[];
+                modified: string[];
+                conflicted: string[];
+                renamed: {
+                    from: string;
+                    to: string;
+                }[];
+            }, {
+                branch: string | null;
+                tracking: string | null;
+                ahead: number;
+                behind: number;
+                isClean: boolean;
+                staged: {
+                    path: string;
+                    headStatus: string;
+                    worktreeStatus: string;
+                }[];
+                unstaged: {
+                    path: string;
+                    headStatus: string;
+                    worktreeStatus: string;
+                }[];
+                untracked: string[];
+                created: string[];
+                deleted: string[];
+                modified: string[];
+                conflicted: string[];
+                renamed: {
+                    from: string;
+                    to: string;
+                }[];
+            }>>;
+            error: z.ZodOptional<z.ZodObject<{
+                message: z.ZodString;
+                code: z.ZodString;
+            }, "strip", z.ZodTypeAny, {
+                code: string;
+                message: string;
+            }, {
+                code: string;
+                message: string;
+            }>>;
+        }, "strip", z.ZodTypeAny, {
+            status: {
+                branch: string | null;
+                tracking: string | null;
+                ahead: number;
+                behind: number;
+                isClean: boolean;
+                staged: {
+                    path: string;
+                    headStatus: string;
+                    worktreeStatus: string;
+                }[];
+                unstaged: {
+                    path: string;
+                    headStatus: string;
+                    worktreeStatus: string;
+                }[];
+                untracked: string[];
+                created: string[];
+                deleted: string[];
+                modified: string[];
+                conflicted: string[];
+                renamed: {
+                    from: string;
+                    to: string;
+                }[];
+            } | null;
+            enabled: boolean;
+            error?: {
+                code: string;
+                message: string;
+            } | undefined;
+        }, {
+            status: {
+                branch: string | null;
+                tracking: string | null;
+                ahead: number;
+                behind: number;
+                isClean: boolean;
+                staged: {
+                    path: string;
+                    headStatus: string;
+                    worktreeStatus: string;
+                }[];
+                unstaged: {
+                    path: string;
+                    headStatus: string;
+                    worktreeStatus: string;
+                }[];
+                untracked: string[];
+                created: string[];
+                deleted: string[];
+                modified: string[];
+                conflicted: string[];
+                renamed: {
+                    from: string;
+                    to: string;
+                }[];
+            } | null;
+            enabled: boolean;
+            error?: {
+                code: string;
+                message: string;
+            } | undefined;
+        }>, any, any, import("@mastra/core").ToolExecutionContext<z.ZodOptional<z.ZodObject<{}, "strip", z.ZodTypeAny, {}, {}>>, any, any>> & {
+            inputSchema: z.ZodOptional<z.ZodObject<{}, "strip", z.ZodTypeAny, {}, {}>>;
+            outputSchema: z.ZodObject<{
+                enabled: z.ZodBoolean;
+                status: z.ZodNullable<z.ZodObject<{
+                    branch: z.ZodNullable<z.ZodString>;
+                    tracking: z.ZodNullable<z.ZodString>;
+                    ahead: z.ZodNumber;
+                    behind: z.ZodNumber;
+                    isClean: z.ZodBoolean;
+                    staged: z.ZodArray<z.ZodObject<{
+                        path: z.ZodString;
+                        headStatus: z.ZodString;
+                        worktreeStatus: z.ZodString;
+                    }, "strip", z.ZodTypeAny, {
+                        path: string;
+                        headStatus: string;
+                        worktreeStatus: string;
+                    }, {
+                        path: string;
+                        headStatus: string;
+                        worktreeStatus: string;
+                    }>, "many">;
+                    unstaged: z.ZodArray<z.ZodObject<{
+                        path: z.ZodString;
+                        headStatus: z.ZodString;
+                        worktreeStatus: z.ZodString;
+                    }, "strip", z.ZodTypeAny, {
+                        path: string;
+                        headStatus: string;
+                        worktreeStatus: string;
+                    }, {
+                        path: string;
+                        headStatus: string;
+                        worktreeStatus: string;
+                    }>, "many">;
+                    untracked: z.ZodArray<z.ZodString, "many">;
+                    created: z.ZodArray<z.ZodString, "many">;
+                    deleted: z.ZodArray<z.ZodString, "many">;
+                    modified: z.ZodArray<z.ZodString, "many">;
+                    conflicted: z.ZodArray<z.ZodString, "many">;
+                    renamed: z.ZodArray<z.ZodObject<{
+                        from: z.ZodString;
+                        to: z.ZodString;
+                    }, "strip", z.ZodTypeAny, {
+                        from: string;
+                        to: string;
+                    }, {
+                        from: string;
+                        to: string;
+                    }>, "many">;
+                }, "strip", z.ZodTypeAny, {
+                    branch: string | null;
+                    tracking: string | null;
+                    ahead: number;
+                    behind: number;
+                    isClean: boolean;
+                    staged: {
+                        path: string;
+                        headStatus: string;
+                        worktreeStatus: string;
+                    }[];
+                    unstaged: {
+                        path: string;
+                        headStatus: string;
+                        worktreeStatus: string;
+                    }[];
+                    untracked: string[];
+                    created: string[];
+                    deleted: string[];
+                    modified: string[];
+                    conflicted: string[];
+                    renamed: {
+                        from: string;
+                        to: string;
+                    }[];
+                }, {
+                    branch: string | null;
+                    tracking: string | null;
+                    ahead: number;
+                    behind: number;
+                    isClean: boolean;
+                    staged: {
+                        path: string;
+                        headStatus: string;
+                        worktreeStatus: string;
+                    }[];
+                    unstaged: {
+                        path: string;
+                        headStatus: string;
+                        worktreeStatus: string;
+                    }[];
+                    untracked: string[];
+                    created: string[];
+                    deleted: string[];
+                    modified: string[];
+                    conflicted: string[];
+                    renamed: {
+                        from: string;
+                        to: string;
+                    }[];
+                }>>;
+                error: z.ZodOptional<z.ZodObject<{
+                    message: z.ZodString;
+                    code: z.ZodString;
+                }, "strip", z.ZodTypeAny, {
+                    code: string;
+                    message: string;
+                }, {
+                    code: string;
+                    message: string;
+                }>>;
+            }, "strip", z.ZodTypeAny, {
+                status: {
+                    branch: string | null;
+                    tracking: string | null;
+                    ahead: number;
+                    behind: number;
+                    isClean: boolean;
+                    staged: {
+                        path: string;
+                        headStatus: string;
+                        worktreeStatus: string;
+                    }[];
+                    unstaged: {
+                        path: string;
+                        headStatus: string;
+                        worktreeStatus: string;
+                    }[];
+                    untracked: string[];
+                    created: string[];
+                    deleted: string[];
+                    modified: string[];
+                    conflicted: string[];
+                    renamed: {
+                        from: string;
+                        to: string;
+                    }[];
+                } | null;
+                enabled: boolean;
+                error?: {
+                    code: string;
+                    message: string;
+                } | undefined;
+            }, {
+                status: {
+                    branch: string | null;
+                    tracking: string | null;
+                    ahead: number;
+                    behind: number;
+                    isClean: boolean;
+                    staged: {
+                        path: string;
+                        headStatus: string;
+                        worktreeStatus: string;
+                    }[];
+                    unstaged: {
+                        path: string;
+                        headStatus: string;
+                        worktreeStatus: string;
+                    }[];
+                    untracked: string[];
+                    created: string[];
+                    deleted: string[];
+                    modified: string[];
+                    conflicted: string[];
+                    renamed: {
+                        from: string;
+                        to: string;
+                    }[];
+                } | null;
+                enabled: boolean;
+                error?: {
+                    code: string;
+                    message: string;
+                } | undefined;
+            }>;
+            execute: (context: import("@mastra/core").ToolExecutionContext<z.ZodOptional<z.ZodObject<{}, "strip", z.ZodTypeAny, {}, {}>>, any, any>, options: import("@mastra/core").ToolInvocationOptions) => Promise<any>;
+        };
+        gitDiffTool: import("@mastra/core/tools").Tool<z.ZodOptional<z.ZodObject<{
+            cached: z.ZodOptional<z.ZodBoolean>;
+        }, "strip", z.ZodTypeAny, {
+            cached?: boolean | undefined;
+        }, {
+            cached?: boolean | undefined;
+        }>>, z.ZodObject<{
+            enabled: z.ZodBoolean;
+            diff: z.ZodNullable<z.ZodObject<{
+                cached: z.ZodBoolean;
+                files: z.ZodArray<z.ZodObject<{
+                    file: z.ZodString;
+                    changes: z.ZodNumber;
+                    insertions: z.ZodNumber;
+                    deletions: z.ZodNumber;
+                }, "strip", z.ZodTypeAny, {
+                    file: string;
+                    changes: number;
+                    insertions: number;
+                    deletions: number;
+                }, {
+                    file: string;
+                    changes: number;
+                    insertions: number;
+                    deletions: number;
+                }>, "many">;
+                insertions: z.ZodNumber;
+                deletions: z.ZodNumber;
+                changes: z.ZodNumber;
+            }, "strip", z.ZodTypeAny, {
+                changes: number;
+                insertions: number;
+                deletions: number;
+                cached: boolean;
+                files: {
+                    file: string;
+                    changes: number;
+                    insertions: number;
+                    deletions: number;
+                }[];
+            }, {
+                changes: number;
+                insertions: number;
+                deletions: number;
+                cached: boolean;
+                files: {
+                    file: string;
+                    changes: number;
+                    insertions: number;
+                    deletions: number;
+                }[];
+            }>>;
+            error: z.ZodOptional<z.ZodObject<{
+                message: z.ZodString;
+                code: z.ZodString;
+            }, "strip", z.ZodTypeAny, {
+                code: string;
+                message: string;
+            }, {
+                code: string;
+                message: string;
+            }>>;
+        }, "strip", z.ZodTypeAny, {
+            enabled: boolean;
+            diff: {
+                changes: number;
+                insertions: number;
+                deletions: number;
+                cached: boolean;
+                files: {
+                    file: string;
+                    changes: number;
+                    insertions: number;
+                    deletions: number;
+                }[];
+            } | null;
+            error?: {
+                code: string;
+                message: string;
+            } | undefined;
+        }, {
+            enabled: boolean;
+            diff: {
+                changes: number;
+                insertions: number;
+                deletions: number;
+                cached: boolean;
+                files: {
+                    file: string;
+                    changes: number;
+                    insertions: number;
+                    deletions: number;
+                }[];
+            } | null;
+            error?: {
+                code: string;
+                message: string;
+            } | undefined;
+        }>, any, any, import("@mastra/core").ToolExecutionContext<z.ZodOptional<z.ZodObject<{
+            cached: z.ZodOptional<z.ZodBoolean>;
+        }, "strip", z.ZodTypeAny, {
+            cached?: boolean | undefined;
+        }, {
+            cached?: boolean | undefined;
+        }>>, any, any>> & {
+            inputSchema: z.ZodOptional<z.ZodObject<{
+                cached: z.ZodOptional<z.ZodBoolean>;
+            }, "strip", z.ZodTypeAny, {
+                cached?: boolean | undefined;
+            }, {
+                cached?: boolean | undefined;
+            }>>;
+            outputSchema: z.ZodObject<{
+                enabled: z.ZodBoolean;
+                diff: z.ZodNullable<z.ZodObject<{
+                    cached: z.ZodBoolean;
+                    files: z.ZodArray<z.ZodObject<{
+                        file: z.ZodString;
+                        changes: z.ZodNumber;
+                        insertions: z.ZodNumber;
+                        deletions: z.ZodNumber;
+                    }, "strip", z.ZodTypeAny, {
+                        file: string;
+                        changes: number;
+                        insertions: number;
+                        deletions: number;
+                    }, {
+                        file: string;
+                        changes: number;
+                        insertions: number;
+                        deletions: number;
+                    }>, "many">;
+                    insertions: z.ZodNumber;
+                    deletions: z.ZodNumber;
+                    changes: z.ZodNumber;
+                }, "strip", z.ZodTypeAny, {
+                    changes: number;
+                    insertions: number;
+                    deletions: number;
+                    cached: boolean;
+                    files: {
+                        file: string;
+                        changes: number;
+                        insertions: number;
+                        deletions: number;
+                    }[];
+                }, {
+                    changes: number;
+                    insertions: number;
+                    deletions: number;
+                    cached: boolean;
+                    files: {
+                        file: string;
+                        changes: number;
+                        insertions: number;
+                        deletions: number;
+                    }[];
+                }>>;
+                error: z.ZodOptional<z.ZodObject<{
+                    message: z.ZodString;
+                    code: z.ZodString;
+                }, "strip", z.ZodTypeAny, {
+                    code: string;
+                    message: string;
+                }, {
+                    code: string;
+                    message: string;
+                }>>;
+            }, "strip", z.ZodTypeAny, {
+                enabled: boolean;
+                diff: {
+                    changes: number;
+                    insertions: number;
+                    deletions: number;
+                    cached: boolean;
+                    files: {
+                        file: string;
+                        changes: number;
+                        insertions: number;
+                        deletions: number;
+                    }[];
+                } | null;
+                error?: {
+                    code: string;
+                    message: string;
+                } | undefined;
+            }, {
+                enabled: boolean;
+                diff: {
+                    changes: number;
+                    insertions: number;
+                    deletions: number;
+                    cached: boolean;
+                    files: {
+                        file: string;
+                        changes: number;
+                        insertions: number;
+                        deletions: number;
+                    }[];
+                } | null;
+                error?: {
+                    code: string;
+                    message: string;
+                } | undefined;
+            }>;
+            execute: (context: import("@mastra/core").ToolExecutionContext<z.ZodOptional<z.ZodObject<{
+                cached: z.ZodOptional<z.ZodBoolean>;
+            }, "strip", z.ZodTypeAny, {
+                cached?: boolean | undefined;
+            }, {
+                cached?: boolean | undefined;
+            }>>, any, any>, options: import("@mastra/core").ToolInvocationOptions) => Promise<any>;
+        };
+        gitStageTool: import("@mastra/core/tools").Tool<z.ZodOptional<z.ZodObject<{
+            paths: z.ZodOptional<z.ZodArray<z.ZodString, "many">>;
+        }, "strip", z.ZodTypeAny, {
+            paths?: string[] | undefined;
+        }, {
+            paths?: string[] | undefined;
+        }>>, z.ZodObject<{
+            enabled: z.ZodBoolean;
+            success: z.ZodBoolean;
+            error: z.ZodOptional<z.ZodObject<{
+                message: z.ZodString;
+                code: z.ZodString;
+            }, "strip", z.ZodTypeAny, {
+                code: string;
+                message: string;
+            }, {
+                code: string;
+                message: string;
+            }>>;
+        }, "strip", z.ZodTypeAny, {
+            enabled: boolean;
+            success: boolean;
+            error?: {
+                code: string;
+                message: string;
+            } | undefined;
+        }, {
+            enabled: boolean;
+            success: boolean;
+            error?: {
+                code: string;
+                message: string;
+            } | undefined;
+        }>, any, any, import("@mastra/core").ToolExecutionContext<z.ZodOptional<z.ZodObject<{
+            paths: z.ZodOptional<z.ZodArray<z.ZodString, "many">>;
+        }, "strip", z.ZodTypeAny, {
+            paths?: string[] | undefined;
+        }, {
+            paths?: string[] | undefined;
+        }>>, any, any>> & {
+            inputSchema: z.ZodOptional<z.ZodObject<{
+                paths: z.ZodOptional<z.ZodArray<z.ZodString, "many">>;
+            }, "strip", z.ZodTypeAny, {
+                paths?: string[] | undefined;
+            }, {
+                paths?: string[] | undefined;
+            }>>;
+            outputSchema: z.ZodObject<{
+                enabled: z.ZodBoolean;
+                success: z.ZodBoolean;
+                error: z.ZodOptional<z.ZodObject<{
+                    message: z.ZodString;
+                    code: z.ZodString;
+                }, "strip", z.ZodTypeAny, {
+                    code: string;
+                    message: string;
+                }, {
+                    code: string;
+                    message: string;
+                }>>;
+            }, "strip", z.ZodTypeAny, {
+                enabled: boolean;
+                success: boolean;
+                error?: {
+                    code: string;
+                    message: string;
+                } | undefined;
+            }, {
+                enabled: boolean;
+                success: boolean;
+                error?: {
+                    code: string;
+                    message: string;
+                } | undefined;
+            }>;
+            execute: (context: import("@mastra/core").ToolExecutionContext<z.ZodOptional<z.ZodObject<{
+                paths: z.ZodOptional<z.ZodArray<z.ZodString, "many">>;
+            }, "strip", z.ZodTypeAny, {
+                paths?: string[] | undefined;
+            }, {
+                paths?: string[] | undefined;
+            }>>, any, any>, options: import("@mastra/core").ToolInvocationOptions) => Promise<any>;
+        };
+        gitCommitTool: import("@mastra/core/tools").Tool<z.ZodObject<{
+            message: z.ZodString;
+            allowEmpty: z.ZodOptional<z.ZodBoolean>;
+            signoff: z.ZodOptional<z.ZodBoolean>;
+            author: z.ZodOptional<z.ZodObject<{
+                name: z.ZodString;
+                email: z.ZodOptional<z.ZodString>;
+            }, "strip", z.ZodTypeAny, {
+                name: string;
+                email?: string | undefined;
+            }, {
+                name: string;
+                email?: string | undefined;
+            }>>;
+        }, "strip", z.ZodTypeAny, {
+            message: string;
+            allowEmpty?: boolean | undefined;
+            signoff?: boolean | undefined;
+            author?: {
+                name: string;
+                email?: string | undefined;
+            } | undefined;
+        }, {
+            message: string;
+            allowEmpty?: boolean | undefined;
+            signoff?: boolean | undefined;
+            author?: {
+                name: string;
+                email?: string | undefined;
+            } | undefined;
+        }>, z.ZodObject<{
+            enabled: z.ZodBoolean;
+            commit: z.ZodNullable<z.ZodObject<{
+                sha: z.ZodString;
+                summary: z.ZodString;
+            }, "strip", z.ZodTypeAny, {
+                sha: string;
+                summary: string;
+            }, {
+                sha: string;
+                summary: string;
+            }>>;
+            error: z.ZodOptional<z.ZodObject<{
+                message: z.ZodString;
+                code: z.ZodString;
+            }, "strip", z.ZodTypeAny, {
+                code: string;
+                message: string;
+            }, {
+                code: string;
+                message: string;
+            }>>;
+        }, "strip", z.ZodTypeAny, {
+            enabled: boolean;
+            commit: {
+                sha: string;
+                summary: string;
+            } | null;
+            error?: {
+                code: string;
+                message: string;
+            } | undefined;
+        }, {
+            enabled: boolean;
+            commit: {
+                sha: string;
+                summary: string;
+            } | null;
+            error?: {
+                code: string;
+                message: string;
+            } | undefined;
+        }>, any, any, import("@mastra/core").ToolExecutionContext<z.ZodObject<{
+            message: z.ZodString;
+            allowEmpty: z.ZodOptional<z.ZodBoolean>;
+            signoff: z.ZodOptional<z.ZodBoolean>;
+            author: z.ZodOptional<z.ZodObject<{
+                name: z.ZodString;
+                email: z.ZodOptional<z.ZodString>;
+            }, "strip", z.ZodTypeAny, {
+                name: string;
+                email?: string | undefined;
+            }, {
+                name: string;
+                email?: string | undefined;
+            }>>;
+        }, "strip", z.ZodTypeAny, {
+            message: string;
+            allowEmpty?: boolean | undefined;
+            signoff?: boolean | undefined;
+            author?: {
+                name: string;
+                email?: string | undefined;
+            } | undefined;
+        }, {
+            message: string;
+            allowEmpty?: boolean | undefined;
+            signoff?: boolean | undefined;
+            author?: {
+                name: string;
+                email?: string | undefined;
+            } | undefined;
+        }>, any, any>> & {
+            inputSchema: z.ZodObject<{
+                message: z.ZodString;
+                allowEmpty: z.ZodOptional<z.ZodBoolean>;
+                signoff: z.ZodOptional<z.ZodBoolean>;
+                author: z.ZodOptional<z.ZodObject<{
+                    name: z.ZodString;
+                    email: z.ZodOptional<z.ZodString>;
+                }, "strip", z.ZodTypeAny, {
+                    name: string;
+                    email?: string | undefined;
+                }, {
+                    name: string;
+                    email?: string | undefined;
+                }>>;
+            }, "strip", z.ZodTypeAny, {
+                message: string;
+                allowEmpty?: boolean | undefined;
+                signoff?: boolean | undefined;
+                author?: {
+                    name: string;
+                    email?: string | undefined;
+                } | undefined;
+            }, {
+                message: string;
+                allowEmpty?: boolean | undefined;
+                signoff?: boolean | undefined;
+                author?: {
+                    name: string;
+                    email?: string | undefined;
+                } | undefined;
+            }>;
+            outputSchema: z.ZodObject<{
+                enabled: z.ZodBoolean;
+                commit: z.ZodNullable<z.ZodObject<{
+                    sha: z.ZodString;
+                    summary: z.ZodString;
+                }, "strip", z.ZodTypeAny, {
+                    sha: string;
+                    summary: string;
+                }, {
+                    sha: string;
+                    summary: string;
+                }>>;
+                error: z.ZodOptional<z.ZodObject<{
+                    message: z.ZodString;
+                    code: z.ZodString;
+                }, "strip", z.ZodTypeAny, {
+                    code: string;
+                    message: string;
+                }, {
+                    code: string;
+                    message: string;
+                }>>;
+            }, "strip", z.ZodTypeAny, {
+                enabled: boolean;
+                commit: {
+                    sha: string;
+                    summary: string;
+                } | null;
+                error?: {
+                    code: string;
+                    message: string;
+                } | undefined;
+            }, {
+                enabled: boolean;
+                commit: {
+                    sha: string;
+                    summary: string;
+                } | null;
+                error?: {
+                    code: string;
+                    message: string;
+                } | undefined;
+            }>;
+            execute: (context: import("@mastra/core").ToolExecutionContext<z.ZodObject<{
+                message: z.ZodString;
+                allowEmpty: z.ZodOptional<z.ZodBoolean>;
+                signoff: z.ZodOptional<z.ZodBoolean>;
+                author: z.ZodOptional<z.ZodObject<{
+                    name: z.ZodString;
+                    email: z.ZodOptional<z.ZodString>;
+                }, "strip", z.ZodTypeAny, {
+                    name: string;
+                    email?: string | undefined;
+                }, {
+                    name: string;
+                    email?: string | undefined;
+                }>>;
+            }, "strip", z.ZodTypeAny, {
+                message: string;
+                allowEmpty?: boolean | undefined;
+                signoff?: boolean | undefined;
+                author?: {
+                    name: string;
+                    email?: string | undefined;
+                } | undefined;
+            }, {
+                message: string;
+                allowEmpty?: boolean | undefined;
+                signoff?: boolean | undefined;
+                author?: {
+                    name: string;
+                    email?: string | undefined;
+                } | undefined;
+            }>, any, any>, options: import("@mastra/core").ToolInvocationOptions) => Promise<any>;
+        };
+        gitPushTool: import("@mastra/core/tools").Tool<z.ZodOptional<z.ZodObject<{
+            remote: z.ZodOptional<z.ZodString>;
+            branch: z.ZodOptional<z.ZodString>;
+            force: z.ZodOptional<z.ZodBoolean>;
+        }, "strip", z.ZodTypeAny, {
+            branch?: string | undefined;
+            remote?: string | undefined;
+            force?: boolean | undefined;
+        }, {
+            branch?: string | undefined;
+            remote?: string | undefined;
+            force?: boolean | undefined;
+        }>>, z.ZodObject<{
+            enabled: z.ZodBoolean;
+            result: z.ZodNullable<z.ZodObject<{
+                remote: z.ZodString;
+                branch: z.ZodString;
+            }, "strip", z.ZodTypeAny, {
+                branch: string;
+                remote: string;
+            }, {
+                branch: string;
+                remote: string;
+            }>>;
+            error: z.ZodOptional<z.ZodObject<{
+                message: z.ZodString;
+                code: z.ZodString;
+            }, "strip", z.ZodTypeAny, {
+                code: string;
+                message: string;
+            }, {
+                code: string;
+                message: string;
+            }>>;
+        }, "strip", z.ZodTypeAny, {
+            enabled: boolean;
+            result: {
+                branch: string;
+                remote: string;
+            } | null;
+            error?: {
+                code: string;
+                message: string;
+            } | undefined;
+        }, {
+            enabled: boolean;
+            result: {
+                branch: string;
+                remote: string;
+            } | null;
+            error?: {
+                code: string;
+                message: string;
+            } | undefined;
+        }>, any, any, import("@mastra/core").ToolExecutionContext<z.ZodOptional<z.ZodObject<{
+            remote: z.ZodOptional<z.ZodString>;
+            branch: z.ZodOptional<z.ZodString>;
+            force: z.ZodOptional<z.ZodBoolean>;
+        }, "strip", z.ZodTypeAny, {
+            branch?: string | undefined;
+            remote?: string | undefined;
+            force?: boolean | undefined;
+        }, {
+            branch?: string | undefined;
+            remote?: string | undefined;
+            force?: boolean | undefined;
+        }>>, any, any>> & {
+            inputSchema: z.ZodOptional<z.ZodObject<{
+                remote: z.ZodOptional<z.ZodString>;
+                branch: z.ZodOptional<z.ZodString>;
+                force: z.ZodOptional<z.ZodBoolean>;
+            }, "strip", z.ZodTypeAny, {
+                branch?: string | undefined;
+                remote?: string | undefined;
+                force?: boolean | undefined;
+            }, {
+                branch?: string | undefined;
+                remote?: string | undefined;
+                force?: boolean | undefined;
+            }>>;
+            outputSchema: z.ZodObject<{
+                enabled: z.ZodBoolean;
+                result: z.ZodNullable<z.ZodObject<{
+                    remote: z.ZodString;
+                    branch: z.ZodString;
+                }, "strip", z.ZodTypeAny, {
+                    branch: string;
+                    remote: string;
+                }, {
+                    branch: string;
+                    remote: string;
+                }>>;
+                error: z.ZodOptional<z.ZodObject<{
+                    message: z.ZodString;
+                    code: z.ZodString;
+                }, "strip", z.ZodTypeAny, {
+                    code: string;
+                    message: string;
+                }, {
+                    code: string;
+                    message: string;
+                }>>;
+            }, "strip", z.ZodTypeAny, {
+                enabled: boolean;
+                result: {
+                    branch: string;
+                    remote: string;
+                } | null;
+                error?: {
+                    code: string;
+                    message: string;
+                } | undefined;
+            }, {
+                enabled: boolean;
+                result: {
+                    branch: string;
+                    remote: string;
+                } | null;
+                error?: {
+                    code: string;
+                    message: string;
+                } | undefined;
+            }>;
+            execute: (context: import("@mastra/core").ToolExecutionContext<z.ZodOptional<z.ZodObject<{
+                remote: z.ZodOptional<z.ZodString>;
+                branch: z.ZodOptional<z.ZodString>;
+                force: z.ZodOptional<z.ZodBoolean>;
+            }, "strip", z.ZodTypeAny, {
+                branch?: string | undefined;
+                remote?: string | undefined;
+                force?: boolean | undefined;
+            }, {
+                branch?: string | undefined;
+                remote?: string | undefined;
+                force?: boolean | undefined;
+            }>>, any, any>, options: import("@mastra/core").ToolInvocationOptions) => Promise<any>;
+        };
+        gitBranchTool: import("@mastra/core/tools").Tool<z.ZodObject<{
+            name: z.ZodString;
+            base: z.ZodOptional<z.ZodString>;
+            checkout: z.ZodOptional<z.ZodBoolean>;
+        }, "strip", z.ZodTypeAny, {
+            name: string;
+            base?: string | undefined;
+            checkout?: boolean | undefined;
+        }, {
+            name: string;
+            base?: string | undefined;
+            checkout?: boolean | undefined;
+        }>, z.ZodObject<{
+            enabled: z.ZodBoolean;
+            branch: z.ZodNullable<z.ZodObject<{
+                name: z.ZodString;
+                checkedOut: z.ZodBoolean;
+            }, "strip", z.ZodTypeAny, {
+                name: string;
+                checkedOut: boolean;
+            }, {
+                name: string;
+                checkedOut: boolean;
+            }>>;
+            error: z.ZodOptional<z.ZodObject<{
+                message: z.ZodString;
+                code: z.ZodString;
+            }, "strip", z.ZodTypeAny, {
+                code: string;
+                message: string;
+            }, {
+                code: string;
+                message: string;
+            }>>;
+        }, "strip", z.ZodTypeAny, {
+            branch: {
+                name: string;
+                checkedOut: boolean;
+            } | null;
+            enabled: boolean;
+            error?: {
+                code: string;
+                message: string;
+            } | undefined;
+        }, {
+            branch: {
+                name: string;
+                checkedOut: boolean;
+            } | null;
+            enabled: boolean;
+            error?: {
+                code: string;
+                message: string;
+            } | undefined;
+        }>, any, any, import("@mastra/core").ToolExecutionContext<z.ZodObject<{
+            name: z.ZodString;
+            base: z.ZodOptional<z.ZodString>;
+            checkout: z.ZodOptional<z.ZodBoolean>;
+        }, "strip", z.ZodTypeAny, {
+            name: string;
+            base?: string | undefined;
+            checkout?: boolean | undefined;
+        }, {
+            name: string;
+            base?: string | undefined;
+            checkout?: boolean | undefined;
+        }>, any, any>> & {
+            inputSchema: z.ZodObject<{
+                name: z.ZodString;
+                base: z.ZodOptional<z.ZodString>;
+                checkout: z.ZodOptional<z.ZodBoolean>;
+            }, "strip", z.ZodTypeAny, {
+                name: string;
+                base?: string | undefined;
+                checkout?: boolean | undefined;
+            }, {
+                name: string;
+                base?: string | undefined;
+                checkout?: boolean | undefined;
+            }>;
+            outputSchema: z.ZodObject<{
+                enabled: z.ZodBoolean;
+                branch: z.ZodNullable<z.ZodObject<{
+                    name: z.ZodString;
+                    checkedOut: z.ZodBoolean;
+                }, "strip", z.ZodTypeAny, {
+                    name: string;
+                    checkedOut: boolean;
+                }, {
+                    name: string;
+                    checkedOut: boolean;
+                }>>;
+                error: z.ZodOptional<z.ZodObject<{
+                    message: z.ZodString;
+                    code: z.ZodString;
+                }, "strip", z.ZodTypeAny, {
+                    code: string;
+                    message: string;
+                }, {
+                    code: string;
+                    message: string;
+                }>>;
+            }, "strip", z.ZodTypeAny, {
+                branch: {
+                    name: string;
+                    checkedOut: boolean;
+                } | null;
+                enabled: boolean;
+                error?: {
+                    code: string;
+                    message: string;
+                } | undefined;
+            }, {
+                branch: {
+                    name: string;
+                    checkedOut: boolean;
+                } | null;
+                enabled: boolean;
+                error?: {
+                    code: string;
+                    message: string;
+                } | undefined;
+            }>;
+            execute: (context: import("@mastra/core").ToolExecutionContext<z.ZodObject<{
+                name: z.ZodString;
+                base: z.ZodOptional<z.ZodString>;
+                checkout: z.ZodOptional<z.ZodBoolean>;
+            }, "strip", z.ZodTypeAny, {
+                name: string;
+                base?: string | undefined;
+                checkout?: boolean | undefined;
+            }, {
+                name: string;
+                base?: string | undefined;
+                checkout?: boolean | undefined;
+            }>, any, any>, options: import("@mastra/core").ToolInvocationOptions) => Promise<any>;
+        };
+        listDeploysTool: import("@mastra/core/tools").Tool<z.ZodObject<{
+            service: z.ZodOptional<z.ZodString>;
+            since: z.ZodOptional<z.ZodString>;
+        }, "strip", z.ZodTypeAny, {
+            service?: string | undefined;
+            since?: string | undefined;
+        }, {
+            service?: string | undefined;
+            since?: string | undefined;
+        }>, z.ZodObject<{
+            count: z.ZodNumber;
+            jobs: z.ZodArray<z.ZodObject<{
+                id: z.ZodString;
+                service: z.ZodString;
+                status: z.ZodEnum<["PENDING", "RUNNING", "SUCCEEDED", "FAILED"]>;
+                createdAt: z.ZodString;
+                updatedAt: z.ZodString;
+                spec: z.ZodObject<{
+                    service: z.ZodString;
+                    image: z.ZodString;
+                    version: z.ZodDefault<z.ZodString>;
+                    command: z.ZodDefault<z.ZodArray<z.ZodString, "many">>;
+                    env: z.ZodDefault<z.ZodRecord<z.ZodString, z.ZodString>>;
+                    metadata: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodAny>>;
+                }, "strip", z.ZodTypeAny, {
+                    service: string;
+                    image: string;
+                    version: string;
+                    command: string[];
+                    env: Record<string, string>;
+                    metadata?: Record<string, any> | undefined;
+                }, {
+                    service: string;
+                    image: string;
+                    metadata?: Record<string, any> | undefined;
+                    version?: string | undefined;
+                    command?: string[] | undefined;
+                    env?: Record<string, string> | undefined;
+                }>;
+                type: z.ZodEnum<["DEPLOY", "ROLLBACK"]>;
+                parentJobId: z.ZodOptional<z.ZodString>;
+                outcome: z.ZodOptional<z.ZodString>;
+            }, "strip", z.ZodTypeAny, {
+                type: "ROLLBACK" | "DEPLOY";
+                status: "PENDING" | "RUNNING" | "SUCCEEDED" | "FAILED";
+                id: string;
+                createdAt: string;
+                updatedAt: string;
+                service: string;
+                spec: {
+                    service: string;
+                    image: string;
+                    version: string;
+                    command: string[];
+                    env: Record<string, string>;
+                    metadata?: Record<string, any> | undefined;
+                };
+                parentJobId?: string | undefined;
+                outcome?: string | undefined;
+            }, {
+                type: "ROLLBACK" | "DEPLOY";
+                status: "PENDING" | "RUNNING" | "SUCCEEDED" | "FAILED";
+                id: string;
+                createdAt: string;
+                updatedAt: string;
+                service: string;
+                spec: {
+                    service: string;
+                    image: string;
+                    metadata?: Record<string, any> | undefined;
+                    version?: string | undefined;
+                    command?: string[] | undefined;
+                    env?: Record<string, string> | undefined;
+                };
+                parentJobId?: string | undefined;
+                outcome?: string | undefined;
+            }>, "many">;
+        }, "strip", z.ZodTypeAny, {
+            count: number;
+            jobs: {
+                type: "ROLLBACK" | "DEPLOY";
+                status: "PENDING" | "RUNNING" | "SUCCEEDED" | "FAILED";
+                id: string;
+                createdAt: string;
+                updatedAt: string;
+                service: string;
+                spec: {
+                    service: string;
+                    image: string;
+                    version: string;
+                    command: string[];
+                    env: Record<string, string>;
+                    metadata?: Record<string, any> | undefined;
+                };
+                parentJobId?: string | undefined;
+                outcome?: string | undefined;
+            }[];
+        }, {
+            count: number;
+            jobs: {
+                type: "ROLLBACK" | "DEPLOY";
+                status: "PENDING" | "RUNNING" | "SUCCEEDED" | "FAILED";
+                id: string;
+                createdAt: string;
+                updatedAt: string;
+                service: string;
+                spec: {
+                    service: string;
+                    image: string;
+                    metadata?: Record<string, any> | undefined;
+                    version?: string | undefined;
+                    command?: string[] | undefined;
+                    env?: Record<string, string> | undefined;
+                };
+                parentJobId?: string | undefined;
+                outcome?: string | undefined;
+            }[];
+        }>, any, any, import("@mastra/core").ToolExecutionContext<z.ZodObject<{
+            service: z.ZodOptional<z.ZodString>;
+            since: z.ZodOptional<z.ZodString>;
+        }, "strip", z.ZodTypeAny, {
+            service?: string | undefined;
+            since?: string | undefined;
+        }, {
+            service?: string | undefined;
+            since?: string | undefined;
+        }>, any, any>> & {
+            inputSchema: z.ZodObject<{
+                service: z.ZodOptional<z.ZodString>;
+                since: z.ZodOptional<z.ZodString>;
+            }, "strip", z.ZodTypeAny, {
+                service?: string | undefined;
+                since?: string | undefined;
+            }, {
+                service?: string | undefined;
+                since?: string | undefined;
+            }>;
+            outputSchema: z.ZodObject<{
+                count: z.ZodNumber;
+                jobs: z.ZodArray<z.ZodObject<{
+                    id: z.ZodString;
+                    service: z.ZodString;
+                    status: z.ZodEnum<["PENDING", "RUNNING", "SUCCEEDED", "FAILED"]>;
+                    createdAt: z.ZodString;
+                    updatedAt: z.ZodString;
+                    spec: z.ZodObject<{
+                        service: z.ZodString;
+                        image: z.ZodString;
+                        version: z.ZodDefault<z.ZodString>;
+                        command: z.ZodDefault<z.ZodArray<z.ZodString, "many">>;
+                        env: z.ZodDefault<z.ZodRecord<z.ZodString, z.ZodString>>;
+                        metadata: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodAny>>;
+                    }, "strip", z.ZodTypeAny, {
+                        service: string;
+                        image: string;
+                        version: string;
+                        command: string[];
+                        env: Record<string, string>;
+                        metadata?: Record<string, any> | undefined;
+                    }, {
+                        service: string;
+                        image: string;
+                        metadata?: Record<string, any> | undefined;
+                        version?: string | undefined;
+                        command?: string[] | undefined;
+                        env?: Record<string, string> | undefined;
+                    }>;
+                    type: z.ZodEnum<["DEPLOY", "ROLLBACK"]>;
+                    parentJobId: z.ZodOptional<z.ZodString>;
+                    outcome: z.ZodOptional<z.ZodString>;
+                }, "strip", z.ZodTypeAny, {
+                    type: "ROLLBACK" | "DEPLOY";
+                    status: "PENDING" | "RUNNING" | "SUCCEEDED" | "FAILED";
+                    id: string;
+                    createdAt: string;
+                    updatedAt: string;
+                    service: string;
+                    spec: {
+                        service: string;
+                        image: string;
+                        version: string;
+                        command: string[];
+                        env: Record<string, string>;
+                        metadata?: Record<string, any> | undefined;
+                    };
+                    parentJobId?: string | undefined;
+                    outcome?: string | undefined;
+                }, {
+                    type: "ROLLBACK" | "DEPLOY";
+                    status: "PENDING" | "RUNNING" | "SUCCEEDED" | "FAILED";
+                    id: string;
+                    createdAt: string;
+                    updatedAt: string;
+                    service: string;
+                    spec: {
+                        service: string;
+                        image: string;
+                        metadata?: Record<string, any> | undefined;
+                        version?: string | undefined;
+                        command?: string[] | undefined;
+                        env?: Record<string, string> | undefined;
+                    };
+                    parentJobId?: string | undefined;
+                    outcome?: string | undefined;
+                }>, "many">;
+            }, "strip", z.ZodTypeAny, {
+                count: number;
+                jobs: {
+                    type: "ROLLBACK" | "DEPLOY";
+                    status: "PENDING" | "RUNNING" | "SUCCEEDED" | "FAILED";
+                    id: string;
+                    createdAt: string;
+                    updatedAt: string;
+                    service: string;
+                    spec: {
+                        service: string;
+                        image: string;
+                        version: string;
+                        command: string[];
+                        env: Record<string, string>;
+                        metadata?: Record<string, any> | undefined;
+                    };
+                    parentJobId?: string | undefined;
+                    outcome?: string | undefined;
+                }[];
+            }, {
+                count: number;
+                jobs: {
+                    type: "ROLLBACK" | "DEPLOY";
+                    status: "PENDING" | "RUNNING" | "SUCCEEDED" | "FAILED";
+                    id: string;
+                    createdAt: string;
+                    updatedAt: string;
+                    service: string;
+                    spec: {
+                        service: string;
+                        image: string;
+                        metadata?: Record<string, any> | undefined;
+                        version?: string | undefined;
+                        command?: string[] | undefined;
+                        env?: Record<string, string> | undefined;
+                    };
+                    parentJobId?: string | undefined;
+                    outcome?: string | undefined;
+                }[];
+            }>;
+            execute: (context: import("@mastra/core").ToolExecutionContext<z.ZodObject<{
+                service: z.ZodOptional<z.ZodString>;
+                since: z.ZodOptional<z.ZodString>;
+            }, "strip", z.ZodTypeAny, {
+                service?: string | undefined;
+                since?: string | undefined;
+            }, {
+                service?: string | undefined;
+                since?: string | undefined;
+            }>, any, any>, options: import("@mastra/core").ToolInvocationOptions) => Promise<any>;
+        };
+        listPostmortemsTool: import("@mastra/core/tools").Tool<z.ZodObject<{
+            service: z.ZodOptional<z.ZodString>;
+            status: z.ZodOptional<z.ZodEnum<["DRAFT", "PUBLISHED"]>>;
+        }, "strip", z.ZodTypeAny, {
+            status?: "DRAFT" | "PUBLISHED" | undefined;
+            service?: string | undefined;
+        }, {
+            status?: "DRAFT" | "PUBLISHED" | undefined;
+            service?: string | undefined;
+        }>, z.ZodObject<{
+            count: z.ZodNumber;
+            postmortems: z.ZodArray<z.ZodType<import("@sentinelops/tools/postmortems").PostmortemRecord, z.ZodTypeDef, import("@sentinelops/tools/postmortems").PostmortemRecord>, "many">;
+        }, "strip", z.ZodTypeAny, {
+            count: number;
+            postmortems: import("@sentinelops/tools/postmortems").PostmortemRecord[];
+        }, {
+            count: number;
+            postmortems: import("@sentinelops/tools/postmortems").PostmortemRecord[];
+        }>, any, any, import("@mastra/core").ToolExecutionContext<z.ZodObject<{
+            service: z.ZodOptional<z.ZodString>;
+            status: z.ZodOptional<z.ZodEnum<["DRAFT", "PUBLISHED"]>>;
+        }, "strip", z.ZodTypeAny, {
+            status?: "DRAFT" | "PUBLISHED" | undefined;
+            service?: string | undefined;
+        }, {
+            status?: "DRAFT" | "PUBLISHED" | undefined;
+            service?: string | undefined;
+        }>, any, any>> & {
+            inputSchema: z.ZodObject<{
+                service: z.ZodOptional<z.ZodString>;
+                status: z.ZodOptional<z.ZodEnum<["DRAFT", "PUBLISHED"]>>;
+            }, "strip", z.ZodTypeAny, {
+                status?: "DRAFT" | "PUBLISHED" | undefined;
+                service?: string | undefined;
+            }, {
+                status?: "DRAFT" | "PUBLISHED" | undefined;
+                service?: string | undefined;
+            }>;
+            outputSchema: z.ZodObject<{
+                count: z.ZodNumber;
+                postmortems: z.ZodArray<z.ZodType<import("@sentinelops/tools/postmortems").PostmortemRecord, z.ZodTypeDef, import("@sentinelops/tools/postmortems").PostmortemRecord>, "many">;
+            }, "strip", z.ZodTypeAny, {
+                count: number;
+                postmortems: import("@sentinelops/tools/postmortems").PostmortemRecord[];
+            }, {
+                count: number;
+                postmortems: import("@sentinelops/tools/postmortems").PostmortemRecord[];
+            }>;
+            execute: (context: import("@mastra/core").ToolExecutionContext<z.ZodObject<{
+                service: z.ZodOptional<z.ZodString>;
+                status: z.ZodOptional<z.ZodEnum<["DRAFT", "PUBLISHED"]>>;
+            }, "strip", z.ZodTypeAny, {
+                status?: "DRAFT" | "PUBLISHED" | undefined;
+                service?: string | undefined;
+            }, {
+                status?: "DRAFT" | "PUBLISHED" | undefined;
+                service?: string | undefined;
+            }>, any, any>, options: import("@mastra/core").ToolInvocationOptions) => Promise<any>;
+        };
+        queryLogsTool: import("@mastra/core/tools").Tool<z.ZodObject<{
+            query: z.ZodString;
+            timeRange: z.ZodOptional<z.ZodObject<{
+                from: z.ZodOptional<z.ZodString>;
+                to: z.ZodOptional<z.ZodString>;
+            }, "strip", z.ZodTypeAny, {
+                from?: string | undefined;
+                to?: string | undefined;
+            }, {
+                from?: string | undefined;
+                to?: string | undefined;
+            }>>;
+            limit: z.ZodDefault<z.ZodNumber>;
+        }, "strip", z.ZodTypeAny, {
+            query: string;
+            limit: number;
+            timeRange?: {
+                from?: string | undefined;
+                to?: string | undefined;
+            } | undefined;
+        }, {
+            query: string;
+            timeRange?: {
+                from?: string | undefined;
+                to?: string | undefined;
+            } | undefined;
+            limit?: number | undefined;
+        }>, z.ZodObject<{
+            count: z.ZodNumber;
+            logs: z.ZodArray<z.ZodType<import("@sentinelops/tools/logs").LogRecord, z.ZodTypeDef, import("@sentinelops/tools/logs").LogRecord>, "many">;
+        }, "strip", z.ZodTypeAny, {
+            count: number;
+            logs: import("@sentinelops/tools/logs").LogRecord[];
+        }, {
+            count: number;
+            logs: import("@sentinelops/tools/logs").LogRecord[];
+        }>, any, any, import("@mastra/core").ToolExecutionContext<z.ZodObject<{
+            query: z.ZodString;
+            timeRange: z.ZodOptional<z.ZodObject<{
+                from: z.ZodOptional<z.ZodString>;
+                to: z.ZodOptional<z.ZodString>;
+            }, "strip", z.ZodTypeAny, {
+                from?: string | undefined;
+                to?: string | undefined;
+            }, {
+                from?: string | undefined;
+                to?: string | undefined;
+            }>>;
+            limit: z.ZodDefault<z.ZodNumber>;
+        }, "strip", z.ZodTypeAny, {
+            query: string;
+            limit: number;
+            timeRange?: {
+                from?: string | undefined;
+                to?: string | undefined;
+            } | undefined;
+        }, {
+            query: string;
+            timeRange?: {
+                from?: string | undefined;
+                to?: string | undefined;
+            } | undefined;
+            limit?: number | undefined;
+        }>, any, any>> & {
+            inputSchema: z.ZodObject<{
+                query: z.ZodString;
+                timeRange: z.ZodOptional<z.ZodObject<{
+                    from: z.ZodOptional<z.ZodString>;
+                    to: z.ZodOptional<z.ZodString>;
+                }, "strip", z.ZodTypeAny, {
+                    from?: string | undefined;
+                    to?: string | undefined;
+                }, {
+                    from?: string | undefined;
+                    to?: string | undefined;
+                }>>;
+                limit: z.ZodDefault<z.ZodNumber>;
+            }, "strip", z.ZodTypeAny, {
+                query: string;
+                limit: number;
+                timeRange?: {
+                    from?: string | undefined;
+                    to?: string | undefined;
+                } | undefined;
+            }, {
+                query: string;
+                timeRange?: {
+                    from?: string | undefined;
+                    to?: string | undefined;
+                } | undefined;
+                limit?: number | undefined;
+            }>;
+            outputSchema: z.ZodObject<{
+                count: z.ZodNumber;
+                logs: z.ZodArray<z.ZodType<import("@sentinelops/tools/logs").LogRecord, z.ZodTypeDef, import("@sentinelops/tools/logs").LogRecord>, "many">;
+            }, "strip", z.ZodTypeAny, {
+                count: number;
+                logs: import("@sentinelops/tools/logs").LogRecord[];
+            }, {
+                count: number;
+                logs: import("@sentinelops/tools/logs").LogRecord[];
+            }>;
+            execute: (context: import("@mastra/core").ToolExecutionContext<z.ZodObject<{
+                query: z.ZodString;
+                timeRange: z.ZodOptional<z.ZodObject<{
+                    from: z.ZodOptional<z.ZodString>;
+                    to: z.ZodOptional<z.ZodString>;
+                }, "strip", z.ZodTypeAny, {
+                    from?: string | undefined;
+                    to?: string | undefined;
+                }, {
+                    from?: string | undefined;
+                    to?: string | undefined;
+                }>>;
+                limit: z.ZodDefault<z.ZodNumber>;
+            }, "strip", z.ZodTypeAny, {
+                query: string;
+                limit: number;
+                timeRange?: {
+                    from?: string | undefined;
+                    to?: string | undefined;
+                } | undefined;
+            }, {
+                query: string;
+                timeRange?: {
+                    from?: string | undefined;
+                    to?: string | undefined;
+                } | undefined;
+                limit?: number | undefined;
+            }>, any, any>, options: import("@mastra/core").ToolInvocationOptions) => Promise<any>;
+        };
+        createStrategyTool: import("@mastra/core/tools").Tool<z.ZodObject<{
+            title: z.ZodString;
+            focusArea: z.ZodString;
+            constraints: z.ZodOptional<z.ZodString>;
+            plan: z.ZodString;
+            metrics: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodAny>>;
+        }, "strip", z.ZodTypeAny, {
+            title: string;
+            focusArea: string;
+            plan: string;
+            constraints?: string | undefined;
+            metrics?: Record<string, any> | undefined;
+        }, {
+            title: string;
+            focusArea: string;
+            plan: string;
+            constraints?: string | undefined;
+            metrics?: Record<string, any> | undefined;
+        }>, z.ZodObject<{
+            id: z.ZodString;
+            title: z.ZodString;
+            focusArea: z.ZodString;
+            constraints: z.ZodNullable<z.ZodString>;
+            plan: z.ZodString;
+            metrics: z.ZodNullable<z.ZodRecord<z.ZodString, z.ZodAny>>;
+            createdAt: z.ZodString;
+            updatedAt: z.ZodString;
+        }, "strip", z.ZodTypeAny, {
+            id: string;
+            createdAt: string;
+            updatedAt: string;
+            title: string;
+            focusArea: string;
+            constraints: string | null;
+            plan: string;
+            metrics: Record<string, any> | null;
+        }, {
+            id: string;
+            createdAt: string;
+            updatedAt: string;
+            title: string;
+            focusArea: string;
+            constraints: string | null;
+            plan: string;
+            metrics: Record<string, any> | null;
+        }>, any, any, import("@mastra/core").ToolExecutionContext<z.ZodObject<{
+            title: z.ZodString;
+            focusArea: z.ZodString;
+            constraints: z.ZodOptional<z.ZodString>;
+            plan: z.ZodString;
+            metrics: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodAny>>;
+        }, "strip", z.ZodTypeAny, {
+            title: string;
+            focusArea: string;
+            plan: string;
+            constraints?: string | undefined;
+            metrics?: Record<string, any> | undefined;
+        }, {
+            title: string;
+            focusArea: string;
+            plan: string;
+            constraints?: string | undefined;
+            metrics?: Record<string, any> | undefined;
+        }>, any, any>> & {
+            inputSchema: z.ZodObject<{
+                title: z.ZodString;
+                focusArea: z.ZodString;
+                constraints: z.ZodOptional<z.ZodString>;
+                plan: z.ZodString;
+                metrics: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodAny>>;
+            }, "strip", z.ZodTypeAny, {
+                title: string;
+                focusArea: string;
+                plan: string;
+                constraints?: string | undefined;
+                metrics?: Record<string, any> | undefined;
+            }, {
+                title: string;
+                focusArea: string;
+                plan: string;
+                constraints?: string | undefined;
+                metrics?: Record<string, any> | undefined;
+            }>;
+            outputSchema: z.ZodObject<{
+                id: z.ZodString;
+                title: z.ZodString;
+                focusArea: z.ZodString;
+                constraints: z.ZodNullable<z.ZodString>;
+                plan: z.ZodString;
+                metrics: z.ZodNullable<z.ZodRecord<z.ZodString, z.ZodAny>>;
+                createdAt: z.ZodString;
+                updatedAt: z.ZodString;
+            }, "strip", z.ZodTypeAny, {
+                id: string;
+                createdAt: string;
+                updatedAt: string;
+                title: string;
+                focusArea: string;
+                constraints: string | null;
+                plan: string;
+                metrics: Record<string, any> | null;
+            }, {
+                id: string;
+                createdAt: string;
+                updatedAt: string;
+                title: string;
+                focusArea: string;
+                constraints: string | null;
+                plan: string;
+                metrics: Record<string, any> | null;
+            }>;
+            execute: (context: import("@mastra/core").ToolExecutionContext<z.ZodObject<{
+                title: z.ZodString;
+                focusArea: z.ZodString;
+                constraints: z.ZodOptional<z.ZodString>;
+                plan: z.ZodString;
+                metrics: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodAny>>;
+            }, "strip", z.ZodTypeAny, {
+                title: string;
+                focusArea: string;
+                plan: string;
+                constraints?: string | undefined;
+                metrics?: Record<string, any> | undefined;
+            }, {
+                title: string;
+                focusArea: string;
+                plan: string;
+                constraints?: string | undefined;
+                metrics?: Record<string, any> | undefined;
+            }>, any, any>, options: import("@mastra/core").ToolInvocationOptions) => Promise<any>;
+        };
+    }, Record<string, import("@mastra/core").Metric>>;
     readonly discordTriageAgent: Agent<"DiscordTriageAgent", {
         sampleLogsTool: import("@mastra/core/tools").Tool<z.ZodObject<{
             incidentId: z.ZodString;
@@ -8613,15 +12037,15 @@ export declare const agentsRegistry: {
             ttlSeconds?: number | undefined;
         }>, z.ZodObject<{
             incidentId: z.ZodString;
-            logs: z.ZodArray<z.ZodType<import("@sentinelops/tools").LogRecord, z.ZodTypeDef, import("@sentinelops/tools").LogRecord>, "many">;
+            logs: z.ZodArray<z.ZodType<import("@sentinelops/tools/logs").LogRecord, z.ZodTypeDef, import("@sentinelops/tools/logs").LogRecord>, "many">;
             expiresAt: z.ZodString;
         }, "strip", z.ZodTypeAny, {
             incidentId: string;
-            logs: import("@sentinelops/tools").LogRecord[];
+            logs: import("@sentinelops/tools/logs").LogRecord[];
             expiresAt: string;
         }, {
             incidentId: string;
-            logs: import("@sentinelops/tools").LogRecord[];
+            logs: import("@sentinelops/tools/logs").LogRecord[];
             expiresAt: string;
         }>, any, any, import("@mastra/core").ToolExecutionContext<z.ZodObject<{
             incidentId: z.ZodString;
@@ -8645,15 +12069,15 @@ export declare const agentsRegistry: {
             }>;
             outputSchema: z.ZodObject<{
                 incidentId: z.ZodString;
-                logs: z.ZodArray<z.ZodType<import("@sentinelops/tools").LogRecord, z.ZodTypeDef, import("@sentinelops/tools").LogRecord>, "many">;
+                logs: z.ZodArray<z.ZodType<import("@sentinelops/tools/logs").LogRecord, z.ZodTypeDef, import("@sentinelops/tools/logs").LogRecord>, "many">;
                 expiresAt: z.ZodString;
             }, "strip", z.ZodTypeAny, {
                 incidentId: string;
-                logs: import("@sentinelops/tools").LogRecord[];
+                logs: import("@sentinelops/tools/logs").LogRecord[];
                 expiresAt: string;
             }, {
                 incidentId: string;
-                logs: import("@sentinelops/tools").LogRecord[];
+                logs: import("@sentinelops/tools/logs").LogRecord[];
                 expiresAt: string;
             }>;
             execute: (context: import("@mastra/core").ToolExecutionContext<z.ZodObject<{
@@ -8822,7 +12246,7 @@ export declare const agentsRegistry: {
             metadata?: Record<string, any> | undefined;
             source?: string | undefined;
             level?: "DEBUG" | "INFO" | "WARN" | "ERROR" | "FATAL" | undefined;
-        }>, z.ZodType<import("@sentinelops/tools").LogRecord, z.ZodTypeDef, import("@sentinelops/tools").LogRecord>, any, any, import("@mastra/core").ToolExecutionContext<z.ZodObject<{
+        }>, z.ZodType<import("@sentinelops/tools/logs").LogRecord, z.ZodTypeDef, import("@sentinelops/tools/logs").LogRecord>, any, any, import("@mastra/core").ToolExecutionContext<z.ZodObject<{
             incidentId: z.ZodString;
             source: z.ZodDefault<z.ZodString>;
             level: z.ZodDefault<z.ZodEnum<["DEBUG", "INFO", "WARN", "ERROR", "FATAL"]>>;
@@ -8860,7 +12284,7 @@ export declare const agentsRegistry: {
                 source?: string | undefined;
                 level?: "DEBUG" | "INFO" | "WARN" | "ERROR" | "FATAL" | undefined;
             }>;
-            outputSchema: z.ZodType<import("@sentinelops/tools").LogRecord, z.ZodTypeDef, import("@sentinelops/tools").LogRecord>;
+            outputSchema: z.ZodType<import("@sentinelops/tools/logs").LogRecord, z.ZodTypeDef, import("@sentinelops/tools/logs").LogRecord>;
             execute: (context: import("@mastra/core").ToolExecutionContext<z.ZodObject<{
                 incidentId: z.ZodString;
                 source: z.ZodDefault<z.ZodString>;
@@ -9466,13 +12890,13 @@ export declare const agentsRegistry: {
             service?: string | undefined;
         }>, z.ZodObject<{
             count: z.ZodNumber;
-            postmortems: z.ZodArray<z.ZodType<import("@sentinelops/tools").PostmortemRecord, z.ZodTypeDef, import("@sentinelops/tools").PostmortemRecord>, "many">;
+            postmortems: z.ZodArray<z.ZodType<import("@sentinelops/tools/postmortems").PostmortemRecord, z.ZodTypeDef, import("@sentinelops/tools/postmortems").PostmortemRecord>, "many">;
         }, "strip", z.ZodTypeAny, {
             count: number;
-            postmortems: import("@sentinelops/tools").PostmortemRecord[];
+            postmortems: import("@sentinelops/tools/postmortems").PostmortemRecord[];
         }, {
             count: number;
-            postmortems: import("@sentinelops/tools").PostmortemRecord[];
+            postmortems: import("@sentinelops/tools/postmortems").PostmortemRecord[];
         }>, any, any, import("@mastra/core").ToolExecutionContext<z.ZodObject<{
             service: z.ZodOptional<z.ZodString>;
             status: z.ZodOptional<z.ZodEnum<["DRAFT", "PUBLISHED"]>>;
@@ -9495,13 +12919,13 @@ export declare const agentsRegistry: {
             }>;
             outputSchema: z.ZodObject<{
                 count: z.ZodNumber;
-                postmortems: z.ZodArray<z.ZodType<import("@sentinelops/tools").PostmortemRecord, z.ZodTypeDef, import("@sentinelops/tools").PostmortemRecord>, "many">;
+                postmortems: z.ZodArray<z.ZodType<import("@sentinelops/tools/postmortems").PostmortemRecord, z.ZodTypeDef, import("@sentinelops/tools/postmortems").PostmortemRecord>, "many">;
             }, "strip", z.ZodTypeAny, {
                 count: number;
-                postmortems: import("@sentinelops/tools").PostmortemRecord[];
+                postmortems: import("@sentinelops/tools/postmortems").PostmortemRecord[];
             }, {
                 count: number;
-                postmortems: import("@sentinelops/tools").PostmortemRecord[];
+                postmortems: import("@sentinelops/tools/postmortems").PostmortemRecord[];
             }>;
             execute: (context: import("@mastra/core").ToolExecutionContext<z.ZodObject<{
                 service: z.ZodOptional<z.ZodString>;
@@ -9543,13 +12967,13 @@ export declare const agentsRegistry: {
             limit?: number | undefined;
         }>, z.ZodObject<{
             count: z.ZodNumber;
-            logs: z.ZodArray<z.ZodType<import("@sentinelops/tools").LogRecord, z.ZodTypeDef, import("@sentinelops/tools").LogRecord>, "many">;
+            logs: z.ZodArray<z.ZodType<import("@sentinelops/tools/logs").LogRecord, z.ZodTypeDef, import("@sentinelops/tools/logs").LogRecord>, "many">;
         }, "strip", z.ZodTypeAny, {
             count: number;
-            logs: import("@sentinelops/tools").LogRecord[];
+            logs: import("@sentinelops/tools/logs").LogRecord[];
         }, {
             count: number;
-            logs: import("@sentinelops/tools").LogRecord[];
+            logs: import("@sentinelops/tools/logs").LogRecord[];
         }>, any, any, import("@mastra/core").ToolExecutionContext<z.ZodObject<{
             query: z.ZodString;
             timeRange: z.ZodOptional<z.ZodObject<{
@@ -9608,13 +13032,13 @@ export declare const agentsRegistry: {
             }>;
             outputSchema: z.ZodObject<{
                 count: z.ZodNumber;
-                logs: z.ZodArray<z.ZodType<import("@sentinelops/tools").LogRecord, z.ZodTypeDef, import("@sentinelops/tools").LogRecord>, "many">;
+                logs: z.ZodArray<z.ZodType<import("@sentinelops/tools/logs").LogRecord, z.ZodTypeDef, import("@sentinelops/tools/logs").LogRecord>, "many">;
             }, "strip", z.ZodTypeAny, {
                 count: number;
-                logs: import("@sentinelops/tools").LogRecord[];
+                logs: import("@sentinelops/tools/logs").LogRecord[];
             }, {
                 count: number;
-                logs: import("@sentinelops/tools").LogRecord[];
+                logs: import("@sentinelops/tools/logs").LogRecord[];
             }>;
             execute: (context: import("@mastra/core").ToolExecutionContext<z.ZodObject<{
                 query: z.ZodString;

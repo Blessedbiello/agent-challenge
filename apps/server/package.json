@@ -5,6 +5,8 @@
   "main": "src/index.ts",
   "types": "src/index.ts",
   "dependencies": {
-    "@sentinelops/persistence": "workspace:*"
+    "@sentinelops/persistence": "workspace:*",
+    "@sentinelops/tools": "workspace:*",
+    "@sentinelops/git": "workspace:*"
   }
 }

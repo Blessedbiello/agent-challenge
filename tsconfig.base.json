@@ -21,6 +21,8 @@
       "@sentinelops/agents/*": ["packages/agents/src/*"],
       "@sentinelops/persistence": ["packages/persistence/src"],
       "@sentinelops/persistence/*": ["packages/persistence/src/*"],
+      "@sentinelops/git": ["packages/git/src"],
+      "@sentinelops/git/*": ["packages/git/src/*"],
       "@sentinelops/ui": ["packages/ui/src"],
       "@sentinelops/ui/*": ["packages/ui/src/*"],
       "@sentinelops/mcp": ["src/mastra/mcp"],

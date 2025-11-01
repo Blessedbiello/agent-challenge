@@ -28,6 +28,7 @@ SentinelOps deploys **7 specialized AI agents** that collaborate in real-time:
 | **MonitorAgent** | Anomaly detection | Ingests telemetry, detects spikes/OOMs |
 | **ForensicsAgent** | Postmortem generation | Drafts timeline, root cause, action items |
 | **HumanOpsAgent** | Dashboard copilot | Answers operator questions, suggests runbooks |
+| **CodeExpertAgent** | Coding specialist | Reviews diffs, plans implementations, aligns testing |
 | **DiscordTriage** | Community support | Provides safe troubleshooting via Discord |
 | **AgentBprime** | Optimization strategist | Competition-focused efficiency planning |
 
@@ -81,6 +82,13 @@ graph LR
   - Agent activities (started/in_progress/completed)
   - Incident events (alerts, actions, approvals)
   - Real-time UI synchronization
+
+### 3. Git-Native Automation ✅
+**Challenge Requirement:** *"Coordinate complex operations across tools"*  
+
+- CLI-backed Git service (`packages/git`) keeps repo awareness pure JS friendly.
+- REST + MCP tools cover `git.status`, `git.diff`, `git.stage`, `git.commit`, `git.push`, and `git.branch`.
+- **CodeExpertAgent** orchestrates the flow: inspects diffs, stages paths, crafts commits, pushes branches, and hands off to DevOps automation—all guarded by `SENTINELOPS_GIT_ENABLED`.
 
 **Competitive Edge:** Users **see agents thinking in real-time**. Most dashboards just poll static endpoints.
 
@@ -169,6 +177,18 @@ MODEL_NAME_AT_ENDPOINT=qwen3:0.6b
 ```env
 OPENAI_API_KEY=your-key-here
 ```
+
+### Environment Flags
+
+- `SENTINELOPS_SEED_DATA=true` ensures the demo dataset is loaded on boot. It defaults to `true` for local and staging environments and is ignored when `NODE_ENV=production`, so your persistent incidents stay intact unless you opt back in.
+- `SENTINELOPS_GIT_ENABLED=1` turns on the Git integration layer (status + diff endpoints, MCP tools, dashboards). Override `SENTINELOPS_GIT_ROOT` if your repository lives outside the process working directory.
+- Real-time streaming is powered by WebSockets (`/ws`) and Server-Sent Events (`/v1/events/stream`). You can sanity-check the SSE feed with:
+
+  ```bash
+  curl -N http://localhost:4111/v1/events/stream
+  ```
+
+  You should see an initial `connected` frame followed by live activity whenever agents emit events or you approve an action.
 
 ---
 
@@ -332,36 +352,71 @@ const triagePrompt = await mcp.getPrompt("triage-incident", {
 
 ## 🐳 Deployment
 
-### Build Docker Image
+### Build & Publish Docker Image
 
 ```bash
-docker build -t yourusername/sentinelops:latest .
-docker push yourusername/sentinelops:latest
+# build locally (uses prebuilt artifacts in the repo)
+docker build -t bprime/agent-challenge2:tagname .
+
+# authenticate and push
+docker login
+docker push bprime/agent-challenge2:tagname
 ```
 
-### Deploy to Nosana
+### Verify the Container Locally
+
+```bash
+docker run -d \
+  -p 3000:3000 \
+  -p 4111:4111 \
+  --name sentinelops-demo \
+  bprime/agent-challenge2:tagname
+
+# tail logs (optional)
+docker logs -f sentinelops-demo
+```
+
+### Deploy to Nosana (Pending)
 
 **Via Dashboard:**
 1. Open [Nosana Dashboard](https://dashboard.nosana.com/deploy)
-2. Edit `nos_job_def/nosana_mastra.json`:
+2. Update `nos_job_def/nosana_mastra_job_definition.json` with the published image (see [Nosana job definition](nos_job_def/nosana_mastra_job_definition.json) for the full schema):
    ```json
    {
-     "image": "yourusername/sentinelops:latest"
+     "image": "bprime/agent-challenge2:tagname"
    }
    ```
-3. Select GPU, click Deploy
+3. Select a GPU and launch the job.
+4. Verify the service responds on ports `3000` and `4111`, then capture the deployment URL or screenshot for submission.
 
-**Via CLI:**
+**Via CLI (alternative):**
 ```bash
 npm install -g @nosana/cli
-nosana job post --file ./nos_job_def/nosana_mastra.json --market nvidia-3090
+nosana job post --file ./nos_job_def/nosana_mastra_job_definition.json --market nvidia-3090 --timeout 30
+```
+
+> ✅ **Status:** Docker image has been published. Nosana deployment is still **TODO**—run the job and document the proof below.
+
+---
+
+## 📸 Nosana Deployment Proof (TODO)
+
+- [ ] Launch the job via dashboard or CLI.
+- [ ] Record the deployment ID/URL and capture a screenshot.
+- [ ] Update this section with the evidence (image + link) once verified.
+
+Example placeholder:
+
+```markdown
+**Deployment URL:** https://nosana.app/run/abcdef123456
+![Deployment Screenshot](./assets/nosana-deployment.png)
 ```
 
 ---
 
 ## 🎥 Video Demo
 
-[▶️ Watch 2-Minute Demo](https://youtube.com/link-here)
+[TODO — add demo link after recording](#)
 
 **Highlights:**
 - Real-time agent activity visualization
@@ -395,11 +450,22 @@ nosana job post --file ./nos_job_def/nosana_mastra.json --market nvidia-3090
 - [x] **Frontend Interface** - Next.js dashboard with real-time updates
 - [x] **Live Synchronization** - WebSocket + SSE for instant UI updates
 - [x] **Interactive UI** - Human approval workflow for actions
-- [x] **Deployed on Nosana** - Docker image + deployment proof
-- [x] **Video Demo** - 2-minute walkthrough
+- [x] **Docker Container Published** - `bprime/agent-challenge2:tagname` on Docker Hub
+- [ ] **Deployed on Nosana** - TODO: Launch job and attach proof
+- [ ] **Video Demo** - TODO: Record 1–3 minute walkthrough and update link
+- [ ] **Social Post** - TODO: Share final build on X/BlueSky/LinkedIn with #NosanaAgentChallenge
 - [x] **Documentation** - This README + architecture docs
 
 ---
+
+## 🧾 Submission Checklist
+
+- [x] Docker image pushed to Docker Hub (`bprime/agent-challenge2:tagname`)
+- [ ] Trigger Nosana deployment and capture URL/screenshot (update proof section)
+- [ ] Record demo video and replace the placeholder link above
+- [ ] Publish social post with #NosanaAgentChallenge and add the link here
+- [ ] Finalize README with deployment proof, video link, and social post
+- [ ] Submit repository + artifacts via SuperTeam form
 
 ## 🏆 Why SentinelOps Wins
 
@@ -412,9 +478,22 @@ nosana job post --file ./nos_job_def/nosana_mastra.json --market nvidia-3090
 
 ---
 
+## 🧪 Testing
+
+Run the focused server test suite to confirm the streaming endpoint and WebSocket lifecycle behave as expected:
+
+```bash
+pnpm test:server
+```
+
+The spec boots a Fastify instance on an ephemeral port, attaches to `/v1/events/stream`, and asserts that agent activity propagates over SSE.
+
+---
+
 ## 📚 Resources
 
 - **Architecture Docs:** [docs/agents-architecture.md](docs/agents-architecture.md)
+- **Git Workflow Design:** [docs/git-workflows.md](docs/git-workflows.md)
 - **Mastra Docs:** [mastra.ai/docs](https://mastra.ai/en/docs)
 - **Nosana Docs:** [docs.nosana.io](https://docs.nosana.io)
 - **MCP Protocol:** [Model Context Protocol](https://mastra.ai/en/docs/mcp)

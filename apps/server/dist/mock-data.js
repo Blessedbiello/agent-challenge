@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ensureMockData = ensureMockData;
 exports.getDashboardSnapshot = getDashboardSnapshot;
 const tools_1 = require("@sentinelops/tools");
+const env_1 = require("./env");
 const SeverityMap = {
     LOW: "low",
     MEDIUM: "moderate",
@@ -11,8 +12,19 @@ const SeverityMap = {
 };
 const seeded = { current: false };
 const seedRefs = { actionIds: [] };
+function shouldSeedMockData() {
+    const explicit = process.env.SENTINELOPS_SEED_DATA;
+    if (explicit !== undefined) {
+        return ["1", "true", "yes", "on"].includes(explicit.toLowerCase());
+    }
+    return env_1.env.NODE_ENV !== "production";
+}
 function ensureMockData() {
     if (seeded.current) {
+        return;
+    }
+    if (!shouldSeedMockData()) {
+        seeded.current = true;
         return;
     }
     (0, tools_1.clearAlerts)();
@@ -200,6 +212,7 @@ function getDashboardSnapshot() {
             { name: "DevOpsGPT", focus: "Release orchestration & PR review", status: "online", heartbeat: "2m ago", tasks: 3 },
             { name: "IncidentCommander", focus: "Triage & mitigation planning", status: "online", heartbeat: "48s ago", tasks: 1 },
             { name: "MonitorAgent", focus: "Telemetry ingestion & anomaly detection", status: "degraded", heartbeat: "5m ago", tasks: 6 },
+            { name: "CodeExpertAgent", focus: "Diff analysis & implementation planning", status: "online", heartbeat: "1m ago", tasks: 2 },
             { name: "DiscordTriage", focus: "Community support threads", status: "online", heartbeat: "just now", tasks: 2 },
         ],
         incidents,

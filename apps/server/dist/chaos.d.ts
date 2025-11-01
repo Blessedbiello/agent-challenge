@@ -6,5 +6,5 @@ export declare function listChaosScenarios(): {
     index: number;
     name: string;
     service: string;
-    severity: "HIGH" | "CRITICAL" | "MEDIUM";
+    severity: "MEDIUM" | "HIGH" | "CRITICAL";
 }[];

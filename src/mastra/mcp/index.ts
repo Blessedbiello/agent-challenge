@@ -25,8 +25,8 @@ import {
   listLogs,
   listJobs,
   listIncidentActions,
-} from "../tools";
-import { agentsRegistry } from "../agents";
+} from "@sentinelops/tools";
+import { agentsRegistry } from "@sentinelops/agents";
 
 export const server = new MCPServer({
   name: "SentinelOps MCP Server",
@@ -54,6 +54,7 @@ export const server = new MCPServer({
     listStrategiesTool,
   },
   agents: agentsRegistry,
+  // @ts-ignore Relax resource typing for custom URIs
   resources: {
     // Dynamic MCP Resources for alert discovery
     "sentinel://alerts": {
@@ -284,9 +285,9 @@ Gather evidence from logs, alerts, and deployment history before drafting.`
         };
       },
     },
-  },
+  } as Record<string, unknown>,
+  agents: agentsRegistry,
 });
-
 export const mcpServersRegistry = {
   core: server,
 } as const;

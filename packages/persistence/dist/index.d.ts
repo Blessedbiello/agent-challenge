@@ -1,4 +1,4 @@
-import { type Database as BetterSqliteDatabase } from "better-sqlite3";
+import type { Database as BetterSqliteDatabase } from "better-sqlite3";
 export interface InitDbOptions {
     filename?: string;
     memory?: boolean;

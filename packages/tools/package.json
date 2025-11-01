@@ -5,6 +5,7 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "dependencies": {
-    "@sentinelops/persistence": "workspace:*"
+    "@sentinelops/persistence": "workspace:*",
+    "@sentinelops/git": "workspace:*"
   }
 }

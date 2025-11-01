@@ -17,6 +17,30 @@ class SentinelOpsEventEmitter extends node_events_1.EventEmitter {
             timestamp: new Date().toISOString(),
         });
     }
+    broadcastAlertAcknowledged(alert) {
+        this.emit("incident:event", {
+            type: "alert_acked",
+            incidentId: alert.id,
+            data: alert,
+            timestamp: new Date().toISOString(),
+        });
+    }
+    broadcastAlertResolved(alert) {
+        this.emit("incident:event", {
+            type: "alert_resolved",
+            incidentId: alert.id,
+            data: alert,
+            timestamp: new Date().toISOString(),
+        });
+    }
+    broadcastActionCreated(actionId, incidentId) {
+        this.emit("incident:event", {
+            type: "action_created",
+            incidentId,
+            data: { actionId },
+            timestamp: new Date().toISOString(),
+        });
+    }
     broadcastActionUpdate(actionId, incidentId, status) {
         this.emit("incident:event", {
             type: status === "APPROVED" ? "action_approved" : "action_rejected",

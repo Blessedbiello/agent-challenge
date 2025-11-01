@@ -34,6 +34,7 @@ import {
   listStrategies,
   clearStrategies,
 } from "@sentinelops/tools";
+import { env } from "./env";
 export type DashboardSnapshot = {
   stats: StatCardConfig[];
   roster: AgentRosterItem[];
@@ -108,8 +109,22 @@ const seedRefs: {
   actionIds: string[];
 } = { actionIds: [] };
 
+function shouldSeedMockData(): boolean {
+  const explicit = process.env.SENTINELOPS_SEED_DATA;
+  if (explicit !== undefined) {
+    return ["1", "true", "yes", "on"].includes(explicit.toLowerCase());
+  }
+
+  return env.NODE_ENV !== "production";
+}
+
 export function ensureMockData(): void {
   if (seeded.current) {
+    return;
+  }
+
+  if (!shouldSeedMockData()) {
+    seeded.current = true;
     return;
   }
 
@@ -331,6 +346,7 @@ export function getDashboardSnapshot(): DashboardSnapshot {
       { name: "DevOpsGPT", focus: "Release orchestration & PR review", status: "online", heartbeat: "2m ago", tasks: 3 },
       { name: "IncidentCommander", focus: "Triage & mitigation planning", status: "online", heartbeat: "48s ago", tasks: 1 },
       { name: "MonitorAgent", focus: "Telemetry ingestion & anomaly detection", status: "degraded", heartbeat: "5m ago", tasks: 6 },
+      { name: "CodeExpertAgent", focus: "Diff analysis & implementation planning", status: "online", heartbeat: "1m ago", tasks: 2 },
       { name: "DiscordTriage", focus: "Community support threads", status: "online", heartbeat: "just now", tasks: 2 },
     ],
     incidents,

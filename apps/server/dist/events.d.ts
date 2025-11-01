@@ -29,6 +29,9 @@ declare class SentinelOpsEventEmitter extends EventEmitter {
     broadcastAgentActivity(activity: AgentActivity): void;
     broadcastIncidentEvent(event: IncidentEvent): void;
     broadcastAlertCreated(alert: AlertRecord): void;
+    broadcastAlertAcknowledged(alert: AlertRecord): void;
+    broadcastAlertResolved(alert: AlertRecord): void;
+    broadcastActionCreated(actionId: string, incidentId: string): void;
     broadcastActionUpdate(actionId: string, incidentId: string, status: string): void;
 }
 export declare const eventBus: SentinelOpsEventEmitter;

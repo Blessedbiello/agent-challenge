@@ -22,8 +22,14 @@ import {
   startDeployTool,
   subscribeAlertsTool,
   weatherTool,
-} from "@sentinelops/tools";
-import { initDb } from "@sentinelops/persistence";
+  gitStatusTool,
+  gitDiffTool,
+  gitStageTool,
+  gitCommitTool,
+  gitPushTool,
+  gitBranchTool,
+} from "../../tools/src";
+import { initDb } from "../../persistence/src";
 import { LibSQLStore } from "@mastra/libsql";
 import { Memory } from "@mastra/memory";
 import { z } from "zod";
@@ -36,13 +42,19 @@ import {
   INCIDENT_COMMANDER_PROMPT,
   MONITOR_AGENT_PROMPT,
   AGENT_BPRIME_PROMPT,
+  CODE_EXPERT_PROMPT,
 } from "./prompts";
 
 const ollama = createOllama({
   baseURL: process.env.NOS_OLLAMA_API_URL || process.env.OLLAMA_API_URL,
 });
 
-initDb();
+if (process.env.SENTINELOPS_SKIP_DB === "1") {
+  // In lightweight test environments we skip the native SQLite dependency.
+  console.debug("[agents] Skipping initDb because SENTINELOPS_SKIP_DB=1");
+} else {
+  initDb();
+}
 
 const defaultModelName = process.env.NOS_MODEL_NAME_AT_ENDPOINT || process.env.MODEL_NAME_AT_ENDPOINT || "qwen3:8b";
 
@@ -122,6 +134,27 @@ const DiscordMemorySchema = z.object({
 const AgentBprimeMemorySchema = z.object({
   focusAreas: z.array(z.string()).default([]),
   latestStrategyId: z.string().optional(),
+});
+
+const CodeExpertMemorySchema = z.object({
+  activeReviews: z
+    .array(
+      z.object({
+        branch: z.string().optional(),
+        summary: z.string().optional(),
+        createdAt: z.string().datetime().optional(),
+      })
+    )
+    .default([]),
+  suggestionsBacklog: z
+    .array(
+      z.object({
+        path: z.string(),
+        description: z.string(),
+        status: z.enum(["open", "done"]).default("open"),
+      })
+    )
+    .default([]),
 });
 
 export const devOpsAgent = new Agent({
@@ -205,6 +238,26 @@ export const humanOpsAgent = new Agent({
   memory: createMemory(HumanOpsMemorySchema),
 });
 
+export const codeExpertAgent = new Agent({
+  name: "CodeExpertAgent",
+  description: "Hands-on coding expert for diff analysis, implementation planning, and review.",
+  instructions: CODE_EXPERT_PROMPT,
+  model: ollama(defaultModelName),
+  tools: {
+    gitStatusTool,
+    gitDiffTool,
+    gitStageTool,
+    gitCommitTool,
+    gitPushTool,
+    gitBranchTool,
+    listDeploysTool,
+    listPostmortemsTool,
+    queryLogsTool,
+    createStrategyTool,
+  },
+  memory: createMemory(CodeExpertMemorySchema),
+});
+
 export const discordTriageAgent = new Agent({
   name: "DiscordTriageAgent",
   description: "Handles Discord triage interactions, offering safe troubleshooting steps.",
@@ -240,6 +293,7 @@ export const agentsRegistry = {
   monitorAgent,
   forensicsAgent,
   humanOpsAgent,
+  codeExpertAgent,
   discordTriageAgent,
   agentBprime,
 } as const;

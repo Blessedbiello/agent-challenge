@@ -1,11 +1,16 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.initDb = initDb;
 exports.getDb = getDb;
-const better_sqlite3_1 = __importDefault(require("better-sqlite3"));
+let DatabaseConstructor = null;
+function loadDriver() {
+    if (!DatabaseConstructor) {
+        // eslint-disable-next-line @typescript-eslint/no-var-requires
+        const module = require("better-sqlite3");
+        DatabaseConstructor = (module.default ?? module);
+    }
+    return DatabaseConstructor;
+}
 let db = null;
 let migrationsApplied = false;
 function runMigrations(database) {
@@ -94,12 +99,49 @@ function runMigrations(database) {
     );
   `);
 }
+function createNoopDb() {
+    const fail = () => {
+        throw new Error("Database access disabled (SENTINELOPS_SKIP_DB=1)");
+    };
+    return {
+        exec: (_sql) => fail(),
+        prepare: (_sql) => ({
+            run: fail,
+            get: fail,
+            all: fail,
+            iterate: fail,
+            pluck: false,
+            raw: false,
+            expand: false,
+            bind: fail,
+        }),
+        pragma: (_pragma) => fail(),
+        close: () => undefined,
+        defaultSafeIntegers: false,
+        memory: true,
+        open: false,
+        readonly: false,
+        name: "noop",
+        unsafeMode: false,
+        backup: fail,
+        loadExtension: fail,
+        table: fail,
+    };
+}
 function initDb(options) {
+    if (process.env.SENTINELOPS_SKIP_DB === "1") {
+        if (!db) {
+            db = createNoopDb();
+            migrationsApplied = true;
+        }
+        return db;
+    }
     if (!db) {
+        const Database = loadDriver();
         const filename = options?.filename ??
             (options?.memory ? ":memory:" : process.env.SENTINELOPS_DB_PATH) ??
             "sentinelops.db";
-        db = new better_sqlite3_1.default(filename, {
+        db = new Database(filename, {
             verbose: process.env.SENTINELOPS_DB_VERBOSE ? console.debug : undefined,
         });
         db.pragma("journal_mode = WAL");

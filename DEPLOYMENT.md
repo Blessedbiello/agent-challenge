@@ -132,6 +132,26 @@ docker stop sentinelops
 
 ## 🔧 Production Deployment
 
+### 0. Pre-build Artifacts (required for Docker image)
+
+The Dockerfile expects the compiled assets to exist before you build the image. Run these commands on your workstation first:
+
+```bash
+pnpm install --no-frozen-lockfile
+pnpm build:packages
+pnpm build:server
+pnpm mastra build
+pnpm build:ui
+```
+
+That generates:
+
+- `apps/server/dist` (Fastify API)
+- `.mastra/output` (Mastra agent bundle)
+- `apps/web/.next` (Next.js production build)
+
+After that, `docker build` will reuse those outputs without re-running the toolchain.
+
 ### 1. Build for Production
 
 ```bash

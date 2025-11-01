@@ -1,1 +1,3 @@
-export * from "@sentinelops/agents";
+import { agentsRegistry } from "@sentinelops/agents";
+
+export { agentsRegistry };

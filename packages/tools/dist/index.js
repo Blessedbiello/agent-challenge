@@ -21,4 +21,5 @@ __exportStar(require("./logs"), exports);
 __exportStar(require("./postmortems"), exports);
 __exportStar(require("./actions"), exports);
 __exportStar(require("./strategies"), exports);
+__exportStar(require("./git"), exports);
 //# sourceMappingURL=index.js.map

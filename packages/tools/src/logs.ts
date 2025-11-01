@@ -106,30 +106,30 @@ export const queryLogsTool = createTool({
   }),
   execute: async ({ context }) => {
     const db = getDb();
-    const rows = db.prepare(`SELECT * FROM logs ORDER BY timestamp DESC`).all();
-    let logs = rows.map(deserializeLog);
+    const conditions: string[] = [];
+    const params: any[] = [];
 
-    const query = context.query.toLowerCase();
-    logs = logs.filter(
-      (log) =>
-        log.message.toLowerCase().includes(query) ||
-        JSON.stringify(log.metadata).toLowerCase().includes(query)
-    );
+    const pattern = `%${context.query.toLowerCase()}%`;
+    conditions.push("(LOWER(message) LIKE ? OR LOWER(COALESCE(metadata, '')) LIKE ?)");
+    params.push(pattern, pattern);
 
     if (context.timeRange?.from) {
-      const from = context.timeRange.from;
-      logs = logs.filter((log) => log.timestamp >= from);
+      conditions.push("timestamp >= ?");
+      params.push(context.timeRange.from);
     }
 
     if (context.timeRange?.to) {
-      const to = context.timeRange.to;
-      logs = logs.filter((log) => log.timestamp <= to);
+      conditions.push("timestamp <= ?");
+      params.push(context.timeRange.to);
     }
 
-    logs.sort((a, b) => (a.timestamp < b.timestamp ? 1 : -1));
-    const limited = logs.slice(0, context.limit);
+    const whereClause = conditions.length ? `WHERE ${conditions.join(" AND ")}` : "";
+    const rows = db
+      .prepare(`SELECT * FROM logs ${whereClause} ORDER BY timestamp DESC LIMIT ?`)
+      .all(...params, context.limit);
 
-    return { count: limited.length, logs: limited };
+    const logs = rows.map(deserializeLog);
+    return { count: logs.length, logs };
   },
 });
 

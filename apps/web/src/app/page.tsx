@@ -6,7 +6,7 @@ import { CopilotSidebar, CopilotKitCSSProperties } from "@copilotkit/react-ui";
 import { z } from "zod";
 import { HumanOpsMemorySchema } from "@sentinelops/agents/memory";
 import { SentinelOpsPlaceholder } from "@sentinelops/ui";
-import { useRealTimeEvents } from "../hooks/useRealTimeEvents";
+import { useRealTimeEvents, type AgentActivity } from "../hooks/useRealTimeEvents";
 import { AgentActivityFeed } from "../components/AgentActivityFeed";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_SENTINELOPS_API ?? "http://localhost:4111";
@@ -169,6 +169,7 @@ function getFallbackDashboard(): DashboardData {
       { name: "DevOpsGPT", focus: "Release orchestration & PR review", status: "online", heartbeat: "2m ago", tasks: 3 },
       { name: "IncidentCommander", focus: "Triage & mitigation planning", status: "online", heartbeat: "48s ago", tasks: 1 },
       { name: "MonitorAgent", focus: "Telemetry ingestion & anomaly detection", status: "degraded", heartbeat: "5m ago", tasks: 6 },
+      { name: "CodeExpertAgent", focus: "Diff analysis & implementation planning", status: "online", heartbeat: "1m ago", tasks: 2 },
       { name: "DiscordTriage", focus: "Community support threads", status: "online", heartbeat: "just now", tasks: 2 },
     ],
     incidents: [
@@ -257,7 +258,6 @@ export default function SentinelOpsDashboard() {
   // Real-time event stream
   const {
     activities: agentActivities,
-    incidents: incidentEvents,
     isConnected: wsConnected,
     clearAllActivities,
   } = useRealTimeEvents(API_BASE_URL);
@@ -313,7 +313,7 @@ export default function SentinelOpsDashboard() {
         setActionsLoading(false);
       }
     }
-  }, [API_BASE_URL]);
+  }, []);
 
   const refreshStrategies = useCallback(async (options?: { showLoading?: boolean }) => {
     const showLoading = options?.showLoading ?? false;
@@ -346,11 +346,15 @@ export default function SentinelOpsDashboard() {
         setStrategiesLoading(false);
       }
     }
-  }, [API_BASE_URL]);
+  }, []);
 
   useEffect(() => {
     let cancelled = false;
-    let timer: ReturnType<typeof setInterval> | undefined;
+    const dashboardTimer = setInterval(() => {
+      loadDashboard().catch(() => {
+        /* handled in loadDashboard */
+      });
+    }, REFRESH_INTERVAL_MS);
 
     async function loadDashboard() {
       setIsLoading(true);
@@ -387,39 +391,31 @@ export default function SentinelOpsDashboard() {
       /* handled in loadDashboard */
     });
 
-    timer = setInterval(() => {
-      loadDashboard().catch(() => {
-        /* handled in loadDashboard */
-      });
-    }, REFRESH_INTERVAL_MS);
-
     return () => {
       cancelled = true;
-      if (timer) {
-        clearInterval(timer);
-      }
+      clearInterval(dashboardTimer);
     };
   }, []);
 
   useEffect(() => {
     refreshActions({ showLoading: true }).catch(() => undefined);
-    const timer = setInterval(() => {
+    const actionsTimer = setInterval(() => {
       refreshActions().catch(() => undefined);
     }, REFRESH_INTERVAL_MS);
 
     return () => {
-      clearInterval(timer);
+      clearInterval(actionsTimer);
     };
   }, [refreshActions]);
 
   useEffect(() => {
     refreshStrategies({ showLoading: true }).catch(() => undefined);
-    const timer = setInterval(() => {
+    const strategiesTimer = setInterval(() => {
       refreshStrategies().catch(() => undefined);
     }, REFRESH_INTERVAL_MS * 2);
 
     return () => {
-      clearInterval(timer);
+      clearInterval(strategiesTimer);
     };
   }, [refreshStrategies]);
 
@@ -448,7 +444,7 @@ export default function SentinelOpsDashboard() {
         }
       }
     },
-    [refreshActions, API_BASE_URL]
+    [refreshActions]
   );
 
   const handleRejectAction = useCallback(
@@ -476,7 +472,7 @@ export default function SentinelOpsDashboard() {
         }
       }
     },
-    [refreshActions, API_BASE_URL]
+    [refreshActions]
   );
 
   return (
@@ -490,7 +486,6 @@ export default function SentinelOpsDashboard() {
           <Header themeColor={themeColor} generatedAt={dashboard.generatedAt} isLoading={isLoading} wsConnected={wsConnected} />
           {error ? <ErrorBanner message={error} /> : null}
           <DashboardPanels
-            themeColor={themeColor}
             dashboard={dashboard}
             isLoading={isLoading}
             actions={actions}
@@ -513,7 +508,6 @@ export default function SentinelOpsDashboard() {
 }
 
 function DashboardPanels({
-  themeColor,
   dashboard,
   isLoading,
   actions,
@@ -529,7 +523,6 @@ function DashboardPanels({
   wsConnected,
   onClearActivities,
 }: {
-  themeColor: string;
   dashboard: DashboardData;
   isLoading: boolean;
   actions: ActionQueueItem[];
@@ -541,7 +534,7 @@ function DashboardPanels({
   strategies: StrategyItem[];
   strategiesLoading: boolean;
   strategiesError: string | null;
-  agentActivities: any[];
+  agentActivities: AgentActivity[];
   wsConnected: boolean;
   onClearActivities: () => void;
 }) {
@@ -561,7 +554,7 @@ function DashboardPanels({
     const next = dashboard.memory ?? [];
     const changed =
       current.length !== next.length ||
-      current.some((value, index) => value !== next[index]);
+      current.some((value: string, index: number) => value !== next[index]);
 
     if (changed) {
       setState({
@@ -633,7 +626,10 @@ function Header({ themeColor, generatedAt, isLoading, wsConnected }: { themeColo
   return (
     <header className="flex flex-col gap-6 md:flex-row md:items-start md:justify-between">
       <div className="flex items-center gap-4">
-        <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-600 shadow-lg shadow-indigo-500/50">
+        <div
+          className="flex h-16 w-16 items-center justify-center rounded-2xl shadow-lg shadow-indigo-500/50"
+          style={{ background: `linear-gradient(135deg, ${themeColor}, #7c3aed)` }}
+        >
           <svg className="h-8 w-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
           </svg>
@@ -740,14 +736,14 @@ function AgentMemory({ state, setState }: { state: AgentState; setState: (state:
         </div>
       </div>
       <div className="mt-4 flex flex-col gap-3">
-        {state.proverbs?.map((entry, index) => (
+        {state.proverbs?.map((entry: string, index: number) => (
           <div key={index} className="relative rounded-xl border border-white/10 bg-white/5 p-4 pr-10 text-sm text-white/80">
             {entry}
             <button
               onClick={() => {
                 setState({
                   ...state,
-                  proverbs: state.proverbs?.filter((_, i) => i !== index) ?? [],
+                  proverbs: state.proverbs?.filter((_: string, i: number) => i !== index) ?? [],
                 });
               }}
               className="absolute right-3 top-3 rounded-full bg-white/10 px-2 py-1 text-xs text-white/60 transition hover:bg-white/20 hover:text-white"

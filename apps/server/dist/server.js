@@ -41,22 +41,30 @@ exports.startServer = startServer;
 const fastify_1 = __importDefault(require("fastify"));
 const cors_1 = __importDefault(require("@fastify/cors"));
 const websocket_1 = __importDefault(require("@fastify/websocket"));
-const agents_1 = require("@sentinelops/agents");
 const mcpRegistry_1 = require("./mcpRegistry");
 const persistence_1 = require("@sentinelops/persistence");
 const mock_data_1 = require("./mock-data");
 const tools_1 = require("@sentinelops/tools");
+const git_1 = require("@sentinelops/git");
 const zod_1 = require("zod");
 const env_1 = require("./env");
 const events_1 = require("./events");
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const agentsModule = require("@sentinelops/agents");
+const { agentsRegistry, incidentCommanderAgent } = agentsModule;
 function createServer() {
     const app = (0, fastify_1.default)({
         logger: {
             level: env_1.env.LOG_LEVEL,
         },
     });
-    (0, persistence_1.initDb)();
-    (0, mock_data_1.ensureMockData)();
+    if (process.env.SENTINELOPS_SKIP_DB === "1") {
+        app.log.debug("Skipping database initialization (SENTINELOPS_SKIP_DB=1)");
+    }
+    else {
+        (0, persistence_1.initDb)();
+        (0, mock_data_1.ensureMockData)();
+    }
     app.register(cors_1.default, {
         origin: true,
         credentials: false,
@@ -80,8 +88,7 @@ function createServer() {
             wsClients.delete(socket);
         });
     });
-    // Broadcast agent activities to all connected clients
-    events_1.eventBus.on("agent:activity", (activity) => {
+    const agentActivityListener = (activity) => {
         const message = JSON.stringify({
             type: "agent:activity",
             data: activity,
@@ -92,9 +99,8 @@ function createServer() {
                 client.send(message);
             }
         });
-    });
-    // Broadcast incident events to all connected clients
-    events_1.eventBus.on("incident:event", (event) => {
+    };
+    const incidentEventListener = (event) => {
         const message = JSON.stringify({
             type: "incident:event",
             data: event,
@@ -105,6 +111,26 @@ function createServer() {
                 client.send(message);
             }
         });
+    };
+    // Broadcast agent activities to all connected clients
+    events_1.eventBus.on("agent:activity", agentActivityListener);
+    // Broadcast incident events to all connected clients
+    events_1.eventBus.on("incident:event", incidentEventListener);
+    app.addHook("onClose", (_instance, done) => {
+        events_1.eventBus.off("agent:activity", agentActivityListener);
+        events_1.eventBus.off("incident:event", incidentEventListener);
+        wsClients.forEach((client) => {
+            try {
+                if (client.readyState === 1) {
+                    client.close();
+                }
+            }
+            catch {
+                /* ignore */
+            }
+        });
+        wsClients.clear();
+        done();
     });
     app.get("/healthz", async () => {
         return {
@@ -115,7 +141,7 @@ function createServer() {
         };
     });
     app.get("/v1/agents", async () => {
-        const agents = Object.entries(agents_1.agentsRegistry).map(([key, agent]) => ({
+        const agents = Object.entries(agentsRegistry).map(([key, agent]) => ({
             id: key,
             name: agent.name,
             description: agent.instructions || null,
@@ -129,7 +155,7 @@ function createServer() {
     app.get("/v1/status", async () => {
         return {
             environment: env_1.env.NODE_ENV,
-            agents: Object.keys(agents_1.agentsRegistry).length,
+            agents: Object.keys(agentsRegistry).length,
             mcpServers: Object.keys(mcpRegistry_1.mcpServersRegistry).length,
         };
     });
@@ -138,11 +164,14 @@ function createServer() {
     });
     // SSE endpoint for live incident stream
     app.get("/v1/events/stream", async (request, reply) => {
+        reply.hijack();
         reply.raw.writeHead(200, {
             "Content-Type": "text/event-stream",
             "Cache-Control": "no-cache",
             "Connection": "keep-alive",
         });
+        reply.raw.flushHeaders?.();
+        reply.raw.setTimeout?.(0);
         const sendEvent = (data) => {
             reply.raw.write(`data: ${JSON.stringify(data)}\n\n`);
         };
@@ -160,12 +189,17 @@ function createServer() {
         const incidentEventHandler = (event) => {
             sendEvent({ type: "incident:event", data: event });
         };
+        const heartbeat = setInterval(() => {
+            reply.raw.write(`:heartbeat ${Date.now()}\n\n`);
+        }, 25000);
         events_1.eventBus.on("agent:activity", agentActivityHandler);
         events_1.eventBus.on("incident:event", incidentEventHandler);
         // Cleanup on connection close
         request.raw.on("close", () => {
+            clearInterval(heartbeat);
             events_1.eventBus.off("agent:activity", agentActivityHandler);
             events_1.eventBus.off("incident:event", incidentEventHandler);
+            reply.raw.end();
         });
     });
     app.get("/v1/alerts", async () => {
@@ -183,6 +217,133 @@ function createServer() {
     app.get("/v1/logs", async () => {
         const data = (0, mock_data_1.getDashboardSnapshot)();
         return { logs: data.logs };
+    });
+    app.get("/v1/git/status", async (request, reply) => {
+        if (!(0, git_1.gitIntegrationEnabled)()) {
+            return { enabled: false, status: null };
+        }
+        try {
+            const status = await (0, git_1.getStatusSummary)();
+            return { enabled: true, status };
+        }
+        catch (error) {
+            if (error instanceof git_1.GitRepositoryNotFoundError) {
+                return reply.status(404).send({ error: error.message });
+            }
+            request.log.error({ err: error }, "Failed to read git status");
+            return reply.status(500).send({ error: "Failed to read git status" });
+        }
+    });
+    app.get("/v1/git/diff", async (request, reply) => {
+        if (!(0, git_1.gitIntegrationEnabled)()) {
+            return { enabled: false, diff: null };
+        }
+        try {
+            const query = zod_1.z.object({ cached: zod_1.z.coerce.boolean().optional() }).parse(request.query ?? {});
+            const diff = await (0, git_1.getDiffSummary)({ cached: query.cached });
+            return { enabled: true, diff };
+        }
+        catch (error) {
+            if (error instanceof git_1.GitRepositoryNotFoundError) {
+                return reply.status(404).send({ error: error.message });
+            }
+            request.log.error({ err: error }, "Failed to summarise git diff");
+            return reply.status(500).send({ error: "Failed to summarise git diff" });
+        }
+    });
+    app.post("/v1/git/stage", async (request, reply) => {
+        if (!(0, git_1.gitIntegrationEnabled)()) {
+            return reply.status(400).send({ error: "Git integration disabled" });
+        }
+        try {
+            const body = zod_1.z.object({ paths: zod_1.z.array(zod_1.z.string().min(1)).optional() }).parse(request.body ?? {});
+            await (0, git_1.stageChanges)({ paths: body.paths });
+            return reply.status(200).send({ success: true });
+        }
+        catch (error) {
+            if (error instanceof git_1.GitRepositoryNotFoundError) {
+                return reply.status(404).send({ error: error.message });
+            }
+            request.log.error({ err: error }, "Failed to stage changes");
+            return reply.status(500).send({ error: error.message });
+        }
+    });
+    app.post("/v1/git/commit", async (request, reply) => {
+        if (!(0, git_1.gitIntegrationEnabled)()) {
+            return reply.status(400).send({ error: "Git integration disabled" });
+        }
+        const bodySchema = zod_1.z.object({
+            message: zod_1.z.string().min(1),
+            allowEmpty: zod_1.z.boolean().optional(),
+            signoff: zod_1.z.boolean().optional(),
+            author: zod_1.z
+                .object({
+                name: zod_1.z.string().min(1),
+                email: zod_1.z.string().email().optional(),
+            })
+                .optional(),
+        });
+        try {
+            const body = bodySchema.parse(request.body ?? {});
+            const commit = await (0, git_1.commitChanges)({
+                message: body.message,
+                allowEmpty: body.allowEmpty,
+                signoff: body.signoff,
+                author: body.author,
+            });
+            return reply.status(200).send({ commit });
+        }
+        catch (error) {
+            if (error instanceof git_1.GitRepositoryNotFoundError) {
+                return reply.status(404).send({ error: error.message });
+            }
+            request.log.error({ err: error }, "Failed to commit changes");
+            return reply.status(500).send({ error: error.message });
+        }
+    });
+    app.post("/v1/git/push", async (request, reply) => {
+        if (!(0, git_1.gitIntegrationEnabled)()) {
+            return reply.status(400).send({ error: "Git integration disabled" });
+        }
+        const bodySchema = zod_1.z.object({
+            remote: zod_1.z.string().min(1).optional(),
+            branch: zod_1.z.string().min(1).optional(),
+            force: zod_1.z.boolean().optional(),
+        });
+        try {
+            const body = bodySchema.parse(request.body ?? {});
+            const result = await (0, git_1.pushChanges)(body);
+            return reply.status(200).send({ result });
+        }
+        catch (error) {
+            if (error instanceof git_1.GitRepositoryNotFoundError) {
+                return reply.status(404).send({ error: error.message });
+            }
+            request.log.error({ err: error }, "Failed to push changes");
+            return reply.status(500).send({ error: error.message });
+        }
+    });
+    app.post("/v1/git/branch", async (request, reply) => {
+        if (!(0, git_1.gitIntegrationEnabled)()) {
+            return reply.status(400).send({ error: "Git integration disabled" });
+        }
+        const bodySchema = zod_1.z.object({
+            name: zod_1.z.string().min(1),
+            base: zod_1.z.string().min(1).optional(),
+            checkout: zod_1.z.boolean().optional(),
+        });
+        try {
+            const body = bodySchema.parse(request.body ?? {});
+            const branch = await (0, git_1.createBranch)(body);
+            return reply.status(200).send({ branch });
+        }
+        catch (error) {
+            if (error instanceof git_1.GitRepositoryNotFoundError) {
+                return reply.status(404).send({ error: error.message });
+            }
+            request.log.error({ err: error }, "Failed to create branch");
+            return reply.status(500).send({ error: error.message });
+        }
     });
     app.get("/v1/strategies", async () => ({ strategies: (0, tools_1.listStrategies)() }));
     app.get("/v1/actions", async () => {
@@ -214,6 +375,7 @@ function createServer() {
             return reply.status(400).send({ error: "Invalid action payload", issues: result.error.format() });
         }
         const action = (0, tools_1.createIncidentAction)(result.data);
+        events_1.eventBus.broadcastActionCreated(action.id, action.incidentId);
         return reply.status(201).send(action);
     });
     app.post("/v1/strategies", async (request, reply) => {
@@ -238,6 +400,7 @@ function createServer() {
             return reply.status(400).send({ error: "Invalid acknowledgement payload", issues: result.error.format() });
         }
         const alert = (0, tools_1.ackAlert)(result.data);
+        events_1.eventBus.broadcastAlertAcknowledged(alert);
         return reply.status(200).send(alert);
     });
     app.post("/v1/alerts/:alertId/resolve", async (request, reply) => {
@@ -247,6 +410,7 @@ function createServer() {
             return reply.status(400).send({ error: "Invalid resolution payload", issues: result.error.format() });
         }
         const alert = (0, tools_1.resolveAlert)(result.data);
+        events_1.eventBus.broadcastAlertResolved(alert);
         return reply.status(200).send(alert);
     });
     app.post("/v1/deploys", async (request, reply) => {
@@ -344,7 +508,7 @@ function createServer() {
             timestamp: new Date().toISOString(),
             metadata: { incidentId: incidentAlert.id, severity: incidentAlert.severity },
         });
-        const agentResponse = await agents_1.incidentCommanderAgent.generate([
+        const agentResponse = await incidentCommanderAgent.generate([
             {
                 role: "user",
                 content: `Triage incident ${incidentAlert.id}: ${incidentAlert.service} - ${incidentAlert.summary}. Severity: ${incidentAlert.severity}. Alert metadata: ${JSON.stringify(incidentAlert.metadata)}`,
@@ -384,6 +548,7 @@ function createServer() {
                             raw: suggestion,
                         },
                     });
+                    events_1.eventBus.broadcastActionCreated(created.id, created.incidentId);
                     existingLabels.add(labelCandidate.toLowerCase());
                     actionsForIncident.push(created);
                 });

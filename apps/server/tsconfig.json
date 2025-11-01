@@ -17,6 +17,7 @@
   "references": [
     { "path": "../../packages/persistence" },
     { "path": "../../packages/tools" },
-    { "path": "../../packages/agents" }
+    { "path": "../../packages/agents" },
+    { "path": "../../packages/git" }
   ]
 }

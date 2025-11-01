@@ -1,4 +1,17 @@
-import Database, { type Database as BetterSqliteDatabase } from "better-sqlite3";
+import type { Database as BetterSqliteDatabase, Statement } from "better-sqlite3";
+
+type BetterSqliteConstructor = new (filename: string, options?: any) => BetterSqliteDatabase;
+
+let DatabaseConstructor: BetterSqliteConstructor | null = null;
+
+function loadDriver(): BetterSqliteConstructor {
+  if (!DatabaseConstructor) {
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    const module = require("better-sqlite3");
+    DatabaseConstructor = (module.default ?? module) as BetterSqliteConstructor;
+  }
+  return DatabaseConstructor;
+}
 
 let db: BetterSqliteDatabase | null = null;
 let migrationsApplied = false;
@@ -95,8 +108,49 @@ function runMigrations(database: BetterSqliteDatabase) {
   `);
 }
 
+function createNoopDb(): BetterSqliteDatabase {
+  const fail = () => {
+    throw new Error("Database access disabled (SENTINELOPS_SKIP_DB=1)");
+  };
+
+  return {
+    exec: (_sql: string) => fail(),
+    prepare: (_sql: string) =>
+      ({
+        run: fail,
+        get: fail,
+        all: fail,
+        iterate: fail,
+        pluck: false,
+        raw: false,
+        expand: false,
+        bind: fail,
+      } as unknown as Statement),
+    pragma: (_pragma: string) => fail(),
+    close: () => undefined,
+    defaultSafeIntegers: false,
+    memory: true,
+    open: false,
+    readonly: false,
+    name: "noop",
+    unsafeMode: false,
+    backup: fail,
+    loadExtension: fail,
+    table: fail,
+  } as unknown as BetterSqliteDatabase;
+}
+
 export function initDb(options?: InitDbOptions): BetterSqliteDatabase {
+  if (process.env.SENTINELOPS_SKIP_DB === "1") {
+    if (!db) {
+      db = createNoopDb();
+      migrationsApplied = true;
+    }
+    return db;
+  }
+
   if (!db) {
+    const Database = loadDriver();
     const filename =
       options?.filename ??
       (options?.memory ? ":memory:" : process.env.SENTINELOPS_DB_PATH) ??

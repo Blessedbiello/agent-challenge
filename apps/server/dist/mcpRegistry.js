@@ -3,7 +3,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.mcpServersRegistry = void 0;
 const mcp_1 = require("@mastra/mcp");
 const tools_1 = require("@sentinelops/tools");
-const agents_1 = require("@sentinelops/agents");
+function loadAgentsRegistry() {
+    if (process.env.SENTINELOPS_SKIP_DB === "1") {
+        return {};
+    }
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    const module = require("@sentinelops/agents");
+    return module.agentsRegistry;
+}
+const agentsRegistry = loadAgentsRegistry();
 exports.mcpServersRegistry = {
     core: new mcp_1.MCPServer({
         name: "SentinelOps MCP",
@@ -29,8 +37,14 @@ exports.mcpServersRegistry = {
             rejectIncidentActionTool: tools_1.rejectIncidentActionTool,
             createStrategyTool: tools_1.createStrategyTool,
             listStrategiesTool: tools_1.listStrategiesTool,
+            gitStatusTool: tools_1.gitStatusTool,
+            gitDiffTool: tools_1.gitDiffTool,
+            gitStageTool: tools_1.gitStageTool,
+            gitCommitTool: tools_1.gitCommitTool,
+            gitPushTool: tools_1.gitPushTool,
+            gitBranchTool: tools_1.gitBranchTool,
         },
-        agents: agents_1.agentsRegistry,
+        agents: agentsRegistry,
     }),
 };
 //# sourceMappingURL=mcpRegistry.js.map
